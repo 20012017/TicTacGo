@@ -6,20 +6,12 @@ type WinningPositions struct {
 	rows, columns, diagonals [][]string
 }
 
-func NewWinningPositions(cells []string) WinningPositions {
+func NewWinningPositions(cells []string, grid Grid) WinningPositions {
 	return WinningPositions{
-		rows(cells),
-		columns(cells),
+		grid.Split(3),
+		grid.Transpose(3),
 		diagonals(cells),
 	}
-}
-
-func rows(cells []string) [][]string {
-	return getRows(firstCell, cells)
-}
-
-func columns(cells []string) [][]string {
-	return getColumns(firstCell, cells)
 }
 
 func diagonals(cells []string) [][]string {
@@ -39,26 +31,6 @@ func getAllPositions(allPositions [][]string, positions [][]string) [][]string {
 		allPositions = append(allPositions, row)
 	}
 	return allPositions
-}
-
-func getRows(rowStart int, cells []string) [][]string {
-	rows := [][]string{}
-	for rowStart < (rowLength * rowLength) {
-		row := getCellRange(cells, rowStart, rowStart+(rowLength-1), columnWidth)
-		rows = append(rows, row)
-		rowStart = rowStart + rowLength
-	}
-	return rows
-}
-
-func getColumns(columnStart int, cells []string) [][]string {
-	columns := [][]string{}
-	for columnStart < rowLength {
-		column := getCellRange(cells, columnStart, columnStart+rowLength*2, rowLength)
-		columns = append(columns, column)
-		columnStart = columnStart + columnWidth
-	}
-	return columns
 }
 
 func getLeftDiagonal(cells []string) []string {

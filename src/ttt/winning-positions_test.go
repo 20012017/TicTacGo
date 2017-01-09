@@ -6,7 +6,7 @@ import (
 )
 
 var numberedBoard []string = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
-var winningPositions WinningPositions = NewWinningPositions(numberedBoard)
+var winningPositions WinningPositions = NewWinningPositions(numberedBoard, NewPopulatedGrid(numberedBoard))
 
 func TestReturnsRows(t *testing.T) {
 	expectedRows := [][]string{{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}}
