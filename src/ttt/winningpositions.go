@@ -22,14 +22,12 @@ func diagonals(grid Grid) []Line {
 }
 
 func all(grid Grid) []Line {
-	allPositions := []Line{}
-	allPositions = getAllPositions(allPositions, grid.split(3))
-	allPositions = getAllPositions(allPositions, grid.transpose(3))
-	allPositions = getAllPositions(allPositions, diagonals(grid))
-	return allPositions
+	allPositions := getPositions([]Line{}, grid.split(3))
+	allPositions = getPositions(allPositions, grid.transpose(3))
+	return getPositions(allPositions, diagonals(grid))
 }
 
-func getAllPositions(allPositions, positions []Line) []Line {
+func getPositions(allPositions, positions []Line) []Line {
 	for _, position := range positions {
 		allPositions = append(allPositions, position)
 	}

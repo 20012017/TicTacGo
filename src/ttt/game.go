@@ -17,26 +17,26 @@ func (game Game) play(move int) Board {
 
 func (game Game) currentMark() string {
 	if game.board.countMarks()%2 == 0 {
-		return game.playerOne.mark()
+		return game.markOne()
 	}
-	return game.playerTwo.mark()
+	return game.markTwo()
 }
 
 func (game Game) isOver() bool {
-	over := game.isAWin(game.data()) ||
-		game.rules.isADraw(game.data())
+	over := game.isAWin() ||
+		game.isADraw()
 	return over
 }
 
 func (game Game) result() (bool, string) {
-	if game.isOver() && game.isAWin(game.data()) {
+	if game.isOver() && game.isAWin() {
 		return true, game.winner()
 	}
 	return false, ""
 }
 
 func (game Game) winner() string {
-	return game.rules.winner(game.data())
+	return game.winningMark()
 }
 
 func (game Game) playMove(move int) Board {
@@ -45,8 +45,16 @@ func (game Game) playMove(move int) Board {
 	return markedBoard
 }
 
-func (game Game) isAWin(board Board, markOne, markTwo string) bool {
-	return game.rules.isAWin(board, markOne, markTwo)
+func (game Game) winningMark() string {
+	return game.rules.winner(game.data())
+}
+
+func (game Game) isADraw() bool {
+	return game.rules.isADraw(game.data())
+}
+
+func (game Game) isAWin() bool {
+	return game.rules.isAWin(game.data())
 }
 
 func (game Game) data() (Board, string, string) {

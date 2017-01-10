@@ -13,7 +13,7 @@ func TestEmptyGrid(t *testing.T) {
 	assert.Equal(t, 9, len(newGrid.cells))
 }
 
-func TestGridSplit(t *testing.T) {
+func TestSplit(t *testing.T) {
 	splitGrid := []Line{
 		newLine("1", "2", "3"),
 		newLine("4", "5", "6"),
@@ -22,7 +22,7 @@ func TestGridSplit(t *testing.T) {
 	assert.Equal(t, splitGrid, grid().split(3))
 }
 
-func TestGridTranspose(t *testing.T) {
+func TestTranspose(t *testing.T) {
 	transposedGrid := []Line{
 		newLine("1", "4", "7"),
 		newLine("2", "5", "8"),
@@ -31,7 +31,7 @@ func TestGridTranspose(t *testing.T) {
 	assert.Equal(t, transposedGrid, grid().transpose(3))
 }
 
-func TestGridReverseSplit(t *testing.T) {
+func TestReverseSplit(t *testing.T) {
 	reversedSplit := []Line{
 		newLine("3", "2", "1"),
 		newLine("6", "5", "4"),
@@ -40,14 +40,16 @@ func TestGridReverseSplit(t *testing.T) {
 	assert.Equal(t, reversedSplit, grid().reverseSplit(3))
 }
 
-func TestGridAnyEmpty(t *testing.T) {
+func TestAnyEmpty(t *testing.T) {
 	newGrid := NewGrid(9)
 
 	assert.True(t, newGrid.any(""))
 }
 
-func TestGridFull(t *testing.T) {
-	assert.False(t, grid().any(""))
+func TestFull(t *testing.T) {
+	grid := grid()
+
+	assert.False(t, grid.any(""))
 }
 
 func grid() Grid {
