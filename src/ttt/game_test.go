@@ -9,8 +9,7 @@ var playerOne, playerTwo Player = PlayerDouble{"X"}, PlayerDouble{"O"}
 var rule rules = rules{}
 
 func TestCanPlayAMark(t *testing.T) {
-	var board Board = NewBoard(9)
-	game := NewGame(playerOne, playerTwo, board, rule)
+	game := game(NewBoard(9))
 
 	markedBoard := game.play(0)
 
@@ -18,8 +17,7 @@ func TestCanPlayAMark(t *testing.T) {
 }
 
 func TestCanPlayTwoMarks(t *testing.T) {
-	var board Board = NewBoard(9)
-	game := NewGame(playerOne, playerTwo, board, rule)
+	game := game(NewBoard(9))
 
 	markedBoard := game.play(0)
 	markedBoard = game.play(1)
@@ -29,23 +27,28 @@ func TestCanPlayTwoMarks(t *testing.T) {
 }
 
 func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
-	game := NewGame(playerOne, playerTwo, fullBoard(), rule)
+	game := game(fullBoard())
 
 	assert.True(t, game.isOver())
 }
 
 func TestKnowsWhenGameIsOverWhenWon(t *testing.T) {
-	game := NewGame(playerOne, playerTwo, wonBoard(), rule)
+	game := game(wonBoard())
 
 	assert.True(t, game.isOver())
 }
 
 func TestKnowsTheGameWinner(t *testing.T) {
-	game := NewGame(playerOne, playerTwo, wonBoard(), rule)
+	game := game(wonBoard())
 
 	isWin, winner := game.result()
+
 	assert.Equal(t, "X", winner)
 	assert.True(t, isWin)
+}
+
+func game(board Board) Game {
+	return NewGame(playerOne, playerTwo, board, rule)
 }
 
 func wonBoard() Board {

@@ -14,6 +14,7 @@ func TestReturnsRows(t *testing.T) {
 		newLine("1", "2", "3"),
 		newLine("4", "5", "6"),
 		newLine("7", "8", "9")}
+
 	assert.Equal(t, expectedRows, winningPositions.rows)
 }
 
@@ -22,6 +23,7 @@ func TestReturnsColumns(t *testing.T) {
 		newLine("1", "4", "7"),
 		newLine("2", "5", "8"),
 		newLine("3", "6", "9")}
+
 	assert.Equal(t, expectedColumns, winningPositions.columns)
 }
 
@@ -29,6 +31,7 @@ func TestReturnsDiagonals(t *testing.T) {
 	expectedDiagonals := []Line{
 		newLine("1", "5", "9"),
 		newLine("3", "5", "7")}
+
 	assert.Equal(t, expectedDiagonals, winningPositions.diagonals)
 }
 
@@ -42,5 +45,6 @@ func TestReturnsAllPossibleWinningPositions(t *testing.T) {
 		newLine("3", "6", "9"),
 		newLine("1", "5", "9"),
 		newLine("3", "5", "7")}
+
 	assert.Equal(t, allWinningPositions, winningPositions.all)
 }

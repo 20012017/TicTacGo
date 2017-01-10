@@ -11,6 +11,7 @@ func TestKnowsIfThereIsAWin(t *testing.T) {
 		"X", "X", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
+
 	assert.True(t, rules.isAWin(board, "X", "O"))
 }
 
@@ -20,6 +21,7 @@ func TestKnowsIfThereIsANotAWin(t *testing.T) {
 		"X", "O", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
+
 	assert.False(t, rules.isAWin(board, "X", "O"))
 }
 
@@ -29,6 +31,7 @@ func TestKnowsIfTheGameIsDrawn(t *testing.T) {
 		"X", "O", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
+
 	assert.True(t, rules.isADraw(board, "X", "O"))
 }
 
@@ -38,6 +41,7 @@ func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
 		"X", "X", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
+
 	assert.False(t, rules.isADraw(board, "X", "O"))
 }
 
@@ -47,5 +51,6 @@ func TestKnowsTheWinner(t *testing.T) {
 		"X", "X", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
+
 	assert.Equal(t, "X", rules.winner(board, "X", "O"))
 }

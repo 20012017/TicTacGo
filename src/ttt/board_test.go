@@ -11,24 +11,29 @@ func TestEmptyBoardHasNineSpaces(t *testing.T) {
 
 func TestCanPlaceAMarkOnBoard(t *testing.T) {
 	board := NewBoard(9).placeMark(4, "X")
+
 	assert.Equal(t, "X", board.markAt(4))
 }
 
 func TestCanPlaceTwoMarksOnBoard(t *testing.T) {
 	board := NewBoard(9).placeMark(4, "X")
+
 	board = board.placeMark(5, "0")
+
 	assert.Equal(t, "X", board.markAt(4))
 	assert.Equal(t, "0", board.markAt(5))
 }
 
 func TestKnowsTheRowWidth(t *testing.T) {
 	board := NewBoard(9)
+
 	assert.Equal(t, 3, board.rowLength())
 }
 
 func TestKnowsIfFull(t *testing.T) {
 	fullBoard := []string{"X", "O", "X", "O", "X", "O", "O", "X", "O"}
 	board := NewMarkedBoard(fullBoard)
+
 	assert.True(t, board.isFull())
 }
 
@@ -44,11 +49,13 @@ func TestKnowsAllWinningPositions(t *testing.T) {
 		newLine("3", "6", "9"),
 		newLine("1", "5", "9"),
 		newLine("3", "5", "7")}
+
 	assert.Equal(t, allWinningPositions, board.winningPositions())
 }
 
 func TestCountMarks(t *testing.T) {
 	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
 	board := NewMarkedBoard(markedBoard)
+
 	assert.Equal(t, 2, board.countMarks())
 }
