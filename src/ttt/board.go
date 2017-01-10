@@ -39,6 +39,16 @@ func (board Board) winningPositions() []Line {
 	return NewWinningPositions(board.grid).all
 }
 
+func (board Board) countMarks() int {
+	count := 0
+	for _, mark := range board.grid.cells {
+		if mark != empty {
+			count++
+		}
+	}
+	return count
+}
+
 func (board Board) updateCells(grid Grid, cell int, mark string) []string {
 	cells := grid.cells
 	cells[cell] = mark

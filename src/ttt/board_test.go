@@ -46,3 +46,9 @@ func TestKnowsAllWinningPositions(t *testing.T) {
 		newLine("3", "5", "7")}
 	assert.Equal(t, allWinningPositions, board.winningPositions())
 }
+
+func TestCountMarks(t *testing.T) {
+	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	board := NewMarkedBoard(markedBoard)
+	assert.Equal(t, 2, board.countMarks())
+}
