@@ -47,6 +47,15 @@ func TestKnowsTheGameWinner(t *testing.T) {
 	assert.True(t, isWin)
 }
 
+func TestKnowsWhenThereIsNoWinner(t *testing.T) {
+	game := game(fullBoard())
+
+	isWin, winner := game.result()
+
+	assert.Equal(t, "", winner)
+	assert.False(t, isWin)
+}
+
 func game(board Board) Game {
 	return NewGame(playerOne, playerTwo, board, rule)
 }
