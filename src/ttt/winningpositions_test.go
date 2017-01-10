@@ -42,5 +42,5 @@ func TestReturnsAllPossibleWinningPositions(t *testing.T) {
 		newLine("3", "6", "9"),
 		newLine("1", "5", "9"),
 		newLine("3", "5", "7")}
-	assert.Equal(t, allWinningPositions, winningPositions.all())
+	assert.Equal(t, allWinningPositions, winningPositions.all)
 }

@@ -3,7 +3,7 @@ package ttt
 const rowLength, columnWidth, firstCell int = 3, 1, 0
 
 type WinningPositions struct {
-	rows, columns, diagonals []Line
+	rows, columns, diagonals, all []Line
 }
 
 func NewWinningPositions(grid Grid) WinningPositions {
@@ -11,6 +11,7 @@ func NewWinningPositions(grid Grid) WinningPositions {
 		grid.split(3),
 		grid.transpose(3),
 		diagonals(grid),
+		all(grid),
 	}
 }
 
@@ -20,11 +21,11 @@ func diagonals(grid Grid) []Line {
 	return []Line{left, right}
 }
 
-func (winningPostions WinningPositions) all() []Line {
+func all(grid Grid) []Line {
 	allPositions := []Line{}
-	allPositions = getAllPositions(allPositions, winningPositions.rows)
-	allPositions = getAllPositions(allPositions, winningPositions.columns)
-	allPositions = getAllPositions(allPositions, winningPositions.diagonals)
+	allPositions = getAllPositions(allPositions, grid.split(3))
+	allPositions = getAllPositions(allPositions, grid.transpose(3))
+	allPositions = getAllPositions(allPositions, diagonals(grid))
 	return allPositions
 }
 

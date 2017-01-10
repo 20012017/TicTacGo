@@ -32,3 +32,13 @@ func TestLinesAt(t *testing.T) {
 	line := newLine("1")
 	assert.Equal(t, "1", line.at(0))
 }
+
+func TestLinesAll(t *testing.T) {
+	function := func(str string) bool {
+		return str == "1"
+	}
+	sameLine := newLine("1", "1", "1")
+	differentLine := newLine("1", "2", "3")
+	assert.True(t, sameLine.all(function))
+	assert.False(t, differentLine.all(function))
+}

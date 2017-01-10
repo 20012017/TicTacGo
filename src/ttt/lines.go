@@ -22,6 +22,15 @@ func (line Line) at(position int) string {
 	return line.cells[position]
 }
 
+func (line Line) all(condition func(string) bool) bool {
+	for _, cell := range line.cells {
+		if !condition(cell) {
+			return false
+		}
+	}
+	return true
+}
+
 func (line Line) reverseEachElement(reverseIndex int, row []string) Line {
 	reversedLine := newLine()
 	for i := 0; i < len(row); i++ {
