@@ -1,4 +1,4 @@
-package ttt
+package board
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -39,6 +39,6 @@ func TestLinesAll(t *testing.T) {
 	}
 	sameLine := newLine("1", "1", "1")
 	differentLine := newLine("1", "2", "3")
-	assert.True(t, sameLine.all(function))
-	assert.False(t, differentLine.all(function))
+	assert.True(t, sameLine.All(function))
+	assert.False(t, differentLine.All(function))
 }

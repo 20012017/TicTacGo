@@ -1,4 +1,4 @@
-package ttt
+package board
 
 type Grid struct {
 	cells []string

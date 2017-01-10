@@ -1,4 +1,4 @@
-package ttt
+package board
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -29,7 +29,7 @@ func TestKnowsTheRowWidth(t *testing.T) {
 func TestKnowsIfFull(t *testing.T) {
 	fullBoard := []string{"X", "O", "X", "O", "X", "O", "O", "X", "O"}
 	board := NewMarkedBoard(fullBoard)
-	assert.True(t, board.isFull())
+	assert.True(t, board.IsFull())
 }
 
 func TestKnowsAllWinningPositions(t *testing.T) {
@@ -44,5 +44,5 @@ func TestKnowsAllWinningPositions(t *testing.T) {
 		newLine("3", "6", "9"),
 		newLine("1", "5", "9"),
 		newLine("3", "5", "7")}
-	assert.Equal(t, allWinningPositions, board.winningPositions())
+	assert.Equal(t, allWinningPositions, board.WinningPositions())
 }

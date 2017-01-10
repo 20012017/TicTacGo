@@ -1,4 +1,4 @@
-package ttt
+package board
 
 import "math"
 
@@ -31,11 +31,11 @@ func (board Board) rowLength() int {
 	return int(math.Sqrt(float64(board.size)))
 }
 
-func (board Board) isFull() bool {
+func (board Board) IsFull() bool {
 	return !board.grid.any(empty)
 }
 
-func (board Board) winningPositions() []Line {
+func (board Board) WinningPositions() []Line {
 	return NewWinningPositions(board.grid).all
 }
 

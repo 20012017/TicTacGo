@@ -3,11 +3,12 @@ package ttt
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/board"
 )
 
 func TestKnowsIfThereIsAWin(t *testing.T) {
 	rules := rules{}
-	board := NewMarkedBoard([]string{
+	board := board.NewMarkedBoard([]string{
 		"X", "X", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
@@ -16,7 +17,7 @@ func TestKnowsIfThereIsAWin(t *testing.T) {
 
 func TestKnowsIfThereIsANotAWin(t *testing.T) {
 	rules := rules{}
-	board := NewMarkedBoard([]string{
+	board := board.NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
@@ -25,7 +26,7 @@ func TestKnowsIfThereIsANotAWin(t *testing.T) {
 
 func TestKnowsIfTheGameIsDrawn(t *testing.T) {
 	rules := rules{}
-	board := NewMarkedBoard([]string{
+	board := board.NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
@@ -34,7 +35,7 @@ func TestKnowsIfTheGameIsDrawn(t *testing.T) {
 
 func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
 	rules := rules{}
-	board := NewMarkedBoard([]string{
+	board := board.NewMarkedBoard([]string{
 		"X", "X", "X",
 		"O", "X", "O",
 		"O", "X", "O"})
