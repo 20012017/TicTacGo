@@ -19,12 +19,12 @@ func NewMarkedBoard(cells []string) Board {
 }
 
 func (board Board) placeMark(cell int, mark string) Board {
-	updatedGrid := board.updateCells(board.grid, cell, mark)
+	updatedGrid := board.updateCells(cell, mark)
 	return NewMarkedBoard(updatedGrid)
 }
 
 func (board Board) markAt(index int) string {
-	return board.grid.cells[index]
+	return board.cells()[index]
 }
 
 func (board Board) rowLength() int {
@@ -41,7 +41,7 @@ func (board Board) winningPositions() []Line {
 
 func (board Board) countMarks() int {
 	count := 0
-	for _, mark := range board.grid.cells {
+	for _, mark := range board.cells() {
 		if mark != empty {
 			count++
 		}
@@ -49,8 +49,12 @@ func (board Board) countMarks() int {
 	return count
 }
 
-func (board Board) updateCells(grid Grid, cell int, mark string) []string {
-	cells := grid.cells
+func (board Board) updateCells(cell int, mark string) []string {
+	cells := board.cells()
 	cells[cell] = mark
 	return cells
+}
+
+func (board Board) cells() []string {
+	return board.grid.cells
 }
