@@ -12,24 +12,24 @@ func NewBoard(size int) Board {
 	return Board{grid, size}
 }
 
-func newMarkedBoard(cells []string) Board {
+func NewMarkedBoard(cells []string) Board {
 	return Board{NewPopulatedGrid(cells), len(cells)}
 }
 
-func (board Board) PlaceMark(cell int, mark string) Board {
-	updatedGrid := updateCells(board.grid, cell, mark)
-	return newMarkedBoard(updatedGrid)
+func (board Board) placeMark(cell int, mark string) Board {
+	updatedGrid := board.updateCells(board.grid, cell, mark)
+	return NewMarkedBoard(updatedGrid)
 }
 
-func (board Board) MarkAt(index int) string {
+func (board Board) markAt(index int) string {
 	return board.grid.cells[index]
 }
 
-func (board Board) RowLength() int {
+func (board Board) rowLength() int {
 	return int(math.Sqrt(float64(board.size)))
 }
 
-func updateCells(grid Grid, cell int, mark string) []string {
+func (board Board) updateCells(grid Grid, cell int, mark string) []string {
 	cells := grid.cells
 	cells[cell] = mark
 	return cells
