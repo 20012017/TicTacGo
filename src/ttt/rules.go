@@ -1,18 +1,20 @@
 package ttt
 
+import "ttt/board"
+
 type rules struct{}
 
-func (rule rules) isAWin(board Board, markOne, markTwo string) bool {
-	for _, line := range board.winningPositions() {
-		if line.all(matches(markOne)) || line.all(matches(markTwo)) {
+func (rule rules) isAWin(board board.Board, markOne, markTwo string) bool {
+	for _, line := range board.WinningPositions() {
+		if line.All(matches(markOne)) || line.All(matches(markTwo)) {
 			return true
 		}
 	}
 	return false
 }
 
-func (rule rules) isADraw(board Board, markOne, markTwo string) bool {
-	if board.isFull() && !rule.isAWin(board, markOne, markTwo) {
+func (rule rules) isADraw(board board.Board, markOne, markTwo string) bool {
+	if board.IsFull() && !rule.isAWin(board, markOne, markTwo) {
 		return true
 	}
 	return false

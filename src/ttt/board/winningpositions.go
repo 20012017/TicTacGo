@@ -1,4 +1,4 @@
-package ttt
+package board
 
 const rowLength, columnWidth, firstCell int = 3, 1, 0
 

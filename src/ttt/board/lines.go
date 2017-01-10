@@ -1,4 +1,4 @@
-package ttt
+package board
 
 type Line struct {
 	cells []string
@@ -22,7 +22,7 @@ func (line Line) at(position int) string {
 	return line.cells[position]
 }
 
-func (line Line) all(condition func(string) bool) bool {
+func (line Line) All(condition func(string) bool) bool {
 	for _, cell := range line.cells {
 		if !condition(cell) {
 			return false
