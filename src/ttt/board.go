@@ -2,6 +2,8 @@ package ttt
 
 import "math"
 
+const empty string = ""
+
 type Board struct {
 	grid Grid
 	size int
@@ -27,6 +29,14 @@ func (board Board) markAt(index int) string {
 
 func (board Board) rowLength() int {
 	return int(math.Sqrt(float64(board.size)))
+}
+
+func (board Board) isFull() bool {
+	return !board.grid.any(empty)
+}
+
+func (board Board) winningPositions() []Line {
+	return NewWinningPositions(board.grid).all
 }
 
 func (board Board) updateCells(grid Grid, cell int, mark string) []string {

@@ -56,3 +56,12 @@ func (grid Grid) splitLines(delimiter int) []Line {
 	}
 	return splitGrid
 }
+
+func (grid Grid) any(str string) bool {
+	for _, cell := range grid.cells {
+		if cell == str {
+			return true
+		}
+	}
+	return false
+}

@@ -36,3 +36,12 @@ func TestGridReverseSplit(t *testing.T) {
 		newLine("9", "8", "7")}
 	assert.Equal(t, reversedSplit, grid.reverseSplit(3))
 }
+
+func TestGridAnyEmpty(t *testing.T) {
+	newGrid := NewGrid(9)
+	assert.True(t, newGrid.any(""))
+}
+
+func TestGridFull(t *testing.T) {
+	assert.False(t, grid.any(""))
+}
