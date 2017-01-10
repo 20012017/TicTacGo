@@ -1,32 +1,32 @@
 package ttt
 
-type line struct {
-	cells [][]string
+type Line struct {
+	cells []string
 }
 
-func newLines(cells [][]string) line {
-	return line{cells}
+func newLine(cells ...string) Line {
+	return Line{cells}
 }
 
-func (rows line) Reverse() [][]string {
-	reversedRows := [][]string{}
-	for _, row := range rows.cells {
-		reversedRows = append(reversedRows, reverseLine(row))
-	}
-	return reversedRows
+func (line Line) addCell(cell string) Line {
+	cells := line.cells
+	cells = append(cells, cell)
+	return Line{cells}
 }
 
-func reverseLine(row []string) []string {
-	index, reverseIndex := 0, len(row)-1
-	return reverseEachElement(index, reverseIndex, row)
+func (line Line) reverse() Line {
+	return line.reverseEachElement(len(line.cells)-1, line.cells)
 }
 
-func reverseEachElement(index, reverseIndex int, row []string) []string {
-	reversedRow := make([]string, len(row))
+func (line Line) at(position int) string {
+	return line.cells[position]
+}
+
+func (line Line) reverseEachElement(reverseIndex int, row []string) Line {
+	reversedLine := newLine()
 	for i := 0; i < len(row); i++ {
-		reversedRow[index] = row[reverseIndex]
-		index++
+		reversedLine = reversedLine.addCell(row[reverseIndex])
 		reverseIndex--
 	}
-	return reversedRow
+	return reversedLine
 }

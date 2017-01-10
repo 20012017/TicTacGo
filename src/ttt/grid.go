@@ -13,30 +13,46 @@ func NewPopulatedGrid(cells []string) Grid {
 	return Grid{cells}
 }
 
-func (grid Grid) Split(delimiter int) line {
-	splitGrid := [][]string{}
-	for i := 0; i < len(grid.cells); i = i + delimiter {
-		splitGrid = append(splitGrid, grid.splitCells(i, i+delimiter))
-	}
-	return line{splitGrid}
+func (grid Grid) split(delimiter int) []Line {
+	return grid.splitLines(delimiter)
 }
 
-func (grid Grid) Transpose(delimiter int) [][]string {
-	transposedGrid, rows := [][]string{}, grid.Split(delimiter)
+func (grid Grid) reverseSplit(delimiter int) []Line {
+	reversedLines := []Line{}
+	for _, line := range grid.splitLines(delimiter) {
+		reversedLines = append(reversedLines, line.reverse())
+	}
+	return reversedLines
+}
+
+func (grid Grid) transpose(delimiter int) []Line {
+	transposedGrid, rows := []Line{}, grid.split(delimiter)
 	for i := 0; i < delimiter; i++ {
 		transposedGrid = append(transposedGrid, grid.getCellsAt(rows, i))
 	}
 	return transposedGrid
 }
 
-func (grid Grid) getCellsAt(rows line, position int) []string {
-	cells := []string{}
-	for _, row := range rows.cells {
-		cells = append(cells, row[position])
+func (grid Grid) getCellsAt(lines []Line, position int) Line {
+	newLine := newLine()
+	for _, line := range lines {
+		newLine = newLine.addCell(line.at(position))
 	}
-	return cells
+	return newLine
 }
 
-func (grid Grid) splitCells(start, end int) []string {
-	return grid.cells[start:end]
+func (grid Grid) splitCells(start, end int) Line {
+	splitCells := newLine()
+	for _, cell := range grid.cells[start:end] {
+		splitCells = splitCells.addCell(cell)
+	}
+	return splitCells
+}
+
+func (grid Grid) splitLines(delimiter int) []Line {
+	splitGrid := []Line{}
+	for i := 0; i < len(grid.cells); i = i + delimiter {
+		splitGrid = append(splitGrid, grid.splitCells(i, i+delimiter))
+	}
+	return splitGrid
 }

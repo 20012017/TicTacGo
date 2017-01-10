@@ -1,30 +1,36 @@
 package ttt
 
+import "math"
+
 type Board struct {
-	cells []string
+	grid Grid
+	size int
 }
 
-func NewBoard() Board {
-	return Board{make([]string, 9)}
+func NewBoard(size int) Board {
+	grid := NewGrid(size)
+	return Board{grid, size}
 }
 
 func newMarkedBoard(cells []string) Board {
-	return Board{cells}
-}
-
-func (board Board) Size() int {
-	return len(board.cells)
+	return Board{NewPopulatedGrid(cells), len(cells)}
 }
 
 func (board Board) PlaceMark(cell int, mark string) Board {
-	return newMarkedBoard(updateCells(board.cells, cell, mark))
+	updatedGrid := updateCells(board.grid, cell, mark)
+	return newMarkedBoard(updatedGrid)
 }
 
 func (board Board) MarkAt(index int) string {
-	return board.cells[index]
+	return board.grid.cells[index]
 }
 
-func updateCells(cells []string, cell int, mark string) []string {
+func (board Board) RowLength() int {
+	return int(math.Sqrt(float64(board.size)))
+}
+
+func updateCells(grid Grid, cell int, mark string) []string {
+	cells := grid.cells
 	cells[cell] = mark
 	return cells
 }
