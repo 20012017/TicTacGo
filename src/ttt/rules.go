@@ -2,17 +2,17 @@ package ttt
 
 type rules struct{}
 
-func (rule rules) isAWin(board Board) bool {
+func (rule rules) isAWin(board Board, markOne, markTwo string) bool {
 	for _, line := range board.winningPositions() {
-		if line.all(matches("X")) || line.all(matches("O")) {
+		if line.all(matches(markOne)) || line.all(matches(markTwo)) {
 			return true
 		}
 	}
 	return false
 }
 
-func (rule rules) isADraw(board Board) bool {
-	if board.isFull() && !rule.isAWin(board) {
+func (rule rules) isADraw(board Board, markOne, markTwo string) bool {
+	if board.isFull() && !rule.isAWin(board, markOne, markTwo) {
 		return true
 	}
 	return false
