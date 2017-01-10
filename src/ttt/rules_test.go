@@ -40,3 +40,12 @@ func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
 		"O", "X", "O"})
 	assert.False(t, rules.isADraw(board, "X", "O"))
 }
+
+func TestKnowsTheWinner(t *testing.T) {
+	rules := rules{}
+	board := NewMarkedBoard([]string{
+		"X", "X", "X",
+		"O", "X", "O",
+		"O", "X", "O"})
+	assert.Equal(t, "X", rules.winner(board, "X", "O"))
+}
