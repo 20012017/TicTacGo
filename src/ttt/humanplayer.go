@@ -1,29 +1,20 @@
 package ttt
 
-import (
-	"strconv"
-	"strings"
-)
-
 type HumanPlayer struct {
-	mark        string
-	inputReader InputReader
+	mark          string
+	inputReader   InputReader
+	moveValidator MoveValidator
 }
 
 func (player HumanPlayer) Mark() string {
 	return player.mark
 }
 
-func (player HumanPlayer) move() int {
+func (player HumanPlayer) move(board Board) (int, error) {
 	move := player.inputReader.read()
-	return player.convertToInt(player.trim(move)) - 1
-}
-
-func (player HumanPlayer) trim(move string) string {
-	return strings.TrimSpace(move)
-}
-
-func (player HumanPlayer) convertToInt(move string) int {
-	validmove, _ := strconv.Atoi(move)
-	return validmove
+	_, err := player.moveValidator.validate(move, board)
+	if err != nil {
+		return 0, err
+	}
+	return player.moveValidator.validMove(move), nil
 }

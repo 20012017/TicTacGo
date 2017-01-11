@@ -5,36 +5,56 @@ import (
 	"testing"
 )
 
-func TestHumanPlayerHasAMark(t *testing.T) {
-	player := HumanPlayer{"X", &InputReaderDouble{}}
+type HumanPlayerTest struct {
+	board Board
+}
+
+var humanPlayerTest HumanPlayerTest = HumanPlayerTest{NewBoard(9)}
+
+func TestHasAMark(t *testing.T) {
+	player := humanPlayerTest.newPlayer("1\n")
 
 	assert.Equal(t, "X", player.mark)
 }
 
-func TestHumanPlayerReturnsMark(t *testing.T) {
-	player := HumanPlayer{"X", &InputReaderDouble{}}
+func TestReturnsMark(t *testing.T) {
+	player := humanPlayerTest.newPlayer("1\n")
 
 	assert.Equal(t, "X", player.Mark())
 }
 
-func TestHumanPlayerReadsInput(t *testing.T) {
-	inputReader := &InputReaderDouble{}
-	player := HumanPlayer{"X", inputReader}
+func TestReadsUserInput(t *testing.T) {
+	inputReader := &InputReaderDouble{move: "1\n"}
+	player := HumanPlayer{"X", inputReader, MoveValidator{}}
 
-	player.move()
+	player.move(humanPlayerTest.board)
 
 	assert.True(t, inputReader.called())
 }
 
-func TestHumanPlayerConvertsStringToIndex(t *testing.T) {
-	player := HumanPlayer{"X", &InputReaderDouble{}}
+func TestReturnsErrorIfMoveIsInvalid(t *testing.T) {
+	player := humanPlayerTest.newPlayer("-1\n")
 
-	move := player.move()
+	_, err := player.move(humanPlayerTest.board)
+
+	assert.NotNil(t, err)
+}
+
+func TestReturnsMoveValid(t *testing.T) {
+	player := humanPlayerTest.newPlayer("1\n")
+
+	move, err := player.move(humanPlayerTest.board)
 
 	assert.Equal(t, 0, move)
+	assert.Nil(t, err)
+}
+
+func (humanPlayerTest HumanPlayerTest) newPlayer(move string) HumanPlayer {
+	return HumanPlayer{"X", &InputReaderDouble{move: move}, MoveValidator{}}
 }
 
 type InputReaderDouble struct {
+	move      string
 	wasCalled bool
 }
 
@@ -48,5 +68,5 @@ func (reader *InputReaderDouble) called() bool {
 
 func (reader *InputReaderDouble) read() string {
 	reader.setCalled(true)
-	return "1\n"
+	return reader.move
 }
