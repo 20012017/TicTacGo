@@ -1,4 +1,4 @@
-package ttt
+package core
 
 type Player interface {
 	mark() string
