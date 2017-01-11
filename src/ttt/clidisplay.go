@@ -27,3 +27,11 @@ func (display CliDisplay) showBoard(board Board) {
 	displayBoard := new(DisplayBoard).show(board)
 	display.write(displayBoard)
 }
+
+func (display CliDisplay) draw() {
+	display.write(display.script.draw())
+}
+
+func (display CliDisplay) goodbye() {
+	display.write(display.script.goodbye())
+}

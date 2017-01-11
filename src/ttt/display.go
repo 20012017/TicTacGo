@@ -8,4 +8,8 @@ type Display interface {
 	prompt()
 
 	showBoard(board Board)
+
+	draw()
+
+	goodbye()
 }

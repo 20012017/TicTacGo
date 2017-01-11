@@ -10,7 +10,7 @@ type DisplayTest struct{}
 
 var displayTest DisplayTest = DisplayTest{}
 
-func TestDisplayWritesToWriter(t *testing.T) {
+func TestWritesToWriter(t *testing.T) {
 	buffer, display := displayTest.setUpDisplay()
 
 	display.write("hello")
@@ -18,7 +18,7 @@ func TestDisplayWritesToWriter(t *testing.T) {
 	assert.Equal(t, "hello", buffer.String())
 }
 
-func TestDisplayWelcomesPlayer(t *testing.T) {
+func TestWelcomesPlayer(t *testing.T) {
 	buffer, display := displayTest.setUpDisplay()
 
 	display.welcome()
@@ -26,7 +26,7 @@ func TestDisplayWelcomesPlayer(t *testing.T) {
 	assert.Equal(t, "Welcome to Tic Tac Toe", buffer.String())
 }
 
-func TestDisplayPrintsBoard(t *testing.T) {
+func TestPrintsBoard(t *testing.T) {
 	buffer, display := displayTest.setUpDisplay()
 
 	board := NewBoard(9)
@@ -35,12 +35,28 @@ func TestDisplayPrintsBoard(t *testing.T) {
 	assert.Equal(t, displayTest.newBoard(), buffer.String())
 }
 
-func TestDisplayPromptsForMove(t *testing.T) {
+func TestPromptsForMove(t *testing.T) {
 	buffer, display := displayTest.setUpDisplay()
 
 	display.prompt()
 
 	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9", buffer.String())
+}
+
+func TestDraw(t *testing.T) {
+	buffer, display := displayTest.setUpDisplay()
+
+	display.draw()
+
+	assert.Equal(t, "It's a draw!", buffer.String())
+}
+
+func TestGoodbye(t *testing.T) {
+	buffer, display := displayTest.setUpDisplay()
+
+	display.goodbye()
+
+	assert.Equal(t, "goodbye!", buffer.String())
 }
 
 func (displayTest DisplayTest) setUpDisplay() (*bytes.Buffer, CliDisplay) {
