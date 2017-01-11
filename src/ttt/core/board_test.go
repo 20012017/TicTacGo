@@ -5,14 +5,18 @@ import (
 	"testing"
 )
 
+var boardTest BoardTest = BoardTest{}
+
+type BoardTest struct{}
+
 func TestEmptyBoardHasNineSpaces(t *testing.T) {
-	board := newBoard()
+	board := boardTest.newBoard()
 
 	assert.Equal(t, 9, board.size)
 }
 
 func TestCanPlaceAMarkOnBoard(t *testing.T) {
-	board := newBoard()
+	board := boardTest.newBoard()
 
 	board = board.placeMark(4, "X")
 
@@ -20,7 +24,7 @@ func TestCanPlaceAMarkOnBoard(t *testing.T) {
 }
 
 func TestCanPlaceTwoMarksOnBoard(t *testing.T) {
-	board := newBoard()
+	board := boardTest.newBoard()
 
 	board = board.placeMark(4, "X")
 	board = board.placeMark(5, "0")
@@ -30,7 +34,7 @@ func TestCanPlaceTwoMarksOnBoard(t *testing.T) {
 }
 
 func TestKnowsTheRowWidth(t *testing.T) {
-	board := newBoard()
+	board := boardTest.newBoard()
 
 	assert.Equal(t, 3, board.rowLength())
 }
@@ -48,7 +52,7 @@ func TestKnowsAllWinningPositions(t *testing.T) {
 
 	board := NewMarkedBoard(numberedBoard)
 
-	assert.Equal(t, allWinningPositions(), board.winningPositions())
+	assert.Equal(t, boardTest.allWinningPositions(), board.winningPositions())
 }
 
 func TestCountMarks(t *testing.T) {
@@ -59,7 +63,7 @@ func TestCountMarks(t *testing.T) {
 	assert.Equal(t, 2, board.countMarks())
 }
 
-func allWinningPositions() []Line {
+func (boardTest BoardTest) allWinningPositions() []Line {
 	return []Line{
 		newLine("1", "2", "3"),
 		newLine("4", "5", "6"),
@@ -71,6 +75,6 @@ func allWinningPositions() []Line {
 		newLine("3", "5", "7")}
 }
 
-func newBoard() Board {
+func (boardTest BoardTest) newBoard() Board {
 	return NewBoard(9)
 }
