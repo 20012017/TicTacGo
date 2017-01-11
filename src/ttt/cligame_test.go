@@ -55,6 +55,19 @@ func TestPlaysAWonGame(t *testing.T) {
 	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
 
+func TestDisplayErrorsForInvalidMove(t *testing.T) {
+	playerOne := cliGameTest.newPlayerFake("X", -1, 0, 1, 2)
+	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
+	displaySpy := &DisplaySpy{}
+	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	cliGame := NewCliGame(game, displaySpy)
+
+	cliGame.start()
+
+	assert.True(t, displaySpy.writeHasBeenCalled)
+	assert.Equal(t, "Out of bounds\n", displaySpy.writeArgument)
+}
+
 func (cliGameTest CliGameTest) newPlayerFake(mark string, moves ...int) *PlayerFake {
 	return &PlayerFake{mark, 0, moves}
 }
@@ -67,9 +80,13 @@ type DisplaySpy struct {
 	goodbyeHasBeenCalled   bool
 	winHasBeenCalled       bool
 	clearHasBeenCalled     bool
+	writeHasBeenCalled     bool
+	writeArgument          string
 }
 
-func (displaySpy DisplaySpy) write(message string) {
+func (displaySpy *DisplaySpy) write(message string) {
+	displaySpy.writeHasBeenCalled = true
+	displaySpy.writeArgument = message
 }
 
 func (displaySpy *DisplaySpy) welcome() {

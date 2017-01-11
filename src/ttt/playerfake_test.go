@@ -43,3 +43,12 @@ func TestReturnsTwoMoves(t *testing.T) {
 	assert.Equal(t, 1, move)
 	assert.Nil(t, err)
 }
+
+func TestReturnsAnErrorIfMoveIsInvalid(t *testing.T) {
+	playerFake := newPlayerFake("X", 0, -1)
+
+	_, err := playerFake.move(NewBoard(9))
+
+	assert.NotNil(t, err)
+	assert.Equal(t, "Out of bounds", err.Error())
+}

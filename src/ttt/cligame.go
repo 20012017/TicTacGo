@@ -1,5 +1,7 @@
 package ttt
 
+import "fmt"
+
 type CliGame struct {
 	game    Game
 	display Display
@@ -32,9 +34,18 @@ func (cliGame CliGame) displayResult(isWon bool, winner string) {
 func (cliGame CliGame) play() {
 	for !cliGame.game.isOver() {
 		cliGame.initializeTurn()
-		move, _ := cliGame.currentPlayer().move(cliGame.board())
-		cliGame.game.play(move)
+		cliGame.game.play(cliGame.getValidMove())
 	}
+}
+
+func (cliGame CliGame) getValidMove() int {
+	move, err := cliGame.currentPlayer().move(cliGame.board())
+	for err != nil {
+		cliGame.display.write(fmt.Sprintf("%s\n", err.Error()))
+		cliGame.display.prompt()
+		move, err = cliGame.currentPlayer().move(cliGame.board())
+	}
+	return move
 }
 
 func (cliGame CliGame) initializeTurn() {
