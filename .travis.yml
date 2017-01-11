@@ -1,7 +1,8 @@
 language: go
 go:
   - tip
-before_install:
+install:
   - go get github.com/mattn/goveralls
+  - go get github.com/stretchr/testify
 script:
   - $HOME/gopath/bin/goveralls -service=travis-ci
