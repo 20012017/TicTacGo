@@ -28,7 +28,6 @@ func TestPlaysADrawnGame(t *testing.T) {
 	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
 	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
-
 	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
 	cliGame := NewCliGame(game, displaySpy)
 
@@ -37,6 +36,21 @@ func TestPlaysADrawnGame(t *testing.T) {
 	assert.True(t, game.isOver())
 	assert.True(t, game.isADraw())
 	assert.True(t, displaySpy.drawHasBeenCalled)
+	assert.True(t, displaySpy.goodbyeHasBeenCalled)
+}
+
+func TestPlaysAWonGame(t *testing.T) {
+	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 2)
+	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
+	displaySpy := &DisplaySpy{}
+	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	cliGame := NewCliGame(game, displaySpy)
+
+	cliGame.start()
+
+	assert.True(t, game.isOver())
+	assert.True(t, game.isAWin())
+	assert.True(t, displaySpy.winHasBeenCalled)
 	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
 
@@ -50,6 +64,7 @@ type DisplaySpy struct {
 	promptHasBeenCalled    bool
 	drawHasBeenCalled      bool
 	goodbyeHasBeenCalled   bool
+	winHasBeenCalled       bool
 }
 
 func (displaySpy DisplaySpy) write(message string) {
@@ -73,4 +88,8 @@ func (displaySpy *DisplaySpy) draw() {
 
 func (displaySpy *DisplaySpy) goodbye() {
 	displaySpy.goodbyeHasBeenCalled = true
+}
+
+func (displaySpy *DisplaySpy) win(mark string) {
+	displaySpy.winHasBeenCalled = true
 }

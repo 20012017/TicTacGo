@@ -12,4 +12,6 @@ type Display interface {
 	draw()
 
 	goodbye()
+
+	win(mark string)
 }

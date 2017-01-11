@@ -17,3 +17,7 @@ func (script Script) draw() string {
 func (script Script) goodbye() string {
 	return "goodbye!"
 }
+
+func (script Script) win(mark string) string {
+	return "X wins!"
+}

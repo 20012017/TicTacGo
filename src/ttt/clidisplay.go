@@ -35,3 +35,7 @@ func (display CliDisplay) draw() {
 func (display CliDisplay) goodbye() {
 	display.write(display.script.goodbye())
 }
+
+func (display CliDisplay) win(mark string) {
+	display.write(display.script.win(mark))
+}
