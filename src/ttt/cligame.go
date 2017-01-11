@@ -16,24 +16,46 @@ func (cliGame CliGame) start() {
 }
 
 func (cliGame CliGame) end() {
-	isWon, winner := cliGame.game.result()
+	cliGame.showBoard()
+	cliGame.displayResult(cliGame.game.result())
+	cliGame.display.goodbye()
+}
+
+func (cliGame CliGame) displayResult(isWon bool, winner string) {
 	if isWon {
 		cliGame.display.win(winner)
 	} else {
 		cliGame.display.draw()
 	}
-	cliGame.display.goodbye()
 }
 
 func (cliGame CliGame) play() {
 	for !cliGame.game.isOver() {
-		move, _ := cliGame.game.currentPlayer().move(cliGame.game.board)
+		cliGame.initializeTurn()
+		move, _ := cliGame.currentPlayer().move(cliGame.board())
 		cliGame.game.play(move)
 	}
 }
 
-func (cliGame CliGame) welcome() {
-	cliGame.display.welcome()
-	cliGame.display.showBoard(cliGame.game.board)
+func (cliGame CliGame) initializeTurn() {
+	cliGame.showBoard()
 	cliGame.display.prompt()
+}
+
+func (cliGame CliGame) welcome() {
+	cliGame.display.clear()
+	cliGame.display.welcome()
+}
+
+func (cliGame CliGame) showBoard() {
+	cliGame.display.clear()
+	cliGame.display.showBoard(cliGame.board())
+}
+
+func (cliGame CliGame) board() Board {
+	return cliGame.game.board
+}
+
+func (cliGame CliGame) currentPlayer() Player {
+	return cliGame.game.currentPlayer()
 }

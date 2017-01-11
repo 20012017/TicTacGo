@@ -39,3 +39,7 @@ func (display CliDisplay) goodbye() {
 func (display CliDisplay) win(mark string) {
 	display.write(display.script.win(mark))
 }
+
+func (display CliDisplay) clear() {
+	display.write("\033[2J\033[;H")
+}

@@ -19,6 +19,7 @@ func TestStartsAGame(t *testing.T) {
 
 	cliGame.start()
 
+	assert.True(t, displaySpy.clearHasBeenCalled)
 	assert.True(t, displaySpy.welcomeHasBeenCalled)
 	assert.True(t, displaySpy.showBoardHasBeenCalled)
 	assert.True(t, displaySpy.promptHasBeenCalled)
@@ -65,6 +66,7 @@ type DisplaySpy struct {
 	drawHasBeenCalled      bool
 	goodbyeHasBeenCalled   bool
 	winHasBeenCalled       bool
+	clearHasBeenCalled     bool
 }
 
 func (displaySpy DisplaySpy) write(message string) {
@@ -92,4 +94,8 @@ func (displaySpy *DisplaySpy) goodbye() {
 
 func (displaySpy *DisplaySpy) win(mark string) {
 	displaySpy.winHasBeenCalled = true
+}
+
+func (displaySpy *DisplaySpy) clear() {
+	displaySpy.clearHasBeenCalled = true
 }

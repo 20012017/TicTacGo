@@ -23,7 +23,7 @@ func TestWelcomesPlayer(t *testing.T) {
 
 	display.welcome()
 
-	assert.Equal(t, "Welcome to Tic Tac Toe", buffer.String())
+	assert.Equal(t, "Welcome to Tic Tac Toe\n", buffer.String())
 }
 
 func TestPrintsBoard(t *testing.T) {
@@ -40,7 +40,7 @@ func TestPromptsForMove(t *testing.T) {
 
 	display.prompt()
 
-	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9", buffer.String())
+	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9\n", buffer.String())
 }
 
 func TestDraw(t *testing.T) {
@@ -48,7 +48,7 @@ func TestDraw(t *testing.T) {
 
 	display.draw()
 
-	assert.Equal(t, "It's a draw!", buffer.String())
+	assert.Equal(t, "It's a draw!\n", buffer.String())
 }
 
 func TestGoodbye(t *testing.T) {
@@ -56,7 +56,7 @@ func TestGoodbye(t *testing.T) {
 
 	display.goodbye()
 
-	assert.Equal(t, "goodbye!", buffer.String())
+	assert.Equal(t, "goodbye!\n", buffer.String())
 }
 
 func TestWin(t *testing.T) {
@@ -64,7 +64,15 @@ func TestWin(t *testing.T) {
 
 	display.win("X")
 
-	assert.Equal(t, "X wins!", buffer.String())
+	assert.Equal(t, "X wins!\n", buffer.String())
+}
+
+func TestClearScreen(t *testing.T) {
+	buffer, display := displayTest.setUpDisplay()
+
+	display.clear()
+
+	assert.Equal(t, "\033[2J\033[;H", buffer.String())
 }
 
 func (displayTest DisplayTest) setUpDisplay() (*bytes.Buffer, CliDisplay) {
