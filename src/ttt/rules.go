@@ -4,7 +4,7 @@ type rules struct{}
 
 func (rule rules) isAWin(board Board, markOne, markTwo string) bool {
 	for _, line := range board.winningPositions() {
-		if line.all(matches(markOne)) || line.all(matches(markTwo)) {
+		if rule.winFor(line, markOne) || rule.winFor(line, markTwo) {
 			return true
 		}
 	}
@@ -16,6 +16,21 @@ func (rule rules) isADraw(board Board, markOne, markTwo string) bool {
 		return true
 	}
 	return false
+}
+
+func (rule rules) winner(board Board, markOne, markTwo string) string {
+	for _, line := range board.winningPositions() {
+		if rule.winFor(line, markOne) {
+			return markOne
+		} else if rule.winFor(line, markTwo) {
+			return markTwo
+		}
+	}
+	return ""
+}
+
+func (rule rules) winFor(line Line, mark string) bool {
+	return line.all(matches(mark))
 }
 
 func matches(mark string) func(string) bool {
