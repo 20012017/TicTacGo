@@ -84,3 +84,7 @@ type PlayerDouble struct {
 func (player PlayerDouble) Mark() string {
 	return player.mark
 }
+
+func (player PlayerDouble) move(board Board) (int, error) {
+	return 0, nil
+}
