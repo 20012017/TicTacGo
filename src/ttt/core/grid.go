@@ -1,4 +1,4 @@
-package ttt
+package core
 
 type Grid struct {
 	cells []string

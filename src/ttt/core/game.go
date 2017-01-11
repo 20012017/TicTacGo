@@ -1,4 +1,4 @@
-package ttt
+package core
 
 type Game struct {
 	playerOne, playerTwo Player
