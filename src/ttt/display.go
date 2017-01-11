@@ -14,4 +14,6 @@ type Display interface {
 	goodbye()
 
 	win(mark string)
+
+	clear()
 }
