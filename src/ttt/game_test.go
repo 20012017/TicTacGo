@@ -75,9 +75,9 @@ func fullBoard() Board {
 }
 
 type PlayerDouble struct {
-	playerMark string
+	mark string
 }
 
-func (player PlayerDouble) mark() string {
-	return player.playerMark
+func (player PlayerDouble) Mark() string {
+	return player.mark
 }
