@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+type GridTest struct{}
+
+var gridTest GridTest = GridTest{}
 var numberedSlice []string = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 func TestEmptyGrid(t *testing.T) {
@@ -19,7 +22,7 @@ func TestSplit(t *testing.T) {
 		newLine("4", "5", "6"),
 		newLine("7", "8", "9")}
 
-	assert.Equal(t, splitGrid, grid().split(3))
+	assert.Equal(t, splitGrid, gridTest.grid().split(3))
 }
 
 func TestTranspose(t *testing.T) {
@@ -28,7 +31,7 @@ func TestTranspose(t *testing.T) {
 		newLine("2", "5", "8"),
 		newLine("3", "6", "9")}
 
-	assert.Equal(t, transposedGrid, grid().transpose(3))
+	assert.Equal(t, transposedGrid, gridTest.grid().transpose(3))
 }
 
 func TestReverseSplit(t *testing.T) {
@@ -37,7 +40,7 @@ func TestReverseSplit(t *testing.T) {
 		newLine("6", "5", "4"),
 		newLine("9", "8", "7")}
 
-	assert.Equal(t, reversedSplit, grid().reverseSplit(3))
+	assert.Equal(t, reversedSplit, gridTest.grid().reverseSplit(3))
 }
 
 func TestAnyEmpty(t *testing.T) {
@@ -47,11 +50,11 @@ func TestAnyEmpty(t *testing.T) {
 }
 
 func TestFull(t *testing.T) {
-	grid := grid()
+	grid := gridTest.grid()
 
 	assert.False(t, grid.any(""))
 }
 
-func grid() Grid {
+func (gridTest GridTest) grid() Grid {
 	return NewPopulatedGrid(numberedSlice)
 }

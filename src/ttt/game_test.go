@@ -5,11 +5,14 @@ import (
 	"testing"
 )
 
+type GameTest struct{}
+
+var gameTest GameTest = GameTest{}
 var playerOne, playerTwo Player = PlayerDouble{"X"}, PlayerDouble{"O"}
 var rule rules = rules{}
 
 func TestCanPlayAMark(t *testing.T) {
-	game := game(NewBoard(9))
+	game := gameTest.game(NewBoard(9))
 
 	markedBoard := game.play(0)
 
@@ -17,7 +20,7 @@ func TestCanPlayAMark(t *testing.T) {
 }
 
 func TestCanPlayTwoMarks(t *testing.T) {
-	game := game(NewBoard(9))
+	game := gameTest.game(NewBoard(9))
 
 	markedBoard := game.play(0)
 	markedBoard = game.play(1)
@@ -27,19 +30,19 @@ func TestCanPlayTwoMarks(t *testing.T) {
 }
 
 func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
-	game := game(fullBoard())
+	game := gameTest.game(gameTest.fullBoard())
 
 	assert.True(t, game.isOver())
 }
 
 func TestKnowsWhenGameIsOverWhenWon(t *testing.T) {
-	game := game(wonBoard())
+	game := gameTest.game(gameTest.wonBoard())
 
 	assert.True(t, game.isOver())
 }
 
 func TestKnowsTheGameWinner(t *testing.T) {
-	game := game(wonBoard())
+	game := gameTest.game(gameTest.wonBoard())
 
 	isWin, winner := game.result()
 
@@ -48,7 +51,7 @@ func TestKnowsTheGameWinner(t *testing.T) {
 }
 
 func TestKnowsWhenThereIsNoWinner(t *testing.T) {
-	game := game(fullBoard())
+	game := gameTest.game(gameTest.fullBoard())
 
 	isWin, winner := game.result()
 
@@ -56,18 +59,26 @@ func TestKnowsWhenThereIsNoWinner(t *testing.T) {
 	assert.False(t, isWin)
 }
 
-func game(board Board) Game {
+func TestKnowsTheCurrentPlayer(t *testing.T) {
+	game := gameTest.game(NewBoard(9))
+
+	player := game.currentPlayer()
+
+	assert.Equal(t, "X", player.Mark())
+}
+
+func (gameTest GameTest) game(board Board) Game {
 	return NewGame(playerOne, playerTwo, board, rule)
 }
 
-func wonBoard() Board {
+func (gameTest GameTest) wonBoard() Board {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
 		"X", "O", ""})
 }
 
-func fullBoard() Board {
+func (gameTest GameTest) fullBoard() Board {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
@@ -75,9 +86,13 @@ func fullBoard() Board {
 }
 
 type PlayerDouble struct {
-	playerMark string
+	mark string
 }
 
-func (player PlayerDouble) mark() string {
-	return player.playerMark
+func (player PlayerDouble) Mark() string {
+	return player.mark
+}
+
+func (player PlayerDouble) move(board Board) (int, error) {
+	return 0, nil
 }

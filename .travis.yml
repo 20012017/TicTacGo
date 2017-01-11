@@ -1,4 +1,5 @@
 language: go
+go_import_path: github.com/20012017/TicTacGo/src/ttt
 go:
   - tip
 before_install:

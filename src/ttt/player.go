@@ -1,5 +1,7 @@
 package ttt
 
 type Player interface {
-	mark() string
+	Mark() string
+
+	move(board Board) (int, error)
 }
