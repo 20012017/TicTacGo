@@ -59,6 +59,14 @@ func TestGoodbye(t *testing.T) {
 	assert.Equal(t, "goodbye!", buffer.String())
 }
 
+func TestWin(t *testing.T) {
+	buffer, display := displayTest.setUpDisplay()
+
+	display.win("X")
+
+	assert.Equal(t, "X wins!", buffer.String())
+}
+
 func (displayTest DisplayTest) setUpDisplay() (*bytes.Buffer, CliDisplay) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	display := NewDisplay(buffer, script)
