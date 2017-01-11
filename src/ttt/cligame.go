@@ -12,6 +12,7 @@ func NewCliGame(game Game, playerOne, playerTwo Player, display Display) CliGame
 
 func (cliGame CliGame) start() {
 	cliGame.welcome()
+
 }
 
 func (cliGame CliGame) welcome() {

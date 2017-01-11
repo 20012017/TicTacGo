@@ -14,13 +14,29 @@ func TestStartsAGame(t *testing.T) {
 	playerOne := cliGameTest.newPlayerStub("X", 0, 1, 6, 5, 8)
 	playerTwo := cliGameTest.newPlayerStub("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
-	game := NewCliGame(Game{}, playerOne, playerTwo, displaySpy)
+	cliGame := NewCliGame(Game{}, playerOne, playerTwo, displaySpy)
 
-	game.start()
+	cliGame.start()
 
 	assert.True(t, displaySpy.welcomeHasBeenCalled)
 	assert.True(t, displaySpy.showBoardHasBeenCalled)
 	assert.True(t, displaySpy.promptHasBeenCalled)
+}
+
+func TestPlaysADrawnGame(t *testing.T) {
+	playerOne := cliGameTest.newPlayerStub("X", 0, 1, 6, 5, 8)
+	playerTwo := cliGameTest.newPlayerStub("O", 4, 2, 3, 7)
+	displaySpy := &DisplaySpy{}
+
+	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	cliGame := NewCliGame(game, playerOne, playerTwo, displaySpy)
+
+	cliGame.start()
+
+	assert.True(t, game.isOver())
+	assert.True(t, game.isADraw())
+	assert.True(t, displaySpy.drawHasBeenCalled)
+	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
 
 func (cliGameTest CliGameTest) newPlayerStub(mark string, moves ...int) PlayerStub {
@@ -47,6 +63,8 @@ type DisplaySpy struct {
 	welcomeHasBeenCalled   bool
 	showBoardHasBeenCalled bool
 	promptHasBeenCalled    bool
+	drawHasBeenCalled      bool
+	goodbyeHasBeenCalled   bool
 }
 
 func (displaySpy DisplaySpy) write(message string) {
@@ -62,4 +80,12 @@ func (displaySpy *DisplaySpy) prompt() {
 
 func (displaySpy *DisplaySpy) showBoard(board Board) {
 	displaySpy.showBoardHasBeenCalled = true
+}
+
+func (displaySpy *DisplaySpy) draw() {
+	displaySpy.drawHasBeenCalled = true
+}
+
+func (displaySpy *DisplaySpy) goodbye() {
+	displaySpy.goodbyeHasBeenCalled = true
 }
