@@ -62,9 +62,9 @@ func (game Game) data() (Board, string, string) {
 }
 
 func (game Game) markOne() string {
-	return game.playerOne.mark()
+	return game.playerOne.Mark()
 }
 
 func (game Game) markTwo() string {
-	return game.playerTwo.mark()
+	return game.playerTwo.Mark()
 }
