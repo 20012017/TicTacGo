@@ -11,10 +11,11 @@ type CliGameTest struct {
 var cliGameTest *CliGameTest = new(CliGameTest)
 
 func TestStartsAGame(t *testing.T) {
-	playerOne := cliGameTest.newPlayerStub("X", 0, 1, 6, 5, 8)
-	playerTwo := cliGameTest.newPlayerStub("O", 4, 2, 3, 7)
+	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
+	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
-	cliGame := NewCliGame(Game{}, playerOne, playerTwo, displaySpy)
+	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	cliGame := NewCliGame(game, displaySpy)
 
 	cliGame.start()
 
@@ -24,12 +25,12 @@ func TestStartsAGame(t *testing.T) {
 }
 
 func TestPlaysADrawnGame(t *testing.T) {
-	playerOne := cliGameTest.newPlayerStub("X", 0, 1, 6, 5, 8)
-	playerTwo := cliGameTest.newPlayerStub("O", 4, 2, 3, 7)
+	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
+	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
 
 	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
-	cliGame := NewCliGame(game, playerOne, playerTwo, displaySpy)
+	cliGame := NewCliGame(game, displaySpy)
 
 	cliGame.start()
 
@@ -39,24 +40,8 @@ func TestPlaysADrawnGame(t *testing.T) {
 	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
 
-func (cliGameTest CliGameTest) newPlayerStub(mark string, moves ...int) PlayerStub {
-	return PlayerStub{mark, moves, 0}
-}
-
-type PlayerStub struct {
-	mark        string
-	moves       []int
-	currentMove int
-}
-
-func (player PlayerStub) Mark() string {
-	return player.mark
-}
-
-func (player PlayerStub) move(board Board) (int, error) {
-	move := player.moves[player.currentMove]
-	player.currentMove = player.currentMove + 1
-	return move, nil
+func (cliGameTest CliGameTest) newPlayerFake(mark string, moves ...int) *PlayerFake {
+	return &PlayerFake{mark, 0, moves}
 }
 
 type DisplaySpy struct {
