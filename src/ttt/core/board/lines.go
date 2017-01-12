@@ -8,6 +8,15 @@ func NewLine(cells ...string) Line {
 	return Line{cells}
 }
 
+func (line Line) All(condition func(string) bool) bool {
+	for _, cell := range line.cells {
+		if !condition(cell) {
+			return false
+		}
+	}
+	return true
+}
+
 func (line Line) addCell(cell string) Line {
 	cells := line.cells
 	cells = append(cells, cell)
@@ -20,15 +29,6 @@ func (line Line) reverse() Line {
 
 func (line Line) at(position int) string {
 	return line.cells[position]
-}
-
-func (line Line) All(condition func(string) bool) bool {
-	for _, cell := range line.cells {
-		if !condition(cell) {
-			return false
-		}
-	}
-	return true
 }
 
 func (line Line) reverseEachElement(reverseIndex int, row []string) Line {

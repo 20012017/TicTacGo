@@ -17,6 +17,15 @@ func (grid Grid) Cells() []string {
 	return grid.cells
 }
 
+func (grid Grid) Any(str string) bool {
+	for _, cell := range grid.cells {
+		if cell == str {
+			return true
+		}
+	}
+	return false
+}
+
 func (grid Grid) split(delimiter int) []Line {
 	return grid.splitLines(delimiter)
 }
@@ -59,13 +68,4 @@ func (grid Grid) splitLines(delimiter int) []Line {
 		splitGrid = append(splitGrid, grid.splitCells(i, i+delimiter))
 	}
 	return splitGrid
-}
-
-func (grid Grid) Any(str string) bool {
-	for _, cell := range grid.cells {
-		if cell == str {
-			return true
-		}
-	}
-	return false
 }
