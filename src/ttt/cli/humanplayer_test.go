@@ -67,7 +67,7 @@ func (reader *InputReaderDouble) called() bool {
 	return reader.wasCalled
 }
 
-func (reader *InputReaderDouble) read() string {
+func (reader *InputReaderDouble) Read() string {
 	reader.setCalled(true)
 	return reader.move
 }

@@ -1,4 +1,4 @@
-package cli
+package input
 
 import (
 	"bufio"
@@ -10,8 +10,8 @@ import (
 func TestReadsInput(t *testing.T) {
 	buffer := (new(bytes.Buffer))
 	buffer.WriteString("hello\n")
-	reader := bufio.NewReader(buffer)
-	inputReader := CliInputReader{reader}
+	ioReader := bufio.NewReader(buffer)
+	inputReader := Reader{ioReader}
 
-	assert.Equal(t, "hello\n", inputReader.read())
+	assert.Equal(t, "hello\n", inputReader.Read())
 }

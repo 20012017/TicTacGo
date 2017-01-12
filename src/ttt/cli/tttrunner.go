@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"ttt/cli/display"
+	"ttt/cli/input"
 	"ttt/core"
 )
 
@@ -13,7 +14,7 @@ func (ttt TTT) CreateCliGame() CliGame {
 	return NewCliGame(ttt.createGame(), ttt.createDisplay())
 }
 
-func (ttt TTT) createDisplay() display.DisplayWriter {
+func (ttt TTT) createDisplay() DisplayWriter {
 	return display.NewDisplayWriter(os.Stdout, new(display.Script))
 }
 
@@ -24,7 +25,7 @@ func (ttt TTT) createGame() core.Game {
 }
 
 func (ttt TTT) createPlayers() (core.Player, core.Player) {
-	reader := CliInputReader{bufio.NewReader(os.Stdin)}
+	reader := input.NewReader(bufio.NewReader(os.Stdin))
 	validator := MoveValidator{}
 	playerOne := HumanPlayer{"X", reader, validator}
 	playerTwo := HumanPlayer{"O", reader, validator}

@@ -1,4 +1,4 @@
-package display
+package cli
 
 import "ttt/core"
 

@@ -2,16 +2,15 @@ package cli
 
 import (
 	"fmt"
-	"ttt/cli/display"
 	"ttt/core"
 )
 
 type CliGame struct {
 	game    core.Game
-	display display.DisplayWriter
+	display DisplayWriter
 }
 
-func NewCliGame(game core.Game, display display.DisplayWriter) CliGame {
+func NewCliGame(game core.Game, display DisplayWriter) CliGame {
 	return CliGame{game, display}
 }
 
