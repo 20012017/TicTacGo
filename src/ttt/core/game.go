@@ -3,30 +3,34 @@ package core
 type Game struct {
 	playerOne, playerTwo Player
 	board                Board
-	rules                rules
+	rules                *Rules
 }
 
-func NewGame(playerOne, playerTwo Player, board Board, rule rules) Game {
+func NewGame(playerOne, playerTwo Player, board Board, rule *Rules) Game {
 	return Game{playerOne, playerTwo, board, rule}
 }
 
-func (game Game) play(move int) Board {
+func (game Game) Play(move int) Board {
 	game.board = game.playMove(move)
 	return game.board
 }
 
 func (game Game) currentMark() string {
-	return game.currentPlayer().Mark()
+	return game.CurrentPlayer().Mark()
 }
 
-func (game Game) isOver() bool {
-	over := game.isAWin() ||
-		game.isADraw()
+func (game Game) Board() Board {
+	return game.board
+}
+
+func (game Game) IsOver() bool {
+	over := game.IsAWin() ||
+		game.IsADraw()
 	return over
 }
 
-func (game Game) result() (bool, string) {
-	if game.isOver() && game.isAWin() {
+func (game Game) Result() (bool, string) {
+	if game.IsOver() && game.IsAWin() {
 		return true, game.winner()
 	}
 	return false, ""
@@ -36,7 +40,7 @@ func (game Game) winner() string {
 	return game.winningMark()
 }
 
-func (game Game) currentPlayer() Player {
+func (game Game) CurrentPlayer() Player {
 	if game.board.countMarks()%2 == 0 {
 		return game.playerOne
 	}
@@ -53,11 +57,11 @@ func (game Game) winningMark() string {
 	return game.rules.winner(game.data())
 }
 
-func (game Game) isADraw() bool {
+func (game Game) IsADraw() bool {
 	return game.rules.isADraw(game.data())
 }
 
-func (game Game) isAWin() bool {
+func (game Game) IsAWin() bool {
 	return game.rules.isAWin(game.data())
 }
 

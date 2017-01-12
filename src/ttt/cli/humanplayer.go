@@ -1,4 +1,6 @@
-package ttt
+package cli
+
+import "ttt/core"
 
 type HumanPlayer struct {
 	mark          string
@@ -10,7 +12,7 @@ func (player HumanPlayer) Mark() string {
 	return player.mark
 }
 
-func (player HumanPlayer) move(board Board) (int, error) {
+func (player HumanPlayer) Move(board core.Board) (int, error) {
 	move := player.inputReader.read()
 	_, err := player.moveValidator.validate(move, board)
 	if err != nil {

@@ -1,4 +1,4 @@
-package ttt
+package cli
 
 import (
 	"bufio"

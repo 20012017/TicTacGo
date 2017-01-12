@@ -1,4 +1,4 @@
-package ttt
+package cli
 
 type Script struct{}
 

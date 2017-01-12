@@ -7,8 +7,8 @@
 
 ### How To Run
 
-- `go run ttt.go`
+- `go run src/ttt/main/ttt.go`
 
 ### How To Test
 
-- `go test ttt`
+- `go test ttt/...`

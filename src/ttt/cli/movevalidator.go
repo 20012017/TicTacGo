@@ -1,9 +1,10 @@
-package ttt
+package cli
 
 import (
 	"errors"
 	"strconv"
 	"strings"
+	"ttt/core"
 )
 
 const numberError, boundsError, takenError string = "Not a number",
@@ -13,7 +14,7 @@ const numberError, boundsError, takenError string = "Not a number",
 type MoveValidator struct {
 }
 
-func (validator MoveValidator) validate(move string, board Board) (bool, error) {
+func (validator MoveValidator) validate(move string, board core.Board) (bool, error) {
 	numberMove, err := validator.convertToInt(validator.formatInput(move))
 	if validator.isNotANumber(err) {
 		return false, errors.New(numberError)
@@ -32,20 +33,20 @@ func (validator MoveValidator) validMove(move string) int {
 	return validator.convertToIndex(numberMove)
 }
 
-func (validator MoveValidator) validations() []func(int, Board) (bool, error) {
-	return []func(int, Board) (bool, error){
+func (validator MoveValidator) validations() []func(int, core.Board) (bool, error) {
+	return []func(int, core.Board) (bool, error){
 		validator.validateBounds,
 		validator.validateIndex}
 }
 
-func (validator MoveValidator) validateIndex(move int, board Board) (bool, error) {
+func (validator MoveValidator) validateIndex(move int, board core.Board) (bool, error) {
 	if validator.isInvalidCell(move-1, board) {
 		return false, errors.New(takenError)
 	}
 	return true, nil
 }
 
-func (validator MoveValidator) validateBounds(move int, board Board) (bool, error) {
+func (validator MoveValidator) validateBounds(move int, board core.Board) (bool, error) {
 	if validator.isOutOfBounds(move, board) {
 		return false, errors.New(boundsError)
 	}
@@ -56,12 +57,12 @@ func (validator MoveValidator) convertToIndex(move int) int {
 	return move - 1
 }
 
-func (validator MoveValidator) isInvalidCell(index int, board Board) bool {
-	return board.markAt(index) != ""
+func (validator MoveValidator) isInvalidCell(index int, board core.Board) bool {
+	return board.MarkAt(index) != ""
 }
 
-func (validator MoveValidator) isOutOfBounds(move int, board Board) bool {
-	return move >= board.size || move < 1
+func (validator MoveValidator) isOutOfBounds(move int, board core.Board) bool {
+	return move >= board.Size() || move < 1
 }
 
 func (validator MoveValidator) isNotANumber(err error) bool {

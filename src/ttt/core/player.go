@@ -3,5 +3,5 @@ package core
 type Player interface {
 	Mark() string
 
-	move(board Board) (int, error)
+	Move(board Board) (int, error)
 }

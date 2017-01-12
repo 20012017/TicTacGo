@@ -1,8 +1,9 @@
-package ttt
+package cli
 
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core"
 )
 
 type CliGameTest struct {
@@ -14,10 +15,10 @@ func TestStartsAGame(t *testing.T) {
 	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
 	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
-	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
 
-	cliGame.start()
+	cliGame.Start()
 
 	assert.True(t, displaySpy.clearHasBeenCalled)
 	assert.True(t, displaySpy.welcomeHasBeenCalled)
@@ -29,13 +30,13 @@ func TestPlaysADrawnGame(t *testing.T) {
 	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
 	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
-	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
 
-	cliGame.start()
+	cliGame.Start()
 
-	assert.True(t, game.isOver())
-	assert.True(t, game.isADraw())
+	assert.True(t, game.IsOver())
+	assert.True(t, game.IsADraw())
 	assert.True(t, displaySpy.drawHasBeenCalled)
 	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
@@ -44,13 +45,13 @@ func TestPlaysAWonGame(t *testing.T) {
 	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 2)
 	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
 	displaySpy := &DisplaySpy{}
-	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
 
-	cliGame.start()
+	cliGame.Start()
 
-	assert.True(t, game.isOver())
-	assert.True(t, game.isAWin())
+	assert.True(t, game.IsOver())
+	assert.True(t, game.IsAWin())
 	assert.True(t, displaySpy.winHasBeenCalled)
 	assert.True(t, displaySpy.goodbyeHasBeenCalled)
 }
@@ -59,10 +60,10 @@ func TestDisplayErrorsForInvalidMove(t *testing.T) {
 	playerOne := cliGameTest.newPlayerFake("X", -1, 0, 1, 2)
 	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
 	displaySpy := &DisplaySpy{}
-	game := Game{playerOne, playerTwo, NewBoard(9), rules{}}
+	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
 
-	cliGame.start()
+	cliGame.Start()
 
 	assert.True(t, displaySpy.writeHasBeenCalled)
 	assert.Equal(t, "Out of bounds\n", displaySpy.writeArgument)
@@ -97,7 +98,7 @@ func (displaySpy *DisplaySpy) prompt() {
 	displaySpy.promptHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) showBoard(board Board) {
+func (displaySpy *DisplaySpy) showBoard(board core.Board) {
 	displaySpy.showBoardHasBeenCalled = true
 }
 

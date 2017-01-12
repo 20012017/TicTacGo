@@ -1,15 +1,16 @@
-package ttt
+package cli
 
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core"
 )
 
 type HumanPlayerTest struct {
-	board Board
+	board core.Board
 }
 
-var humanPlayerTest HumanPlayerTest = HumanPlayerTest{NewBoard(9)}
+var humanPlayerTest HumanPlayerTest = HumanPlayerTest{core.NewBoard(9)}
 
 func TestHasAMark(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
@@ -27,7 +28,7 @@ func TestReadsUserInput(t *testing.T) {
 	inputReader := &InputReaderDouble{move: "1\n"}
 	player := HumanPlayer{"X", inputReader, MoveValidator{}}
 
-	player.move(humanPlayerTest.board)
+	player.Move(humanPlayerTest.board)
 
 	assert.True(t, inputReader.called())
 }
@@ -35,7 +36,7 @@ func TestReadsUserInput(t *testing.T) {
 func TestReturnsErrorIfMoveIsInvalid(t *testing.T) {
 	player := humanPlayerTest.newPlayer("-1\n")
 
-	_, err := player.move(humanPlayerTest.board)
+	_, err := player.Move(humanPlayerTest.board)
 
 	assert.NotNil(t, err)
 }
@@ -43,7 +44,7 @@ func TestReturnsErrorIfMoveIsInvalid(t *testing.T) {
 func TestReturnsMoveValid(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
 
-	move, err := player.move(humanPlayerTest.board)
+	move, err := player.Move(humanPlayerTest.board)
 
 	assert.Equal(t, 0, move)
 	assert.Nil(t, err)

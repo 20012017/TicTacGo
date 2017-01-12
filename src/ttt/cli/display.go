@@ -1,4 +1,6 @@
-package ttt
+package cli
+
+import "ttt/core"
 
 type Display interface {
 	write(message string)
@@ -7,7 +9,7 @@ type Display interface {
 
 	prompt()
 
-	showBoard(board Board)
+	showBoard(board core.Board)
 
 	draw()
 

@@ -5,8 +5,9 @@ import (
 	"testing"
 )
 
+var rules *Rules = new(Rules)
+
 func TestKnowsIfThereIsAWin(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"X", "X", "X",
 		"O", "X", "O",
@@ -16,7 +17,6 @@ func TestKnowsIfThereIsAWin(t *testing.T) {
 }
 
 func TestKnowsIfThereIsANotAWin(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
@@ -26,7 +26,6 @@ func TestKnowsIfThereIsANotAWin(t *testing.T) {
 }
 
 func TestKnowsIfTheGameIsDrawn(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
@@ -36,7 +35,6 @@ func TestKnowsIfTheGameIsDrawn(t *testing.T) {
 }
 
 func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"X", "X", "X",
 		"O", "X", "O",
@@ -46,7 +44,6 @@ func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
 }
 
 func TestKnowsTheWinnerWhenX(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"X", "X", "X",
 		"O", "X", "O",
@@ -56,7 +53,6 @@ func TestKnowsTheWinnerWhenX(t *testing.T) {
 }
 
 func TestKnowsTheWinnerWhenO(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"O", "O", "O",
 		"", "", "",
@@ -66,7 +62,6 @@ func TestKnowsTheWinnerWhenO(t *testing.T) {
 }
 
 func TestKnowsThereIsNoWinner(t *testing.T) {
-	rules := rules{}
 	board := NewMarkedBoard([]string{
 		"", "", "",
 		"", "", "",

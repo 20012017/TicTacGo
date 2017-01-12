@@ -1,5 +1,7 @@
-package ttt
+package main
+
+import "ttt/cli"
 
 func main() {
-	StartGame()
+	new(cli.TTT).CreateCliGame().Start()
 }

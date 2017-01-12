@@ -13,6 +13,10 @@ func NewPopulatedGrid(cells []string) Grid {
 	return Grid{cells}
 }
 
+func (grid Grid) Cells() []string {
+	return grid.cells
+}
+
 func (grid Grid) split(delimiter int) []Line {
 	return grid.splitLines(delimiter)
 }

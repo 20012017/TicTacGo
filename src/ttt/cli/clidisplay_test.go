@@ -1,9 +1,10 @@
-package ttt
+package cli
 
 import (
 	"bytes"
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core"
 )
 
 type DisplayTest struct{}
@@ -29,7 +30,7 @@ func TestWelcomesPlayer(t *testing.T) {
 func TestPrintsBoard(t *testing.T) {
 	buffer, display := displayTest.setUpDisplay()
 
-	board := NewBoard(9)
+	board := core.NewBoard(9)
 	display.showBoard(board)
 
 	assert.Equal(t, displayTest.newBoard(), buffer.String())

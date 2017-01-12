@@ -14,6 +14,14 @@ func NewBoard(size int) Board {
 	return Board{grid, size}
 }
 
+func (board Board) Grid() Grid {
+	return board.grid
+}
+
+func (board Board) Size() int {
+	return board.size
+}
+
 func NewMarkedBoard(cells []string) Board {
 	return Board{NewPopulatedGrid(cells), len(cells)}
 }
@@ -23,7 +31,7 @@ func (board Board) placeMark(cell int, mark string) Board {
 	return NewMarkedBoard(updatedGrid)
 }
 
-func (board Board) markAt(index int) string {
+func (board Board) MarkAt(index int) string {
 	return board.cells()[index]
 }
 

@@ -9,42 +9,42 @@ type GameTest struct{}
 
 var gameTest GameTest = GameTest{}
 var playerOne, playerTwo Player = PlayerDouble{"X"}, PlayerDouble{"O"}
-var rule rules = rules{}
+var rule *Rules = new(Rules)
 
 func TestCanPlayAMark(t *testing.T) {
 	game := gameTest.game(NewBoard(9))
 
-	markedBoard := game.play(0)
+	markedBoard := game.Play(0)
 
-	assert.Equal(t, "X", markedBoard.markAt(0))
+	assert.Equal(t, "X", markedBoard.MarkAt(0))
 }
 
 func TestCanPlayTwoMarks(t *testing.T) {
 	game := gameTest.game(NewBoard(9))
 
-	markedBoard := game.play(0)
-	markedBoard = game.play(1)
+	markedBoard := game.Play(0)
+	markedBoard = game.Play(1)
 
-	assert.Equal(t, "X", markedBoard.markAt(0))
-	assert.Equal(t, "O", markedBoard.markAt(1))
+	assert.Equal(t, "X", markedBoard.MarkAt(0))
+	assert.Equal(t, "O", markedBoard.MarkAt(1))
 }
 
 func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
 	game := gameTest.game(gameTest.fullBoard())
 
-	assert.True(t, game.isOver())
+	assert.True(t, game.IsOver())
 }
 
 func TestKnowsWhenGameIsOverWhenWon(t *testing.T) {
 	game := gameTest.game(gameTest.wonBoard())
 
-	assert.True(t, game.isOver())
+	assert.True(t, game.IsOver())
 }
 
 func TestKnowsTheGameWinner(t *testing.T) {
 	game := gameTest.game(gameTest.wonBoard())
 
-	isWin, winner := game.result()
+	isWin, winner := game.Result()
 
 	assert.Equal(t, "X", winner)
 	assert.True(t, isWin)
@@ -53,7 +53,7 @@ func TestKnowsTheGameWinner(t *testing.T) {
 func TestKnowsWhenThereIsNoWinner(t *testing.T) {
 	game := gameTest.game(gameTest.fullBoard())
 
-	isWin, winner := game.result()
+	isWin, winner := game.Result()
 
 	assert.Equal(t, "", winner)
 	assert.False(t, isWin)
@@ -62,7 +62,7 @@ func TestKnowsWhenThereIsNoWinner(t *testing.T) {
 func TestKnowsTheCurrentPlayer(t *testing.T) {
 	game := gameTest.game(NewBoard(9))
 
-	player := game.currentPlayer()
+	player := game.CurrentPlayer()
 
 	assert.Equal(t, "X", player.Mark())
 }
@@ -93,6 +93,6 @@ func (player PlayerDouble) Mark() string {
 	return player.mark
 }
 
-func (player PlayerDouble) move(board Board) (int, error) {
+func (player PlayerDouble) Move(board Board) (int, error) {
 	return 0, nil
 }

@@ -1,4 +1,4 @@
-package ttt
+package cli
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -16,10 +16,7 @@ func TestCreatesGame(t *testing.T) {
 	game := new(TTT).createGame()
 
 	assert.NotNil(t, game)
-	assert.NotNil(t, game.board)
-	assert.NotNil(t, game.playerOne)
-	assert.NotNil(t, game.playerTwo)
-	assert.NotNil(t, game.rules)
+	assert.NotNil(t, game.Board())
 }
 
 func TestCreatesDisplay(t *testing.T) {
@@ -29,7 +26,7 @@ func TestCreatesDisplay(t *testing.T) {
 }
 
 func TestCreatesCliGame(t *testing.T) {
-	cliGame := new(TTT).createCliGame()
+	cliGame := new(TTT).CreateCliGame()
 
 	assert.NotNil(t, cliGame)
 	assert.NotNil(t, cliGame.game)

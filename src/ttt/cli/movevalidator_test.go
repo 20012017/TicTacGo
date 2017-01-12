@@ -1,14 +1,15 @@
-package ttt
+package cli
 
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core"
 )
 
 func TestDoesNotValidateAWord(t *testing.T) {
 	moveValidator := MoveValidator{}
 
-	valid, err := moveValidator.validate("hello\n", NewBoard(9))
+	valid, err := moveValidator.validate("hello\n", core.NewBoard(9))
 
 	assert.False(t, valid)
 	assert.Equal(t, "Not a number", err.Error())
@@ -17,7 +18,7 @@ func TestDoesNotValidateAWord(t *testing.T) {
 func TestDoesNotValidateAMoveLargerThanTheBoard(t *testing.T) {
 	moveValidator := MoveValidator{}
 
-	valid, err := moveValidator.validate("10\n", NewBoard(9))
+	valid, err := moveValidator.validate("10\n", core.NewBoard(9))
 
 	assert.False(t, valid)
 	assert.Equal(t, "Out of bounds", err.Error())
@@ -26,7 +27,7 @@ func TestDoesNotValidateAMoveLargerThanTheBoard(t *testing.T) {
 func TestDoesNotValidateAMoveSmallerThanTheBoard(t *testing.T) {
 	moveValidator := MoveValidator{}
 
-	valid, err := moveValidator.validate("-1\n", NewBoard(9))
+	valid, err := moveValidator.validate("-1\n", core.NewBoard(9))
 
 	assert.False(t, valid)
 	assert.Equal(t, "Out of bounds", err.Error())
@@ -35,7 +36,7 @@ func TestDoesNotValidateAMoveSmallerThanTheBoard(t *testing.T) {
 func TestDoesNotValidateAMoveOnATakenCell(t *testing.T) {
 	moveValidator := MoveValidator{}
 
-	markedBoard := NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
+	markedBoard := core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
 	valid, err := moveValidator.validate("1\n", markedBoard)
 
 	assert.False(t, valid)
@@ -45,7 +46,7 @@ func TestDoesNotValidateAMoveOnATakenCell(t *testing.T) {
 func TestValidatesAValidMove(t *testing.T) {
 	moveValidator := MoveValidator{}
 
-	valid, err := moveValidator.validate("1\n", NewBoard(9))
+	valid, err := moveValidator.validate("1\n", core.NewBoard(9))
 
 	assert.True(t, valid)
 	assert.Nil(t, err)

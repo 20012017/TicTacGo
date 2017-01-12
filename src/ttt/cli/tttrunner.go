@@ -1,18 +1,14 @@
-package ttt
+package cli
 
 import (
 	"bufio"
 	"os"
+	"ttt/core"
 )
 
-type TTT struct {
-}
+type TTT struct{}
 
-func StartGame() {
-	new(TTT).createCliGame().start()
-}
-
-func (ttt TTT) createCliGame() CliGame {
+func (ttt TTT) CreateCliGame() CliGame {
 	return NewCliGame(ttt.createGame(), ttt.createDisplay())
 }
 
@@ -20,13 +16,13 @@ func (ttt TTT) createDisplay() Display {
 	return NewDisplay(os.Stdout, &Script{})
 }
 
-func (ttt TTT) createGame() Game {
+func (ttt TTT) createGame() core.Game {
 	playerOne, playerTwo := ttt.createPlayers()
-	board := NewBoard(9)
-	return NewGame(playerOne, playerTwo, board, rules{})
+	board := core.NewBoard(9)
+	return core.NewGame(playerOne, playerTwo, board, new(core.Rules))
 }
 
-func (ttt TTT) createPlayers() (Player, Player) {
+func (ttt TTT) createPlayers() (core.Player, core.Player) {
 	reader := CliInputReader{bufio.NewReader(os.Stdin)}
 	validator := MoveValidator{}
 	playerOne := HumanPlayer{"X", reader, validator}

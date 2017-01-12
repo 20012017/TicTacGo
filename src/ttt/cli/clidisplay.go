@@ -1,6 +1,9 @@
-package ttt
+package cli
 
-import "io"
+import (
+	"io"
+	"ttt/core"
+)
 
 type CliDisplay struct {
 	writer io.Writer
@@ -23,7 +26,7 @@ func (display CliDisplay) prompt() {
 	display.write(display.script.prompt())
 }
 
-func (display CliDisplay) showBoard(board Board) {
+func (display CliDisplay) showBoard(board core.Board) {
 	displayBoard := new(DisplayBoard).show(board)
 	display.write(displayBoard)
 }
