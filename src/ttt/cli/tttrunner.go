@@ -3,6 +3,7 @@ package cli
 import (
 	"bufio"
 	"os"
+	"ttt/cli/display"
 	"ttt/core"
 )
 
@@ -12,8 +13,8 @@ func (ttt TTT) CreateCliGame() CliGame {
 	return NewCliGame(ttt.createGame(), ttt.createDisplay())
 }
 
-func (ttt TTT) createDisplay() Display {
-	return NewDisplay(os.Stdout, &Script{})
+func (ttt TTT) createDisplay() display.DisplayWriter {
+	return display.NewDisplayWriter(os.Stdout, new(display.Script))
 }
 
 func (ttt TTT) createGame() core.Game {

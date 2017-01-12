@@ -1,4 +1,4 @@
-package cli
+package display
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestDisplaysAnEmptyBoard(t *testing.T) {
-	displayBoard, board := DisplayBoard{}, core.NewBoard(9)
+	displayBoard, board := Board{}, core.NewBoard(9)
 	stringBoard :=
 		`-------------
 |[-]|[-]|[-]|
@@ -21,7 +21,7 @@ func TestDisplaysAnEmptyBoard(t *testing.T) {
 }
 
 func TestDisplaysAMarkedBoard(t *testing.T) {
-	displayBoard, board := DisplayBoard{}, core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
+	displayBoard, board := Board{}, core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
 	stringBoard :=
 		`-------------
 |[X]|[-]|[-]|

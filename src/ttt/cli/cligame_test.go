@@ -85,35 +85,35 @@ type DisplaySpy struct {
 	writeArgument          string
 }
 
-func (displaySpy *DisplaySpy) write(message string) {
+func (displaySpy *DisplaySpy) Write(message string) {
 	displaySpy.writeHasBeenCalled = true
 	displaySpy.writeArgument = message
 }
 
-func (displaySpy *DisplaySpy) welcome() {
+func (displaySpy *DisplaySpy) Welcome() {
 	displaySpy.welcomeHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) prompt() {
+func (displaySpy *DisplaySpy) Prompt() {
 	displaySpy.promptHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) showBoard(board core.TTTBoard) {
+func (displaySpy *DisplaySpy) ShowBoard(board core.TTTBoard) {
 	displaySpy.showBoardHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) draw() {
+func (displaySpy *DisplaySpy) Draw() {
 	displaySpy.drawHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) goodbye() {
+func (displaySpy *DisplaySpy) Goodbye() {
 	displaySpy.goodbyeHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) win(mark string) {
+func (displaySpy *DisplaySpy) Win(mark string) {
 	displaySpy.winHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) clear() {
+func (displaySpy *DisplaySpy) Clear() {
 	displaySpy.clearHasBeenCalled = true
 }

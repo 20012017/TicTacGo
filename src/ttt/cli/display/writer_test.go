@@ -1,4 +1,4 @@
-package cli
+package display
 
 import (
 	"bytes"
@@ -7,82 +7,82 @@ import (
 	"ttt/core"
 )
 
-type DisplayTest struct{}
+type WriterTest struct{}
 
-var displayTest DisplayTest = DisplayTest{}
+var writerTest WriterTest = WriterTest{}
 
 func TestWritesToWriter(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.write("hello")
+	writer.Write("hello")
 
 	assert.Equal(t, "hello", buffer.String())
 }
 
 func TestWelcomesPlayer(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.welcome()
+	writer.Welcome()
 
 	assert.Equal(t, "Welcome to Tic Tac Toe\n", buffer.String())
 }
 
 func TestPrintsBoard(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
 	board := core.NewBoard(9)
-	display.showBoard(board)
+	writer.ShowBoard(board)
 
-	assert.Equal(t, displayTest.newBoard(), buffer.String())
+	assert.Equal(t, writerTest.newBoard(), buffer.String())
 }
 
 func TestPromptsForMove(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.prompt()
+	writer.Prompt()
 
 	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9\n", buffer.String())
 }
 
 func TestDraw(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.draw()
+	writer.Draw()
 
 	assert.Equal(t, "It's a draw!\n", buffer.String())
 }
 
 func TestGoodbye(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.goodbye()
+	writer.Goodbye()
 
 	assert.Equal(t, "goodbye!\n", buffer.String())
 }
 
 func TestWin(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.win("X")
+	writer.Win("X")
 
 	assert.Equal(t, "X wins!\n", buffer.String())
 }
 
 func TestClearScreen(t *testing.T) {
-	buffer, display := displayTest.setUpDisplay()
+	buffer, writer := writerTest.setUpWriter()
 
-	display.clear()
+	writer.Clear()
 
 	assert.Equal(t, "\033[2J\033[;H", buffer.String())
 }
 
-func (displayTest DisplayTest) setUpDisplay() (*bytes.Buffer, CliDisplay) {
+func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
-	display := NewDisplay(buffer, script)
-	return buffer, display
+	writer := NewDisplayWriter(buffer, script)
+	return buffer, writer
 }
 
-func (displayTest DisplayTest) newBoard() string {
+func (writerTest WriterTest) newBoard() string {
 	return `-------------
 |[-]|[-]|[-]|
 -------------
