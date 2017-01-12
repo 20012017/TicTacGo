@@ -43,7 +43,7 @@ func (tttboard TTTBoard) AvailableMoves() []int {
 	return availableMoves
 }
 
-func (tttboard TTTBoard) placeMark(cell int, mark string) TTTBoard {
+func (tttboard TTTBoard) PlaceMark(cell int, mark string) TTTBoard {
 	updatedGrid := tttboard.updateCells(cell, mark)
 	return NewMarkedBoard(updatedGrid)
 }
@@ -71,9 +71,8 @@ func (tttboard TTTBoard) CountMarks() int {
 }
 
 func (tttboard TTTBoard) updateCells(cell int, mark string) []string {
-	cells := tttboard.cells()
-	cells[cell] = mark
-	return cells
+	grid := tttboard.grid.Mark(cell, mark)
+	return grid.Cells()
 }
 
 func (tttboard TTTBoard) cells() []string {

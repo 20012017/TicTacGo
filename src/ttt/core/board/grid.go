@@ -26,6 +26,13 @@ func (grid Grid) Any(str string) bool {
 	return false
 }
 
+func (grid Grid) Mark(move int, mark string) Grid {
+	cells := make([]string, 9)
+	copy(cells, grid.Cells())
+	cells[move] = mark
+	return NewPopulatedGrid(cells)
+}
+
 func (grid Grid) split(delimiter int) []Line {
 	return grid.splitLines(delimiter)
 }

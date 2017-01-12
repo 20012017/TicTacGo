@@ -19,7 +19,7 @@ func TestEmptyBoardHasNineSpaces(t *testing.T) {
 func TestCanPlaceAMarkOnBoard(t *testing.T) {
 	board := boardTest.newBoard()
 
-	board = board.placeMark(4, "X")
+	board = board.PlaceMark(4, "X")
 
 	assert.Equal(t, "X", board.MarkAt(4))
 }
@@ -27,11 +27,21 @@ func TestCanPlaceAMarkOnBoard(t *testing.T) {
 func TestCanPlaceTwoMarksOnBoard(t *testing.T) {
 	board := boardTest.newBoard()
 
-	board = board.placeMark(4, "X")
-	board = board.placeMark(5, "0")
+	board = board.PlaceMark(4, "X")
+	board = board.PlaceMark(5, "0")
 
 	assert.Equal(t, "X", board.MarkAt(4))
 	assert.Equal(t, "0", board.MarkAt(5))
+}
+
+func TestBoardIsImmutable(t *testing.T) {
+	board := boardTest.newBoard()
+
+	board = board.PlaceMark(4, "X")
+	board.PlaceMark(5, "0")
+
+	assert.Equal(t, "X", board.MarkAt(4))
+	assert.Equal(t, "", board.MarkAt(5))
 }
 
 func TestKnowsTheRowWidth(t *testing.T) {

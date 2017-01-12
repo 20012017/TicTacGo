@@ -22,11 +22,11 @@ func TestCanPlayAMark(t *testing.T) {
 func TestCanPlayTwoMarks(t *testing.T) {
 	game := gameTest.game(NewBoard(9))
 
-	markedBoard := game.Play(0)
-	markedBoard = game.Play(1)
+	game.Play(0)
+	game.Play(1)
 
-	assert.Equal(t, "X", markedBoard.MarkAt(0))
-	assert.Equal(t, "O", markedBoard.MarkAt(1))
+	assert.Equal(t, "X", game.board.MarkAt(0))
+	assert.Equal(t, "O", game.board.MarkAt(1))
 }
 
 func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
