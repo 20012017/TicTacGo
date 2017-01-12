@@ -47,7 +47,7 @@ func (tttboard TTTBoard) isFull() bool {
 }
 
 func (tttboard TTTBoard) winningPositions() []board.Line {
-	return board.NewWinningPositions(tttboard.grid).All
+	return board.NewWinningPositions(tttboard.grid, tttboard.rowLength()).All
 }
 
 func (tttboard TTTBoard) countMarks() int {

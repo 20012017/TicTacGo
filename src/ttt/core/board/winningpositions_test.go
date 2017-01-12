@@ -7,7 +7,7 @@ import (
 
 var numberedBoard []string = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 var winningPositions WinningPositions = NewWinningPositions(
-	NewPopulatedGrid(numberedBoard))
+	NewPopulatedGrid(numberedBoard), 3)
 
 func TestReturnsRows(t *testing.T) {
 	expectedRows := []Line{

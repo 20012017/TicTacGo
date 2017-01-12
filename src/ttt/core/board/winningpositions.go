@@ -6,10 +6,10 @@ type WinningPositions struct {
 	rows, columns, diagonals, All []Line
 }
 
-func NewWinningPositions(grid Grid) WinningPositions {
+func NewWinningPositions(grid Grid, delimiter int) WinningPositions {
 	return WinningPositions{
-		grid.split(3),
-		grid.transpose(3),
+		grid.split(delimiter),
+		grid.transpose(delimiter),
 		diagonals(grid),
 		all(grid),
 	}
