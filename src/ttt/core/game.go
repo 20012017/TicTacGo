@@ -10,15 +10,6 @@ func NewGame(playerOne, playerTwo Player, board TTTBoard, rule *Rules) Game {
 	return Game{playerOne, playerTwo, board, rule}
 }
 
-func (game Game) Play(move int) TTTBoard {
-	game.board = game.playMove(move)
-	return game.board
-}
-
-func (game Game) currentMark() string {
-	return game.CurrentPlayer().Mark()
-}
-
 func (game Game) Board() TTTBoard {
 	return game.board
 }
@@ -36,8 +27,9 @@ func (game Game) Result() (bool, string) {
 	return false, ""
 }
 
-func (game Game) winner() string {
-	return game.winningMark()
+func (game Game) Play(move int) TTTBoard {
+	game.board = game.playMove(move)
+	return game.board
 }
 
 func (game Game) CurrentPlayer() Player {
@@ -45,6 +37,22 @@ func (game Game) CurrentPlayer() Player {
 		return game.playerOne
 	}
 	return game.playerTwo
+}
+
+func (game Game) IsADraw() bool {
+	return game.rules.isADraw(game.data())
+}
+
+func (game Game) IsAWin() bool {
+	return game.rules.isAWin(game.data())
+}
+
+func (game Game) currentMark() string {
+	return game.CurrentPlayer().Mark()
+}
+
+func (game Game) winner() string {
+	return game.winningMark()
 }
 
 func (game Game) playMove(move int) TTTBoard {
@@ -55,14 +63,6 @@ func (game Game) playMove(move int) TTTBoard {
 
 func (game Game) winningMark() string {
 	return game.rules.winner(game.data())
-}
-
-func (game Game) IsADraw() bool {
-	return game.rules.isADraw(game.data())
-}
-
-func (game Game) IsAWin() bool {
-	return game.rules.isAWin(game.data())
 }
 
 func (game Game) data() (TTTBoard, string, string) {

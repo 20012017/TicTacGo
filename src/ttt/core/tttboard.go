@@ -17,6 +17,10 @@ func NewBoard(size int) TTTBoard {
 	return TTTBoard{grid, size}
 }
 
+func NewMarkedBoard(cells []string) TTTBoard {
+	return TTTBoard{board.NewPopulatedGrid(cells), len(cells)}
+}
+
 func (tttboard TTTBoard) Grid() board.Grid {
 	return tttboard.grid
 }
@@ -25,17 +29,13 @@ func (tttboard TTTBoard) Size() int {
 	return tttboard.size
 }
 
-func NewMarkedBoard(cells []string) TTTBoard {
-	return TTTBoard{board.NewPopulatedGrid(cells), len(cells)}
+func (tttboard TTTBoard) MarkAt(index int) string {
+	return tttboard.cells()[index]
 }
 
 func (tttboard TTTBoard) placeMark(cell int, mark string) TTTBoard {
 	updatedGrid := tttboard.updateCells(cell, mark)
 	return NewMarkedBoard(updatedGrid)
-}
-
-func (tttboard TTTBoard) MarkAt(index int) string {
-	return tttboard.cells()[index]
 }
 
 func (tttboard TTTBoard) rowLength() int {
