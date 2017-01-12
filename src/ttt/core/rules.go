@@ -1,9 +1,11 @@
 package core
 
-type rules struct{}
+import "ttt/core/board"
 
-func (rule rules) isAWin(board Board, markOne, markTwo string) bool {
-	for _, line := range board.winningPositions() {
+type Rules struct{}
+
+func (rule Rules) isAWin(tttboard TTTBoard, markOne, markTwo string) bool {
+	for _, line := range tttboard.winningPositions() {
 		if rule.winFor(line, markOne) || rule.winFor(line, markTwo) {
 			return true
 		}
@@ -11,15 +13,15 @@ func (rule rules) isAWin(board Board, markOne, markTwo string) bool {
 	return false
 }
 
-func (rule rules) isADraw(board Board, markOne, markTwo string) bool {
-	if board.isFull() && !rule.isAWin(board, markOne, markTwo) {
+func (rule Rules) isADraw(tttboard TTTBoard, markOne, markTwo string) bool {
+	if tttboard.isFull() && !rule.isAWin(tttboard, markOne, markTwo) {
 		return true
 	}
 	return false
 }
 
-func (rule rules) winner(board Board, markOne, markTwo string) string {
-	for _, line := range board.winningPositions() {
+func (rule Rules) winner(tttboard TTTBoard, markOne, markTwo string) string {
+	for _, line := range tttboard.winningPositions() {
 		if rule.winFor(line, markOne) {
 			return markOne
 		} else if rule.winFor(line, markTwo) {
@@ -29,8 +31,8 @@ func (rule rules) winner(board Board, markOne, markTwo string) string {
 	return ""
 }
 
-func (rule rules) winFor(line Line, mark string) bool {
-	return line.all(matches(mark))
+func (rule Rules) winFor(line board.Line, mark string) bool {
+	return line.All(matches(mark))
 }
 
 func matches(mark string) func(string) bool {

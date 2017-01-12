@@ -1,15 +1,15 @@
-package core
+package board
 
 const rowLength, columnWidth, firstCell int = 3, 1, 0
 
 type WinningPositions struct {
-	rows, columns, diagonals, all []Line
+	rows, columns, diagonals, All []Line
 }
 
-func NewWinningPositions(grid Grid) WinningPositions {
+func NewWinningPositions(grid Grid, delimiter int) WinningPositions {
 	return WinningPositions{
-		grid.split(3),
-		grid.transpose(3),
+		grid.split(delimiter),
+		grid.transpose(delimiter),
 		diagonals(grid),
 		all(grid),
 	}
@@ -35,7 +35,7 @@ func getPositions(allPositions, positions []Line) []Line {
 }
 
 func getDiagonal(lines []Line) Line {
-	diagonal := newLine()
+	diagonal := NewLine()
 	for index, line := range lines {
 		diagonal = diagonal.addCell(line.at(index))
 	}

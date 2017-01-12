@@ -1,5 +1,7 @@
 package core
 
 type Player interface {
-	mark() string
+	Mark() string
+
+	Move(tttboard TTTBoard) (int, error)
 }
