@@ -26,8 +26,7 @@ func (game Game) Result() (bool, string) {
 }
 
 func (game *Game) Play(move int) TTTBoard {
-	markedBoard := game.playMove(move)
-	game.board = markedBoard
+	game.board = game.playMove(move)
 	return game.board
 }
 
@@ -55,7 +54,8 @@ func (game Game) winner() string {
 }
 
 func (game Game) playMove(move int) TTTBoard {
-	return game.board.PlaceMark(move, game.currentMark())
+	mark := game.CurrentPlayer().Mark()
+	return game.board.PlaceMark(move, mark)
 }
 
 func (game Game) winningMark() string {

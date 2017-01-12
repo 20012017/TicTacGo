@@ -61,7 +61,7 @@ func (validator Move) isInvalidCell(index int, board core.TTTBoard) bool {
 }
 
 func (validator Move) isOutOfBounds(move int, board core.TTTBoard) bool {
-	return move >= board.Size() || move < 1
+	return move >= board.Size()+1 || move < 1
 }
 
 func (validator Move) isNotANumber(err error) bool {
