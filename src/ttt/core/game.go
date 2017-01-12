@@ -15,9 +15,7 @@ func (game Game) Board() TTTBoard {
 }
 
 func (game Game) IsOver() bool {
-	over := game.IsAWin() ||
-		game.IsADraw()
-	return over
+	return game.rules.IsOver(game.board, game.markOne(), game.markTwo())
 }
 
 func (game Game) Result() (bool, string) {
@@ -33,7 +31,7 @@ func (game Game) Play(move int) TTTBoard {
 }
 
 func (game Game) CurrentPlayer() Player {
-	if game.board.countMarks()%2 == 0 {
+	if game.board.CountMarks()%2 == 0 {
 		return game.playerOne
 	}
 	return game.playerTwo
@@ -62,7 +60,7 @@ func (game Game) playMove(move int) TTTBoard {
 }
 
 func (game Game) winningMark() string {
-	return game.rules.winner(game.data())
+	return game.rules.Winner(game.data())
 }
 
 func (game Game) data() (TTTBoard, string, string) {
