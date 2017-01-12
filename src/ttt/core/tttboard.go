@@ -33,6 +33,16 @@ func (tttboard TTTBoard) MarkAt(index int) string {
 	return tttboard.cells()[index]
 }
 
+func (tttboard TTTBoard) AvailableMoves() []int {
+	availableMoves := []int{}
+	for index, cell := range tttboard.grid.Cells() {
+		if cell == "" {
+			availableMoves = append(availableMoves, index)
+		}
+	}
+	return availableMoves
+}
+
 func (tttboard TTTBoard) placeMark(cell int, mark string) TTTBoard {
 	updatedGrid := tttboard.updateCells(cell, mark)
 	return NewMarkedBoard(updatedGrid)
@@ -50,7 +60,7 @@ func (tttboard TTTBoard) winningPositions() []board.Line {
 	return board.NewWinningPositions(tttboard.grid, tttboard.rowLength()).All
 }
 
-func (tttboard TTTBoard) countMarks() int {
+func (tttboard TTTBoard) CountMarks() int {
 	count := 0
 	for _, mark := range tttboard.cells() {
 		if mark != empty {

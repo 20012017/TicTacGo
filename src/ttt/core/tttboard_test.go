@@ -61,7 +61,24 @@ func TestCountMarks(t *testing.T) {
 
 	board := NewMarkedBoard(markedBoard)
 
-	assert.Equal(t, 2, board.countMarks())
+	assert.Equal(t, 2, board.CountMarks())
+}
+
+func TestAvailableMovesOnEmptyBoard(t *testing.T) {
+	board := boardTest.newBoard()
+
+	availablePositions := board.AvailableMoves()
+
+	assert.Equal(t, 9, len(availablePositions))
+}
+
+func TestAvailableMovesOnAMarkedBoard(t *testing.T) {
+	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	board := NewMarkedBoard(markedBoard)
+
+	availablePositions := board.AvailableMoves()
+
+	assert.Equal(t, 7, len(availablePositions))
 }
 
 func (boardTest BoardTest) allWinningPositions() []board.Line {
