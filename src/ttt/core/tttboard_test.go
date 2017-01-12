@@ -91,6 +91,18 @@ func TestAvailableMovesOnAMarkedBoard(t *testing.T) {
 	assert.Equal(t, 7, len(availablePositions))
 }
 
+func TestAvailableMovesDecreaseAfterMark(t *testing.T) {
+	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	board := NewMarkedBoard(markedBoard)
+
+	availablePositions := board.AvailableMoves()
+	board = board.PlaceMark(8, "X")
+	newAvailablePositions := board.AvailableMoves()
+
+	assert.Equal(t, 7, len(availablePositions))
+	assert.Equal(t, 6, len(newAvailablePositions))
+}
+
 func (boardTest BoardTest) allWinningPositions() []board.Line {
 	return []board.Line{
 		board.NewLine("1", "2", "3"),

@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -33,6 +34,24 @@ func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
 	game := gameTest.game(gameTest.fullBoard())
 
 	assert.True(t, game.IsOver())
+}
+
+func TestCanDrawAGame(t *testing.T) {
+	game := gameTest.game(gameTest.fullBoard())
+
+	game.Play(0)
+	game.Play(3)
+	game.Play(1)
+	game.Play(4)
+	game.Play(5)
+	game.Play(2)
+	game.Play(6)
+	game.Play(7)
+	game.Play(8)
+
+	assert.True(t, game.IsOver())
+	fmt.Println(game.board.grid)
+	assert.True(t, game.IsADraw())
 }
 
 func TestKnowsWhenGameIsOverWhenWon(t *testing.T) {

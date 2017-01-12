@@ -8,6 +8,7 @@ import (
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
+	"ttt/core/player"
 )
 
 type TTT struct{}
@@ -30,6 +31,6 @@ func (ttt TTT) createPlayers() (core.Player, core.Player) {
 	reader := input.NewReader(bufio.NewReader(os.Stdin))
 	validator := new(validators.Move)
 	playerOne := players.NewHuman("X", reader, validator)
-	playerTwo := players.NewHuman("O", reader, validator)
+	playerTwo := player.NewComputer("O", "X", new(core.Rules))
 	return playerOne, playerTwo
 }
