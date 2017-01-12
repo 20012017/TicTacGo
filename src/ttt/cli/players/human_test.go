@@ -1,4 +1,4 @@
-package cli
+package players
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,11 +7,11 @@ import (
 	"ttt/core"
 )
 
-type HumanPlayerTest struct {
+type HumanTest struct {
 	board core.TTTBoard
 }
 
-var humanPlayerTest HumanPlayerTest = HumanPlayerTest{core.NewBoard(9)}
+var humanPlayerTest HumanTest = HumanTest{core.NewBoard(9)}
 
 func TestHasAMark(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
@@ -27,7 +27,7 @@ func TestReturnsMark(t *testing.T) {
 
 func TestReadsUserInput(t *testing.T) {
 	inputReader := &InputReaderDouble{move: "1\n"}
-	player := HumanPlayer{"X", inputReader, new(validators.Move)}
+	player := Human{"X", inputReader, new(validators.Move)}
 
 	player.Move(humanPlayerTest.board)
 
@@ -51,8 +51,8 @@ func TestReturnsMoveValid(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func (humanPlayerTest HumanPlayerTest) newPlayer(move string) HumanPlayer {
-	return HumanPlayer{"X", &InputReaderDouble{move: move}, new(validators.Move)}
+func (humanPlayerTest HumanTest) newPlayer(move string) Human {
+	return Human{"X", &InputReaderDouble{move: move}, new(validators.Move)}
 }
 
 type InputReaderDouble struct {

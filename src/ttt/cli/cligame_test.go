@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/cli/players"
 	"ttt/core"
 )
 
@@ -12,8 +13,8 @@ type CliGameTest struct {
 var cliGameTest *CliGameTest = new(CliGameTest)
 
 func TestStartsAGame(t *testing.T) {
-	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
-	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
+	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
+	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
@@ -27,8 +28,8 @@ func TestStartsAGame(t *testing.T) {
 }
 
 func TestPlaysADrawnGame(t *testing.T) {
-	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 6, 5, 8)
-	playerTwo := cliGameTest.newPlayerFake("O", 4, 2, 3, 7)
+	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
+	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := &DisplaySpy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
@@ -42,8 +43,8 @@ func TestPlaysADrawnGame(t *testing.T) {
 }
 
 func TestPlaysAWonGame(t *testing.T) {
-	playerOne := cliGameTest.newPlayerFake("X", 0, 1, 2)
-	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
+	playerOne := players.NewFake("X", 0, 0, 1, 2)
+	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := &DisplaySpy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
@@ -57,8 +58,8 @@ func TestPlaysAWonGame(t *testing.T) {
 }
 
 func TestDisplayErrorsForInvalidMove(t *testing.T) {
-	playerOne := cliGameTest.newPlayerFake("X", -1, 0, 1, 2)
-	playerTwo := cliGameTest.newPlayerFake("O", 6, 7)
+	playerOne := players.NewFake("X", 0, -1, 0, 1, 2)
+	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := &DisplaySpy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 	cliGame := NewCliGame(game, displaySpy)
@@ -67,10 +68,6 @@ func TestDisplayErrorsForInvalidMove(t *testing.T) {
 
 	assert.True(t, displaySpy.writeHasBeenCalled)
 	assert.Equal(t, "Out of bounds\n", displaySpy.writeArgument)
-}
-
-func (cliGameTest CliGameTest) newPlayerFake(mark string, moves ...int) *PlayerFake {
-	return &PlayerFake{mark, 0, moves}
 }
 
 type DisplaySpy struct {

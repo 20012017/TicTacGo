@@ -1,4 +1,4 @@
-package cli
+package players
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,19 +7,19 @@ import (
 )
 
 func TestMark(t *testing.T) {
-	playerFake := newPlayerFake("X", 0)
+	playerFake := NewFake("X", 0)
 
 	assert.Equal(t, "X", playerFake.Mark())
 }
 
 func TestHasACurrentMoveNumber(t *testing.T) {
-	playerFake := newPlayerFake("X", 0)
+	playerFake := NewFake("X", 0)
 
 	assert.Equal(t, 0, playerFake.currentMove)
 }
 
 func TestCurrentMoveIncreasesAfterAMoveIsMade(t *testing.T) {
-	playerFake := newPlayerFake("X", 0, 0)
+	playerFake := NewFake("X", 0, 0)
 
 	playerFake.Move(core.NewBoard(9))
 
@@ -27,7 +27,7 @@ func TestCurrentMoveIncreasesAfterAMoveIsMade(t *testing.T) {
 }
 
 func TestReturnsValidAMove(t *testing.T) {
-	playerFake := newPlayerFake("X", 0, 0)
+	playerFake := NewFake("X", 0, 0)
 
 	move, err := playerFake.Move(core.NewBoard(9))
 
@@ -36,7 +36,7 @@ func TestReturnsValidAMove(t *testing.T) {
 }
 
 func TestReturnsTwoMoves(t *testing.T) {
-	playerFake := newPlayerFake("X", 0, 0, 1)
+	playerFake := NewFake("X", 0, 0, 1)
 
 	playerFake.Move(core.NewBoard(9))
 	move, err := playerFake.Move(core.NewBoard(9))
@@ -46,7 +46,7 @@ func TestReturnsTwoMoves(t *testing.T) {
 }
 
 func TestReturnsAnErrorIfMoveIsInvalid(t *testing.T) {
-	playerFake := newPlayerFake("X", 0, -1)
+	playerFake := NewFake("X", 0, -1)
 
 	_, err := playerFake.Move(core.NewBoard(9))
 
