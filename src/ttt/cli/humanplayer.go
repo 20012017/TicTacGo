@@ -1,11 +1,14 @@
 package cli
 
-import "ttt/core"
+import (
+	"ttt/cli/input/validators"
+	"ttt/core"
+)
 
 type HumanPlayer struct {
 	mark          string
 	inputReader   InputReader
-	moveValidator MoveValidator
+	moveValidator *validators.Move
 }
 
 func (player HumanPlayer) Mark() string {
@@ -14,9 +17,9 @@ func (player HumanPlayer) Mark() string {
 
 func (player HumanPlayer) Move(board core.TTTBoard) (int, error) {
 	move := player.inputReader.Read()
-	_, err := player.moveValidator.validate(move, board)
+	_, err := player.moveValidator.Validate(move, board)
 	if err != nil {
 		return 0, err
 	}
-	return player.moveValidator.validMove(move), nil
+	return player.moveValidator.ValidMove(move), nil
 }

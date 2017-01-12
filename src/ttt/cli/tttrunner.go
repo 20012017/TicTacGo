@@ -5,6 +5,7 @@ import (
 	"os"
 	"ttt/cli/display"
 	"ttt/cli/input"
+	"ttt/cli/input/validators"
 	"ttt/core"
 )
 
@@ -26,7 +27,7 @@ func (ttt TTT) createGame() core.Game {
 
 func (ttt TTT) createPlayers() (core.Player, core.Player) {
 	reader := input.NewReader(bufio.NewReader(os.Stdin))
-	validator := MoveValidator{}
+	validator := new(validators.Move)
 	playerOne := HumanPlayer{"X", reader, validator}
 	playerTwo := HumanPlayer{"O", reader, validator}
 	return playerOne, playerTwo

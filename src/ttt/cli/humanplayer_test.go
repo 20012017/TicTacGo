@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/cli/input/validators"
 	"ttt/core"
 )
 
@@ -26,7 +27,7 @@ func TestReturnsMark(t *testing.T) {
 
 func TestReadsUserInput(t *testing.T) {
 	inputReader := &InputReaderDouble{move: "1\n"}
-	player := HumanPlayer{"X", inputReader, MoveValidator{}}
+	player := HumanPlayer{"X", inputReader, new(validators.Move)}
 
 	player.Move(humanPlayerTest.board)
 
@@ -51,7 +52,7 @@ func TestReturnsMoveValid(t *testing.T) {
 }
 
 func (humanPlayerTest HumanPlayerTest) newPlayer(move string) HumanPlayer {
-	return HumanPlayer{"X", &InputReaderDouble{move: move}, MoveValidator{}}
+	return HumanPlayer{"X", &InputReaderDouble{move: move}, new(validators.Move)}
 }
 
 type InputReaderDouble struct {
