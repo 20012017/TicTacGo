@@ -66,7 +66,7 @@ func (cliGame CliGame) showBoard() {
 	cliGame.display.showBoard(cliGame.board())
 }
 
-func (cliGame CliGame) board() core.Board {
+func (cliGame CliGame) board() core.TTTBoard {
 	return cliGame.game.Board()
 }
 

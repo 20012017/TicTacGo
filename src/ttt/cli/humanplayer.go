@@ -12,7 +12,7 @@ func (player HumanPlayer) Mark() string {
 	return player.mark
 }
 
-func (player HumanPlayer) Move(board core.Board) (int, error) {
+func (player HumanPlayer) Move(board core.TTTBoard) (int, error) {
 	move := player.inputReader.read()
 	_, err := player.moveValidator.validate(move, board)
 	if err != nil {

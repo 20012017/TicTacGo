@@ -1,4 +1,4 @@
-package core
+package board
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -18,27 +18,27 @@ func TestEmptyGrid(t *testing.T) {
 
 func TestSplit(t *testing.T) {
 	splitGrid := []Line{
-		newLine("1", "2", "3"),
-		newLine("4", "5", "6"),
-		newLine("7", "8", "9")}
+		NewLine("1", "2", "3"),
+		NewLine("4", "5", "6"),
+		NewLine("7", "8", "9")}
 
 	assert.Equal(t, splitGrid, gridTest.grid().split(3))
 }
 
 func TestTranspose(t *testing.T) {
 	transposedGrid := []Line{
-		newLine("1", "4", "7"),
-		newLine("2", "5", "8"),
-		newLine("3", "6", "9")}
+		NewLine("1", "4", "7"),
+		NewLine("2", "5", "8"),
+		NewLine("3", "6", "9")}
 
 	assert.Equal(t, transposedGrid, gridTest.grid().transpose(3))
 }
 
 func TestReverseSplit(t *testing.T) {
 	reversedSplit := []Line{
-		newLine("3", "2", "1"),
-		newLine("6", "5", "4"),
-		newLine("9", "8", "7")}
+		NewLine("3", "2", "1"),
+		NewLine("6", "5", "4"),
+		NewLine("9", "8", "7")}
 
 	assert.Equal(t, reversedSplit, gridTest.grid().reverseSplit(3))
 }
@@ -46,13 +46,13 @@ func TestReverseSplit(t *testing.T) {
 func TestAnyEmpty(t *testing.T) {
 	newGrid := NewGrid(9)
 
-	assert.True(t, newGrid.any(""))
+	assert.True(t, newGrid.Any(""))
 }
 
 func TestFull(t *testing.T) {
 	grid := gridTest.grid()
 
-	assert.False(t, grid.any(""))
+	assert.False(t, grid.Any(""))
 }
 
 func (gridTest GridTest) grid() Grid {

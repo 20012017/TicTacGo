@@ -67,18 +67,18 @@ func TestKnowsTheCurrentPlayer(t *testing.T) {
 	assert.Equal(t, "X", player.Mark())
 }
 
-func (gameTest GameTest) game(board Board) Game {
-	return NewGame(playerOne, playerTwo, board, rule)
+func (gameTest GameTest) game(tttboard TTTBoard) Game {
+	return NewGame(playerOne, playerTwo, tttboard, rule)
 }
 
-func (gameTest GameTest) wonBoard() Board {
+func (gameTest GameTest) wonBoard() TTTBoard {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
 		"X", "O", ""})
 }
 
-func (gameTest GameTest) fullBoard() Board {
+func (gameTest GameTest) fullBoard() TTTBoard {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
@@ -93,6 +93,6 @@ func (player PlayerDouble) Mark() string {
 	return player.mark
 }
 
-func (player PlayerDouble) Move(board Board) (int, error) {
+func (player PlayerDouble) Move(board TTTBoard) (int, error) {
 	return 0, nil
 }

@@ -9,7 +9,7 @@ type Display interface {
 
 	prompt()
 
-	showBoard(board core.Board)
+	showBoard(board core.TTTBoard)
 
 	draw()
 

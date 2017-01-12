@@ -1,4 +1,4 @@
-package core
+package board
 
 type Grid struct {
 	cells []string
@@ -38,7 +38,7 @@ func (grid Grid) transpose(delimiter int) []Line {
 }
 
 func (grid Grid) getCellsAt(lines []Line, position int) Line {
-	newLine := newLine()
+	newLine := NewLine()
 	for _, line := range lines {
 		newLine = newLine.addCell(line.at(position))
 	}
@@ -46,7 +46,7 @@ func (grid Grid) getCellsAt(lines []Line, position int) Line {
 }
 
 func (grid Grid) splitCells(start, end int) Line {
-	splitCells := newLine()
+	splitCells := NewLine()
 	for _, cell := range grid.cells[start:end] {
 		splitCells = splitCells.addCell(cell)
 	}
@@ -61,7 +61,7 @@ func (grid Grid) splitLines(delimiter int) []Line {
 	return splitGrid
 }
 
-func (grid Grid) any(str string) bool {
+func (grid Grid) Any(str string) bool {
 	for _, cell := range grid.cells {
 		if cell == str {
 			return true

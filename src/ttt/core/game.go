@@ -2,15 +2,15 @@ package core
 
 type Game struct {
 	playerOne, playerTwo Player
-	board                Board
+	board                TTTBoard
 	rules                *Rules
 }
 
-func NewGame(playerOne, playerTwo Player, board Board, rule *Rules) Game {
+func NewGame(playerOne, playerTwo Player, board TTTBoard, rule *Rules) Game {
 	return Game{playerOne, playerTwo, board, rule}
 }
 
-func (game Game) Play(move int) Board {
+func (game Game) Play(move int) TTTBoard {
 	game.board = game.playMove(move)
 	return game.board
 }
@@ -19,7 +19,7 @@ func (game Game) currentMark() string {
 	return game.CurrentPlayer().Mark()
 }
 
-func (game Game) Board() Board {
+func (game Game) Board() TTTBoard {
 	return game.board
 }
 
@@ -47,7 +47,7 @@ func (game Game) CurrentPlayer() Player {
 	return game.playerTwo
 }
 
-func (game Game) playMove(move int) Board {
+func (game Game) playMove(move int) TTTBoard {
 	board := game.board
 	markedBoard := board.placeMark(move, game.currentMark())
 	return markedBoard
@@ -65,7 +65,7 @@ func (game Game) IsAWin() bool {
 	return game.rules.isAWin(game.data())
 }
 
-func (game Game) data() (Board, string, string) {
+func (game Game) data() (TTTBoard, string, string) {
 	return game.board, game.markOne(), game.markTwo()
 }
 

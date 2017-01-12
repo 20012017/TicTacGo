@@ -1,10 +1,10 @@
-package core
+package board
 
 type Line struct {
 	cells []string
 }
 
-func newLine(cells ...string) Line {
+func NewLine(cells ...string) Line {
 	return Line{cells}
 }
 
@@ -22,7 +22,7 @@ func (line Line) at(position int) string {
 	return line.cells[position]
 }
 
-func (line Line) all(condition func(string) bool) bool {
+func (line Line) All(condition func(string) bool) bool {
 	for _, cell := range line.cells {
 		if !condition(cell) {
 			return false
@@ -32,7 +32,7 @@ func (line Line) all(condition func(string) bool) bool {
 }
 
 func (line Line) reverseEachElement(reverseIndex int, row []string) Line {
-	reversedLine := newLine()
+	reversedLine := NewLine()
 	for i := 0; i < len(row); i++ {
 		reversedLine = reversedLine.addCell(row[reverseIndex])
 		reverseIndex--

@@ -1,9 +1,9 @@
-package core
+package board
 
 const rowLength, columnWidth, firstCell int = 3, 1, 0
 
 type WinningPositions struct {
-	rows, columns, diagonals, all []Line
+	rows, columns, diagonals, All []Line
 }
 
 func NewWinningPositions(grid Grid) WinningPositions {
@@ -35,7 +35,7 @@ func getPositions(allPositions, positions []Line) []Line {
 }
 
 func getDiagonal(lines []Line) Line {
-	diagonal := newLine()
+	diagonal := NewLine()
 	for index, line := range lines {
 		diagonal = diagonal.addCell(line.at(index))
 	}

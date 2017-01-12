@@ -26,7 +26,7 @@ func (display CliDisplay) prompt() {
 	display.write(display.script.prompt())
 }
 
-func (display CliDisplay) showBoard(board core.Board) {
+func (display CliDisplay) showBoard(board core.TTTBoard) {
 	displayBoard := new(DisplayBoard).show(board)
 	display.write(displayBoard)
 }

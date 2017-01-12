@@ -98,7 +98,7 @@ func (displaySpy *DisplaySpy) prompt() {
 	displaySpy.promptHasBeenCalled = true
 }
 
-func (displaySpy *DisplaySpy) showBoard(board core.Board) {
+func (displaySpy *DisplaySpy) showBoard(board core.TTTBoard) {
 	displaySpy.showBoardHasBeenCalled = true
 }
 

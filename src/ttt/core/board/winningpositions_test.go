@@ -1,4 +1,4 @@
-package core
+package board
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -11,40 +11,40 @@ var winningPositions WinningPositions = NewWinningPositions(
 
 func TestReturnsRows(t *testing.T) {
 	expectedRows := []Line{
-		newLine("1", "2", "3"),
-		newLine("4", "5", "6"),
-		newLine("7", "8", "9")}
+		NewLine("1", "2", "3"),
+		NewLine("4", "5", "6"),
+		NewLine("7", "8", "9")}
 
 	assert.Equal(t, expectedRows, winningPositions.rows)
 }
 
 func TestReturnsColumns(t *testing.T) {
 	expectedColumns := []Line{
-		newLine("1", "4", "7"),
-		newLine("2", "5", "8"),
-		newLine("3", "6", "9")}
+		NewLine("1", "4", "7"),
+		NewLine("2", "5", "8"),
+		NewLine("3", "6", "9")}
 
 	assert.Equal(t, expectedColumns, winningPositions.columns)
 }
 
 func TestReturnsDiagonals(t *testing.T) {
 	expectedDiagonals := []Line{
-		newLine("1", "5", "9"),
-		newLine("3", "5", "7")}
+		NewLine("1", "5", "9"),
+		NewLine("3", "5", "7")}
 
 	assert.Equal(t, expectedDiagonals, winningPositions.diagonals)
 }
 
 func TestReturnsAllPossibleWinningPositions(t *testing.T) {
 	allWinningPositions := []Line{
-		newLine("1", "2", "3"),
-		newLine("4", "5", "6"),
-		newLine("7", "8", "9"),
-		newLine("1", "4", "7"),
-		newLine("2", "5", "8"),
-		newLine("3", "6", "9"),
-		newLine("1", "5", "9"),
-		newLine("3", "5", "7")}
+		NewLine("1", "2", "3"),
+		NewLine("4", "5", "6"),
+		NewLine("7", "8", "9"),
+		NewLine("1", "4", "7"),
+		NewLine("2", "5", "8"),
+		NewLine("3", "6", "9"),
+		NewLine("1", "5", "9"),
+		NewLine("3", "5", "7")}
 
-	assert.Equal(t, allWinningPositions, winningPositions.all)
+	assert.Equal(t, allWinningPositions, winningPositions.All)
 }
