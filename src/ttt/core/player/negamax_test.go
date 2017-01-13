@@ -12,7 +12,7 @@ func TestScoresAWin(t *testing.T) {
 	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]string{"X", "X", "X", "", "", "", "", "", ""})
 
-	score := negamax.score(board, 1, "X", "O")
+	score := negamax.score(board, "X", "O")
 
 	assert.Equal(t, 10, score)
 }
@@ -21,7 +21,7 @@ func TestScoresALoss(t *testing.T) {
 	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]string{"O", "O", "O", "", "", "", "", "", ""})
 
-	score := negamax.score(board, 1, "X", "O")
+	score := negamax.score(board, "X", "O")
 
 	assert.Equal(t, -10, score)
 }
@@ -30,7 +30,7 @@ func TestScoresADraw(t *testing.T) {
 	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]string{"O", "X", "O", "X", "O", "X", "X", "O", "X"})
 
-	score := negamax.score(board, 1, "X", "O")
+	score := negamax.score(board, "X", "O")
 
 	assert.Equal(t, 0, score)
 }

@@ -1,90 +1,68 @@
 package player
 
 import (
-	"math"
 	"ttt/core"
 )
 
+const winScore, lossScore, drawScore int = 10, -10, 0
+
 type Negamax struct {
-	scores map[int]int
-	rules  *core.Rules
+	scores              map[int]int
+	rules               *core.Rules
+	colour, alpha, beta int
 }
 
 func NewNegamax(rules *core.Rules) *Negamax {
-	return &Negamax{make(map[int]int), rules}
+	return &Negamax{make(map[int]int), rules, 1, -9999, 9999}
 }
 
 func (negamax *Negamax) move(board core.Board, mark string) int {
-	firstMove, move := negamax.firstMove(board)
-	if firstMove {
-		return move
-	}
 	opponentMark := negamax.opponentMark(mark)
-	negamax.negamax(board, 0, 1, mark, opponentMark)
-	move = negamax.bestMove()
+	alpha, beta, colour := negamax.alpha, negamax.beta, negamax.colour
+	_, move := negamax.negamax(board, alpha, beta, colour, mark, opponentMark)
 	return move
 }
 
-func (negamax Negamax) opponentMark(mark string) string {
+func (negamax *Negamax) opponentMark(mark string) string {
 	if mark == core.MarkX() {
 		return core.MarkO()
 	}
 	return core.MarkX()
 }
 
-func (negamax Negamax) firstMove(board core.Board) (bool, int) {
-	markCount := board.CountMarks()
-	if markCount == 0 {
-		return true, 0
+func (negamax *Negamax) currentMark(color int, mark, opponentMark string) string {
+	if color == negamax.colour {
+		return mark
 	}
-	if markCount == 1 {
-		return true, 4
-	}
-	return false, 0
+	return opponentMark
 }
 
-func (negamax Negamax) getMark(color int, mark, opponentMark string) string {
-	if color == -1 {
-		return opponentMark
-	}
-	return mark
-}
-
-func (negamax Negamax) bestMove() int {
-	bestMove := -999999
-	bestScore := -999999
-	for move, score := range negamax.scores {
-		if score > bestScore {
-			bestScore = score
-			bestMove = move
-		}
-	}
-	return bestMove
-}
-
-func (negamax *Negamax) negamax(board core.Board, depth, colour int, mark, opponentMark string) int {
+func (negamax Negamax) negamax(board core.Board, alpha, beta, colour int, mark, opponentMark string) (int, int) {
 	if negamax.rules.IsOver(board, mark, opponentMark) {
-		return colour * negamax.score(board, depth, mark, opponentMark)
+		return colour * negamax.score(board, mark, opponentMark), -1
 	}
-	bestValue := -9999999
-	for _, move := range board.AvailableMoves() {
-		mark := negamax.getMark(colour, mark, opponentMark)
-		board := board.PlaceMark(move, mark)
-		value := -negamax.negamax(board, depth+1, -colour, mark, opponentMark)
-		bestValue = int(math.Max(float64(bestValue), float64(value)))
-		if depth == 0 {
-			negamax.scores[move] = value
+	var move int
+	for _, cell := range board.AvailableMoves() {
+		currentMark := negamax.currentMark(colour, mark, opponentMark)
+		board := board.PlaceMark(cell, currentMark)
+		score, _ := negamax.negamax(board, -beta, -alpha, -colour, mark, opponentMark)
+		score = -score
+		if score >= beta {
+			return score, cell
+		}
+		if score > alpha {
+			alpha, move = score, cell
 		}
 	}
-	return bestValue
+	return alpha, move
 }
 
-func (negamax Negamax) score(board core.Board, depth int, mark, opponentMark string) int {
+func (negamax Negamax) score(board core.Board, mark, opponentMark string) (score int) {
 	winner := negamax.rules.Winner(board, mark, opponentMark)
 	if winner == mark {
-		return 10 / depth
+		return winScore
 	} else if winner == opponentMark {
-		return -10 / depth
+		return lossScore
 	}
-	return 0
+	return drawScore
 }
