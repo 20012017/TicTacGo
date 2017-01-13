@@ -6,11 +6,11 @@ import (
 )
 
 type Game struct {
-	game    core.Game
+	game    *core.Game
 	display DisplayWriter
 }
 
-func NewCliGame(game core.Game, display DisplayWriter) Game {
+func NewCliGame(game *core.Game, display DisplayWriter) Game {
 	return Game{game, display}
 }
 
@@ -34,7 +34,7 @@ func (cliGame Game) displayResult(isWon bool, winner string) {
 	}
 }
 
-func (cliGame Game) play() {
+func (cliGame *Game) play() {
 	for !cliGame.game.IsOver() {
 		cliGame.initializeTurn()
 		cliGame.game.Play(cliGame.getValidMove())

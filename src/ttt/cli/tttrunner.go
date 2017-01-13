@@ -21,10 +21,11 @@ func (ttt TTT) createDisplay() DisplayWriter {
 	return display.NewDisplayWriter(os.Stdout, new(display.Script))
 }
 
-func (ttt TTT) createGame() core.Game {
+func (ttt TTT) createGame() *core.Game {
 	playerOne, playerTwo := ttt.createPlayers()
 	board := core.NewBoard(9)
-	return core.NewGame(playerOne, playerTwo, board, new(core.Rules))
+	game := core.NewGame(playerOne, playerTwo, board, new(core.Rules))
+	return &game
 }
 
 func (ttt TTT) createPlayers() (core.Player, core.Player) {

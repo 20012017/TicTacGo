@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/cli/display"
@@ -8,17 +9,16 @@ import (
 	"ttt/core"
 )
 
-type GameTest struct {
-}
+type GameTest struct{}
 
 var cliGameTest *GameTest = new(GameTest)
 
 func TestStartsAGame(t *testing.T) {
 	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
-	displaySpy := &display.Spy{}
+	displaySpy := new(display.Spy)
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(game, displaySpy)
+	cliGame := NewCliGame(&game, displaySpy)
 
 	cliGame.Start()
 
@@ -31,12 +31,13 @@ func TestStartsAGame(t *testing.T) {
 func TestPlaysADrawnGame(t *testing.T) {
 	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
-	displaySpy := &display.Spy{}
+	displaySpy := new(display.Spy)
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(game, displaySpy)
+	cliGame := NewCliGame(&game, displaySpy)
 
 	cliGame.Start()
 
+	fmt.Println(game.Board().Grid())
 	assert.True(t, game.IsOver())
 	assert.True(t, game.IsADraw())
 	assert.True(t, displaySpy.DrawHasBeenCalled)
@@ -48,7 +49,7 @@ func TestPlaysAWonGame(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := &display.Spy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(game, displaySpy)
+	cliGame := NewCliGame(&game, displaySpy)
 
 	cliGame.Start()
 
@@ -63,7 +64,7 @@ func TestDisplayErrorsForInvalidMove(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := &display.Spy{}
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(game, displaySpy)
+	cliGame := NewCliGame(&game, displaySpy)
 
 	cliGame.Start()
 
