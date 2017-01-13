@@ -21,8 +21,7 @@ var displaySpy *display.Spy = new(display.Spy)
 var menuValidator validators.Input = validators.NewInputValidator(1, 4)
 
 func TestPrintsAMenuOfGameChoices(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("1\n")
 
 	menu.show()
 
@@ -39,8 +38,7 @@ func TestReadsInput(t *testing.T) {
 }
 
 func TestReturnsTheCorrectMarksForPlayers(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("1\n")
 
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
@@ -50,8 +48,7 @@ func TestReturnsTheCorrectMarksForPlayers(t *testing.T) {
 }
 
 func TestReturnsAHumanVHumanGame(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("1\n")
 
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
@@ -62,8 +59,7 @@ func TestReturnsAHumanVHumanGame(t *testing.T) {
 }
 
 func TestReturnsAHumanVComputerGame(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("2\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("2\n")
 
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
@@ -74,8 +70,7 @@ func TestReturnsAHumanVComputerGame(t *testing.T) {
 }
 
 func TestReturnsAComputerVHumanGame(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("3\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("3\n")
 
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
@@ -86,8 +81,7 @@ func TestReturnsAComputerVHumanGame(t *testing.T) {
 }
 
 func TestReturnsAComputerVComputerGame(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("4\n")
 
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
@@ -98,8 +92,7 @@ func TestReturnsAComputerVComputerGame(t *testing.T) {
 }
 
 func TestLoopsForANumber(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("hello\n", "4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("hello\n")
 
 	menu.show()
 
@@ -107,8 +100,7 @@ func TestLoopsForANumber(t *testing.T) {
 }
 
 func TestLoopsForAValidNumber(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("10\n", "4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("10\n")
 
 	menu.show()
 
@@ -116,8 +108,7 @@ func TestLoopsForAValidNumber(t *testing.T) {
 }
 
 func TestDisplaysTheError(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("10\n", "4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("10\n")
 
 	menu.show()
 
@@ -126,8 +117,7 @@ func TestDisplaysTheError(t *testing.T) {
 }
 
 func TestClearsTheScreen(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("4\n")
 
 	menu.show()
 
@@ -135,12 +125,16 @@ func TestClearsTheScreen(t *testing.T) {
 }
 
 func TestWelcomesThePlayer(t *testing.T) {
-	inputReader := input.NewInputReaderSpy("4\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := menuTest.newMenuWithInput("4\n")
 
 	menu.show()
 
 	assert.True(t, displaySpy.WelcomeHasBeenCalled)
+}
+
+func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
+	inputReader := input.NewInputReaderSpy(userInput, "1\n")
+	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
 }
 
 func (menuTest MenuTest) getPlayers(game core.Game) (playerOne, playerTwo core.Player) {

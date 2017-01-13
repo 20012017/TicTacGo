@@ -7,6 +7,9 @@ import (
 	"strings"
 )
 
+const numberError, rangeError string = "Not a number", "Not between %d and %d"
+const invalidChoice = 0
+
 type Input struct {
 	start, end int
 }
@@ -34,7 +37,7 @@ func (inputValidator Input) validations() []func(int, error) (int, error) {
 
 func (inputValidator Input) validateRange(choice int, err error) (int, error) {
 	if choice < inputValidator.start || choice > inputValidator.end {
-		return 0, errors.New(fmt.Sprintf("Not between %d and %d",
+		return invalidChoice, errors.New(fmt.Sprintf(rangeError,
 			inputValidator.start, inputValidator.end))
 	}
 	return choice, nil
@@ -42,7 +45,7 @@ func (inputValidator Input) validateRange(choice int, err error) (int, error) {
 
 func (inputValidator Input) validateNumber(choice int, err error) (int, error) {
 	if err != nil {
-		return 0, errors.New("Not a number")
+		return invalidChoice, errors.New(numberError)
 	}
 	return choice, nil
 }

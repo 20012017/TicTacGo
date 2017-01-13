@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func TestDoesNotValidateWord(t *testing.T) {
-	inputValidator := Input{1, 4}
+var inputValidator Input = Input{1, 4}
 
+func TestDoesNotValidateWord(t *testing.T) {
 	choice, err := inputValidator.Validate("hello\n")
 
 	assert.Equal(t, 0, choice)
@@ -15,8 +15,6 @@ func TestDoesNotValidateWord(t *testing.T) {
 }
 
 func TestDoesNotValidateAMoveLargerThanTheInput(t *testing.T) {
-	inputValidator := Input{1, 4}
-
 	choice, err := inputValidator.Validate("10\n")
 
 	assert.Equal(t, 0, choice)
@@ -24,8 +22,6 @@ func TestDoesNotValidateAMoveLargerThanTheInput(t *testing.T) {
 }
 
 func TestDoesNotValidateAMoveSmallerThanTheInput(t *testing.T) {
-	inputValidator := Input{1, 4}
-
 	choice, err := inputValidator.Validate("-1\n")
 
 	assert.Equal(t, 0, choice)
@@ -33,8 +29,6 @@ func TestDoesNotValidateAMoveSmallerThanTheInput(t *testing.T) {
 }
 
 func TestValidatesAValidChoice(t *testing.T) {
-	inputValidator := Input{1, 4}
-
 	choice, err := inputValidator.Validate("1\n")
 
 	assert.Nil(t, err)

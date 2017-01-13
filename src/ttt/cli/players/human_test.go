@@ -52,6 +52,6 @@ func TestReturnsMoveValid(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func (humanPlayerTest HumanTest) newPlayer(move string) Human {
+func (humanTest HumanTest) newPlayer(move string) Human {
 	return Human{"X", input.NewInputReaderSpy(move), new(validators.Move)}
 }

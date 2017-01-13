@@ -17,9 +17,17 @@ func NewPlayerFactory(inputReader input.InputReader) Factory {
 
 func (factory Factory) Create(choice int, mark string) core.Player {
 	if choice == 1 {
-		moveValidator := new(validators.Move)
-		return NewHuman(mark, factory.inputReader, moveValidator)
+		return factory.createHumanPlayer(mark)
 	}
+	return factory.createComputerPlayer(mark)
+}
+
+func (factory Factory) createHumanPlayer(mark string) core.Player {
+	moveValidator := new(validators.Move)
+	return NewHuman(mark, factory.inputReader, moveValidator)
+}
+
+func (factory Factory) createComputerPlayer(mark string) core.Player {
 	negamax := player.NewNegamax(new(core.Rules))
 	return player.NewComputer(mark, negamax)
 }

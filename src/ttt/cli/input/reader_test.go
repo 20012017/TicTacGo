@@ -10,6 +10,7 @@ import (
 func TestReadsInput(t *testing.T) {
 	buffer := (new(bytes.Buffer))
 	buffer.WriteString("hello\n")
+
 	ioReader := bufio.NewReader(buffer)
 	inputReader := Reader{ioReader}
 

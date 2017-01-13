@@ -6,9 +6,10 @@ import (
 	"ttt/core"
 )
 
-func TestDoesNotValidateAWord(t *testing.T) {
-	moveValidator := Move{}
+var moveValidator Move = Move{}
+var markedBoard = core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
 
+func TestDoesNotValidateAWord(t *testing.T) {
 	move, err := moveValidator.Validate("hello\n", core.NewBoard(9))
 
 	assert.Equal(t, -1, move)
@@ -16,8 +17,6 @@ func TestDoesNotValidateAWord(t *testing.T) {
 }
 
 func TestDoesNotValidateAMoveLargerThanTheBoard(t *testing.T) {
-	moveValidator := Move{}
-
 	move, err := moveValidator.Validate("10\n", core.NewBoard(9))
 
 	assert.Equal(t, -1, move)
@@ -25,8 +24,6 @@ func TestDoesNotValidateAMoveLargerThanTheBoard(t *testing.T) {
 }
 
 func TestDoesNotValidateAMoveSmallerThanTheBoard(t *testing.T) {
-	moveValidator := Move{}
-
 	move, err := moveValidator.Validate("-1\n", core.NewBoard(9))
 
 	assert.Equal(t, -1, move)
@@ -34,9 +31,6 @@ func TestDoesNotValidateAMoveSmallerThanTheBoard(t *testing.T) {
 }
 
 func TestDoesNotValidateAMoveOnATakenCell(t *testing.T) {
-	moveValidator := Move{}
-
-	markedBoard := core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
 	move, err := moveValidator.Validate("1\n", markedBoard)
 
 	assert.Equal(t, -1, move)
@@ -44,8 +38,6 @@ func TestDoesNotValidateAMoveOnATakenCell(t *testing.T) {
 }
 
 func TestValidatesAValidMove(t *testing.T) {
-	moveValidator := Move{}
-
 	move, err := moveValidator.Validate("4\n", core.NewBoard(9))
 
 	assert.Equal(t, 3, move)

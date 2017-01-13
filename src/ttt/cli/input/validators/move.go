@@ -7,7 +7,7 @@ import (
 
 const takenError string = "Already taken"
 
-const minimumMove, indexDifference, sizeDifference int = 1, 1, 1
+const minimumMove, indexDifference, invalidMove int = 1, 1, -1
 
 type Move struct{}
 
@@ -15,7 +15,7 @@ func (validator Move) Validate(move string, board core.Board) (int, error) {
 	inputValidator := NewInputValidator(minimumMove, board.Size())
 	numberMove, err := inputValidator.Validate(move)
 	if err != nil {
-		return -1, err
+		return invalidMove, err
 	}
 	return validator.validateIndex(numberMove, board)
 }
@@ -23,15 +23,15 @@ func (validator Move) Validate(move string, board core.Board) (int, error) {
 func (validator Move) validateIndex(move int, board core.Board) (int, error) {
 	index := validator.convertToIndex(move)
 	if validator.isInvalidCell(index, board) {
-		return -1, errors.New(takenError)
+		return invalidMove, errors.New(takenError)
 	}
 	return index, nil
 }
 
 func (validator Move) convertToIndex(move int) int {
-	return move - 1
+	return move - indexDifference
 }
 
 func (validator Move) isInvalidCell(index int, board core.Board) bool {
-	return board.MarkAt(index) != ""
+	return board.MarkAt(index) != core.EmptyMark()
 }

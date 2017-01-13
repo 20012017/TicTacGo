@@ -28,33 +28,46 @@ func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory
 
 func (menu Menu) show() core.Game {
 	menu.welcome()
-	menu.display.Menu()
 	choice := menu.validGameChoice()
 	return menu.createGame(choice)
 }
 
 func (menu Menu) validGameChoice() int {
-	choice := menu.inputReader.Read()
+	choice := menu.readInput()
 	gameChoice, err := menu.menuValidator.Validate(choice)
 	for err != nil {
-		menu.display.Write(fmt.Sprintf("%s\n", err.Error()))
-		menu.display.InvalidChoice()
-		choice = menu.inputReader.Read()
+		menu.promptForValidInput(err)
+		choice = menu.readInput()
 		gameChoice, err = menu.menuValidator.Validate(choice)
 	}
 	return gameChoice
 }
 
+func (menu Menu) promptForValidInput(err error) {
+	menu.display.Write(fmt.Sprintf("%s\n", err.Error()))
+	menu.display.InvalidChoice()
+}
+
+func (menu Menu) readInput() string {
+	return menu.inputReader.Read()
+}
+
 func (menu Menu) welcome() {
 	menu.display.Clear()
 	menu.display.Welcome()
+	menu.display.Menu()
 }
 
 func (menu Menu) createGame(gameChoice int) core.Game {
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
+	playerOne, playerTwo := menu.createPlayers(playerOneType, playerTwoType)
+	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
+}
+
+func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, core.Player) {
 	playerOne := menu.playerFactory.Create(playerOneType, core.MarkX())
 	playerTwo := menu.playerFactory.Create(playerTwoType, core.MarkO())
-	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
+	return playerOne, playerTwo
 }
 
 func (menu Menu) getPlayerTypes(choice int) (int, int) {
