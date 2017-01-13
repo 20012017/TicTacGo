@@ -8,7 +8,7 @@ import (
 )
 
 type HumanTest struct {
-	board core.TTTBoard
+	board core.Board
 }
 
 var humanPlayerTest HumanTest = HumanTest{core.NewBoard(9)}

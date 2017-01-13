@@ -27,7 +27,7 @@ func (displaySpy *Spy) Prompt() {
 	displaySpy.PromptHasBeenCalled = true
 }
 
-func (displaySpy *Spy) ShowBoard(board core.TTTBoard) {
+func (displaySpy *Spy) ShowBoard(board core.Board) {
 	displaySpy.ShowBoardHasBeenCalled = true
 }
 

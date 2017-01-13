@@ -20,7 +20,7 @@ func (player Human) Mark() string {
 	return player.mark
 }
 
-func (player Human) Move(board core.TTTBoard) (int, error) {
+func (player Human) Move(board core.Board) (int, error) {
 	move := player.inputReader.Read()
 	_, err := player.moveValidator.Validate(move, board)
 	if err != nil {

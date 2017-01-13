@@ -97,18 +97,18 @@ func TestSwitchesThePlayer(t *testing.T) {
 	assert.Equal(t, "O", game.board.MarkAt(1))
 }
 
-func (gameTest GameTest) game(tttboard TTTBoard) Game {
+func (gameTest GameTest) game(tttboard Board) Game {
 	return NewGame(playerOne, playerTwo, tttboard, rule)
 }
 
-func (gameTest GameTest) wonBoard() TTTBoard {
+func (gameTest GameTest) wonBoard() Board {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
 		"X", "O", ""})
 }
 
-func (gameTest GameTest) fullBoard() TTTBoard {
+func (gameTest GameTest) fullBoard() Board {
 	return NewMarkedBoard([]string{
 		"X", "O", "X",
 		"O", "X", "O",
@@ -123,6 +123,6 @@ func (player PlayerDouble) Mark() string {
 	return player.mark
 }
 
-func (player PlayerDouble) Move(board TTTBoard) (int, error) {
+func (player PlayerDouble) Move(board Board) (int, error) {
 	return 0, nil
 }

@@ -119,6 +119,6 @@ func (boardTest BoardTest) newLine(cell1, cell2, cell3 string) grid.Line {
 	return grid.NewLine(cell1, cell2, cell3)
 }
 
-func (boardTest BoardTest) newBoard() TTTBoard {
+func (boardTest BoardTest) newBoard() Board {
 	return NewBoard(9)
 }

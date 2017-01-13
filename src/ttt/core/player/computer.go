@@ -19,7 +19,7 @@ func (computer Computer) Mark() string {
 	return computer.mark
 }
 
-func (computer Computer) firstMove(board core.TTTBoard) (bool, int) {
+func (computer Computer) firstMove(board core.Board) (bool, int) {
 	markCount := board.CountMarks()
 	if markCount == 0 {
 		return true, 0
@@ -37,7 +37,7 @@ func (computer Computer) getMark(color int) string {
 	return computer.mark
 }
 
-func (computer *Computer) Move(board core.TTTBoard) (int, error) {
+func (computer *Computer) Move(board core.Board) (int, error) {
 	firstMove, move := computer.firstMove(board)
 	if firstMove {
 		return move, nil
@@ -59,7 +59,7 @@ func (computer Computer) bestMove() int {
 	return bestMove
 }
 
-func (computer *Computer) negamax(board core.TTTBoard, depth, colour int) int {
+func (computer *Computer) negamax(board core.Board, depth, colour int) int {
 	if computer.rules.IsOver(board, computer.mark, computer.opponentMark) {
 		return colour * computer.score(board, depth)
 	}
@@ -76,7 +76,7 @@ func (computer *Computer) negamax(board core.TTTBoard, depth, colour int) int {
 	return bestValue
 }
 
-func (computer Computer) score(board core.TTTBoard, depth int) int {
+func (computer Computer) score(board core.Board, depth int) int {
 	winner := computer.rules.Winner(board, computer.mark, computer.opponentMark)
 	if winner == computer.mark {
 		return 10 / depth
