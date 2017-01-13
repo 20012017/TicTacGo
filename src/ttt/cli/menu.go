@@ -19,27 +19,35 @@ type Menu struct {
 	display       DisplayWriter
 	inputReader   input.InputReader
 	playerFactory players.Factory
-	menuValidator validators.Menu
+	menuValidator validators.Input
 }
 
-func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory players.Factory, menuValidator validators.Menu) Menu {
+func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory players.Factory, menuValidator validators.Input) Menu {
 	return Menu{display, inputReader, playerFactory, menuValidator}
 }
 
 func (menu Menu) show() core.Game {
-	menu.display.Clear()
-	menu.display.Welcome()
+	menu.welcome()
 	menu.display.Menu()
+	choice := menu.validGameChoice()
+	return menu.createGame(choice)
+}
+
+func (menu Menu) validGameChoice() int {
 	choice := menu.inputReader.Read()
-	valid, err := menu.menuValidator.Validate(choice)
-	for valid != true {
+	gameChoice, err := menu.menuValidator.Validate(choice)
+	for err != nil {
 		menu.display.Write(fmt.Sprintf("%s\n", err.Error()))
 		menu.display.InvalidChoice()
 		choice = menu.inputReader.Read()
-		valid, err = menu.menuValidator.Validate(choice)
+		gameChoice, err = menu.menuValidator.Validate(choice)
 	}
-	gameChoice := menu.menuValidator.ValidChoice(choice)
-	return menu.createGame(gameChoice)
+	return gameChoice
+}
+
+func (menu Menu) welcome() {
+	menu.display.Clear()
+	menu.display.Welcome()
 }
 
 func (menu Menu) createGame(gameChoice int) core.Game {

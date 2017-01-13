@@ -122,7 +122,7 @@ func TestDisplaysTheError(t *testing.T) {
 	menu.show()
 
 	assert.True(t, displaySpy.WriteHasBeenCalled)
-	assert.Equal(t, "Not in menu", displaySpy.WriteArgument)
+	assert.Equal(t, "Not between 1 and 4\n", displaySpy.WriteArgument)
 }
 
 func TestClearsTheScreen(t *testing.T) {

@@ -24,7 +24,9 @@ func TestWelcomesPlayer(t *testing.T) {
 
 	writer.Welcome()
 
-	assert.Equal(t, "Welcome to Tic Tac Toe\n", buffer.String())
+	assert.Equal(t,
+		"**********************Welcome to Tic Tac Toe**********************\n",
+		buffer.String())
 }
 
 func TestPrintsBoard(t *testing.T) {
@@ -41,7 +43,9 @@ func TestPromptsForMove(t *testing.T) {
 
 	writer.Prompt()
 
-	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9\n", buffer.String())
+	assert.Equal(t,
+		"Where would you like to make a move?\nPlease choose a space between 1 and 9\n",
+		buffer.String())
 }
 
 func TestDraw(t *testing.T) {
@@ -91,7 +95,7 @@ func TestInvalidChoice(t *testing.T) {
 
 	writer.InvalidChoice()
 
-	assert.Equal(t, "Please enter a number between 1 and 4", buffer.String())
+	assert.Equal(t, "Please enter a number between 1 and 4\n", buffer.String())
 }
 
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {

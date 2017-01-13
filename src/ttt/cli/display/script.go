@@ -1,9 +1,11 @@
 package display
 
+import "fmt"
+
 type Script struct{}
 
 func (script Script) welcome() string {
-	return "Welcome to Tic Tac Toe\n"
+	return "**********************Welcome to Tic Tac Toe**********************\n"
 }
 
 func (script Script) prompt() string {
@@ -19,7 +21,7 @@ func (script Script) goodbye() string {
 }
 
 func (script Script) win(mark string) string {
-	return "X wins!\n"
+	return fmt.Sprintf("%s wins!\n", mark)
 }
 
 func (script Script) menu() string {
@@ -27,5 +29,5 @@ func (script Script) menu() string {
 }
 
 func (script Script) invalidChoice() string {
-	return "Please enter a number between 1 and 4"
+	return "Please enter a number between 1 and 4\n"
 }
