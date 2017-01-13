@@ -14,21 +14,35 @@ func NewMenuValidator(start, end int) Menu {
 	return Menu{start, end}
 }
 
-func (menu Menu) Validate(input string) (bool, error) {
-	input = menu.formatInput(input)
-	choice, err := menu.convertToInt(input)
-	if err != nil {
-		return false, errors.New("Not a number")
+func (menu Menu) Validate(input string) (choice int, err error) {
+	for _, validation := range menu.validations() {
+		choice, err = validation(menu.convertToInt(menu.formatInput(input)))
+		if err != nil {
+			return choice, err
+		}
 	}
-	if choice < menu.start || choice > menu.end {
-		return false, errors.New("Not in menu")
-	}
-	return true, nil
+	return choice, nil
 }
 
-func (menu Menu) ValidChoice(input string) int {
-	choice, _ := menu.convertToInt(menu.formatInput(input))
-	return choice
+func (menu Menu) validations() []func(int, error) (int, error) {
+	return []func(int, error) (int, error){
+		menu.validateNumber,
+		menu.validateRange,
+	}
+}
+
+func (menu Menu) validateRange(choice int, err error) (int, error) {
+	if choice < menu.start || choice > menu.end {
+		return 0, errors.New("Not in menu")
+	}
+	return choice, nil
+}
+
+func (menu Menu) validateNumber(choice int, err error) (int, error) {
+	if err != nil {
+		return 0, errors.New("Not a number")
+	}
+	return choice, nil
 }
 
 func (menu Menu) formatInput(input string) string {
