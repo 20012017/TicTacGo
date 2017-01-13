@@ -2,26 +2,26 @@ package core
 
 import (
 	"math"
-	"ttt/core/board"
+	"ttt/core/grid"
 )
 
 const empty string = ""
 
 type TTTBoard struct {
-	grid board.Grid
+	grid grid.Grid
 	size int
 }
 
 func NewBoard(size int) TTTBoard {
-	grid := board.NewGrid(size)
+	grid := grid.NewGrid(size)
 	return TTTBoard{grid, size}
 }
 
 func NewMarkedBoard(cells []string) TTTBoard {
-	return TTTBoard{board.NewPopulatedGrid(cells), len(cells)}
+	return TTTBoard{grid.NewPopulatedGrid(cells), len(cells)}
 }
 
-func (tttboard TTTBoard) Grid() board.Grid {
+func (tttboard TTTBoard) Grid() grid.Grid {
 	return tttboard.grid
 }
 
@@ -56,8 +56,8 @@ func (tttboard TTTBoard) isFull() bool {
 	return !tttboard.grid.Any(empty)
 }
 
-func (tttboard TTTBoard) winningPositions() []board.Line {
-	return board.NewWinningPositions(tttboard.grid, tttboard.rowLength()).All
+func (tttboard TTTBoard) winningPositions() []grid.Line {
+	return grid.NewWinningPositions(tttboard.grid, tttboard.rowLength()).All
 }
 
 func (tttboard TTTBoard) CountMarks() int {

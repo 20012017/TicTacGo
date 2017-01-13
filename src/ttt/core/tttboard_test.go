@@ -3,7 +3,7 @@ package core
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"ttt/core/board"
+	"ttt/core/grid"
 )
 
 var boardTest BoardTest = BoardTest{}
@@ -103,16 +103,20 @@ func TestAvailableMovesDecreaseAfterMark(t *testing.T) {
 	assert.Equal(t, 6, len(newAvailablePositions))
 }
 
-func (boardTest BoardTest) allWinningPositions() []board.Line {
-	return []board.Line{
-		board.NewLine("1", "2", "3"),
-		board.NewLine("4", "5", "6"),
-		board.NewLine("7", "8", "9"),
-		board.NewLine("1", "4", "7"),
-		board.NewLine("2", "5", "8"),
-		board.NewLine("3", "6", "9"),
-		board.NewLine("1", "5", "9"),
-		board.NewLine("3", "5", "7")}
+func (boardTest BoardTest) allWinningPositions() []grid.Line {
+	return []grid.Line{
+		boardTest.newLine("1", "2", "3"),
+		boardTest.newLine("4", "5", "6"),
+		boardTest.newLine("7", "8", "9"),
+		boardTest.newLine("1", "4", "7"),
+		boardTest.newLine("2", "5", "8"),
+		boardTest.newLine("3", "6", "9"),
+		boardTest.newLine("1", "5", "9"),
+		boardTest.newLine("3", "5", "7")}
+}
+
+func (boardTest BoardTest) newLine(cell1, cell2, cell3 string) grid.Line {
+	return grid.NewLine(cell1, cell2, cell3)
 }
 
 func (boardTest BoardTest) newBoard() TTTBoard {

@@ -1,6 +1,6 @@
 package core
 
-import "ttt/core/board"
+import "ttt/core/grid"
 
 type Rules struct{}
 
@@ -20,7 +20,7 @@ func (rule Rules) Winner(tttboard TTTBoard, markOne, markTwo string) string {
 	return ""
 }
 
-func (rule Rules) winFor(line board.Line, mark string) bool {
+func (rule Rules) winFor(line grid.Line, mark string) bool {
 	return line.All(matches(mark))
 }
 
