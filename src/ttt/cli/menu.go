@@ -1,9 +1,8 @@
 package cli
 
 import (
-	"strconv"
-	"strings"
 	"ttt/cli/input"
+	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
 )
@@ -19,21 +18,24 @@ type Menu struct {
 	display       DisplayWriter
 	inputReader   input.InputReader
 	playerFactory players.Factory
+	menuValidator validators.Menu
 }
 
-func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory players.Factory) Menu {
-	return Menu{display, inputReader, playerFactory}
+func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory players.Factory, menuValidator validators.Menu) Menu {
+	return Menu{display, inputReader, playerFactory, menuValidator}
 }
 
 func (menu Menu) show() core.Game {
 	menu.display.Menu()
 	choice := menu.inputReader.Read()
-	gameChoice, err := strconv.Atoi(strings.TrimSpace(choice))
-	for err != nil || gameChoice < 1 || gameChoice > 4 {
+	valid, err := menu.menuValidator.Validate(choice)
+	for valid != true {
+		menu.display.Write(err.Error())
 		menu.display.InvalidChoice()
 		choice = menu.inputReader.Read()
-		gameChoice, err = strconv.Atoi(strings.TrimSpace(choice))
+		valid, err = menu.menuValidator.Validate(choice)
 	}
+	gameChoice := menu.menuValidator.ValidChoice(choice)
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
 	playerOne := menu.playerFactory.Create(playerOneType, core.MarkX())
 	playerTwo := menu.playerFactory.Create(playerTwoType, core.MarkO())
