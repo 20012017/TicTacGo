@@ -21,3 +21,7 @@ func (script Script) goodbye() string {
 func (script Script) win(mark string) string {
 	return "X wins!\n"
 }
+
+func (script Script) menu() string {
+	return "Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n"
+}

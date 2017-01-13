@@ -12,6 +12,7 @@ type Spy struct {
 	ClearHasBeenCalled     bool
 	WriteHasBeenCalled     bool
 	WriteArgument          string
+	MenuWasCalled          bool
 }
 
 func (displaySpy *Spy) Write(message string) {
@@ -45,4 +46,8 @@ func (displaySpy *Spy) Win(mark string) {
 
 func (displaySpy *Spy) Clear() {
 	displaySpy.ClearHasBeenCalled = true
+}
+
+func (displaySpy *Spy) Menu() {
+	displaySpy.MenuWasCalled = true
 }

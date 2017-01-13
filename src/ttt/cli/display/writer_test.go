@@ -76,6 +76,14 @@ func TestClearScreen(t *testing.T) {
 	assert.Equal(t, "\033[2J\033[;H", buffer.String())
 }
 
+func TestMenu(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.Menu()
+
+	assert.Equal(t, "Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n", buffer.String())
+}
+
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	writer := NewDisplayWriter(buffer, script)

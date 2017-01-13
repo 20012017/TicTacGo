@@ -46,3 +46,7 @@ func (writer Writer) Win(mark string) {
 func (writer Writer) Clear() {
 	writer.Write("\033[2J\033[;H")
 }
+
+func (writer Writer) Menu() {
+	writer.Write(writer.script.menu())
+}
