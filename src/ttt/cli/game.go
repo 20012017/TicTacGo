@@ -5,28 +5,28 @@ import (
 	"ttt/core"
 )
 
-type CliGame struct {
-	game    core.Game
+type Game struct {
+	game    *core.Game
 	display DisplayWriter
 }
 
-func NewCliGame(game core.Game, display DisplayWriter) CliGame {
-	return CliGame{game, display}
+func NewCliGame(game *core.Game, display DisplayWriter) Game {
+	return Game{game, display}
 }
 
-func (cliGame CliGame) Start() {
+func (cliGame Game) Start() {
 	cliGame.welcome()
 	cliGame.play()
 	cliGame.end()
 }
 
-func (cliGame CliGame) end() {
+func (cliGame Game) end() {
 	cliGame.showBoard()
 	cliGame.displayResult(cliGame.game.Result())
 	cliGame.display.Goodbye()
 }
 
-func (cliGame CliGame) displayResult(isWon bool, winner string) {
+func (cliGame Game) displayResult(isWon bool, winner string) {
 	if isWon {
 		cliGame.display.Win(winner)
 	} else {
@@ -34,14 +34,14 @@ func (cliGame CliGame) displayResult(isWon bool, winner string) {
 	}
 }
 
-func (cliGame CliGame) play() {
+func (cliGame *Game) play() {
 	for !cliGame.game.IsOver() {
 		cliGame.initializeTurn()
 		cliGame.game.Play(cliGame.getValidMove())
 	}
 }
 
-func (cliGame CliGame) getValidMove() int {
+func (cliGame Game) getValidMove() int {
 	move, err := cliGame.currentPlayer().Move(cliGame.board())
 	for err != nil {
 		cliGame.display.Write(fmt.Sprintf("%s\n", err.Error()))
@@ -51,25 +51,25 @@ func (cliGame CliGame) getValidMove() int {
 	return move
 }
 
-func (cliGame CliGame) initializeTurn() {
+func (cliGame Game) initializeTurn() {
 	cliGame.showBoard()
 	cliGame.display.Prompt()
 }
 
-func (cliGame CliGame) welcome() {
+func (cliGame Game) welcome() {
 	cliGame.display.Clear()
 	cliGame.display.Welcome()
 }
 
-func (cliGame CliGame) showBoard() {
+func (cliGame Game) showBoard() {
 	cliGame.display.Clear()
 	cliGame.display.ShowBoard(cliGame.board())
 }
 
-func (cliGame CliGame) board() core.TTTBoard {
+func (cliGame Game) board() core.Board {
 	return cliGame.game.Board()
 }
 
-func (cliGame CliGame) currentPlayer() core.Player {
+func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
 }

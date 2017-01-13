@@ -1,4 +1,4 @@
-package board
+package grid
 
 type Line struct {
 	cells []string

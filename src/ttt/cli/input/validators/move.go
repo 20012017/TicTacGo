@@ -13,7 +13,7 @@ const numberError, boundsError, takenError string = "Not a number",
 
 type Move struct{}
 
-func (validator Move) Validate(move string, board core.TTTBoard) (bool, error) {
+func (validator Move) Validate(move string, board core.Board) (bool, error) {
 	numberMove, err := validator.convertToInt(validator.formatInput(move))
 	if validator.isNotANumber(err) {
 		return false, errors.New(numberError)
@@ -32,20 +32,20 @@ func (validator Move) ValidMove(move string) int {
 	return validator.convertToIndex(numberMove)
 }
 
-func (validator Move) validations() []func(int, core.TTTBoard) (bool, error) {
-	return []func(int, core.TTTBoard) (bool, error){
+func (validator Move) validations() []func(int, core.Board) (bool, error) {
+	return []func(int, core.Board) (bool, error){
 		validator.validateBounds,
 		validator.validateIndex}
 }
 
-func (validator Move) validateIndex(move int, board core.TTTBoard) (bool, error) {
+func (validator Move) validateIndex(move int, board core.Board) (bool, error) {
 	if validator.isInvalidCell(move-1, board) {
 		return false, errors.New(takenError)
 	}
 	return true, nil
 }
 
-func (validator Move) validateBounds(move int, board core.TTTBoard) (bool, error) {
+func (validator Move) validateBounds(move int, board core.Board) (bool, error) {
 	if validator.isOutOfBounds(move, board) {
 		return false, errors.New(boundsError)
 	}
@@ -56,12 +56,12 @@ func (validator Move) convertToIndex(move int) int {
 	return move - 1
 }
 
-func (validator Move) isInvalidCell(index int, board core.TTTBoard) bool {
+func (validator Move) isInvalidCell(index int, board core.Board) bool {
 	return board.MarkAt(index) != ""
 }
 
-func (validator Move) isOutOfBounds(move int, board core.TTTBoard) bool {
-	return move >= board.Size() || move < 1
+func (validator Move) isOutOfBounds(move int, board core.Board) bool {
+	return move >= board.Size()+1 || move < 1
 }
 
 func (validator Move) isNotANumber(err error) bool {

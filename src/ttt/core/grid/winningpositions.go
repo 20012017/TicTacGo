@@ -1,4 +1,4 @@
-package board
+package grid
 
 const rowLength, columnWidth, firstCell int = 3, 1, 0
 

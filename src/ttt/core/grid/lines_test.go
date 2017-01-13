@@ -1,4 +1,4 @@
-package board
+package grid
 
 import (
 	"github.com/stretchr/testify/assert"

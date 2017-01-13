@@ -26,7 +26,7 @@ func (writer Writer) Prompt() {
 	writer.Write(writer.script.prompt())
 }
 
-func (writer Writer) ShowBoard(board core.TTTBoard) {
+func (writer Writer) ShowBoard(board core.Board) {
 	displayBoard := new(Board).show(board)
 	writer.Write(displayBoard)
 }

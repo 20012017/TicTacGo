@@ -12,15 +12,15 @@ type Human struct {
 	moveValidator *validators.Move
 }
 
-func NewHuman(mark string, inputReader input.InputReader, moveValidator *validators.Move) Human {
-	return Human{mark, inputReader, moveValidator}
+func NewHuman(mark string, inputReader input.InputReader, moveValidator *validators.Move) *Human {
+	return &Human{mark, inputReader, moveValidator}
 }
 
 func (player Human) Mark() string {
 	return player.mark
 }
 
-func (player Human) Move(board core.TTTBoard) (int, error) {
+func (player Human) Move(board core.Board) (int, error) {
 	move := player.inputReader.Read()
 	_, err := player.moveValidator.Validate(move, board)
 	if err != nil {

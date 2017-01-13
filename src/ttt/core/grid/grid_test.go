@@ -1,4 +1,4 @@
-package board
+package grid
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -53,6 +53,15 @@ func TestFull(t *testing.T) {
 	grid := gridTest.grid()
 
 	assert.False(t, grid.Any(""))
+}
+
+func TestMark(t *testing.T) {
+	grid := NewGrid(9)
+
+	markedGrid := grid.Mark(0, "X")
+
+	assert.Equal(t, []string{"", "", "", "", "", "", "", "", ""}, grid.Cells())
+	assert.Equal(t, []string{"X", "", "", "", "", "", "", "", ""}, markedGrid.Cells())
 }
 
 func (gridTest GridTest) grid() Grid {

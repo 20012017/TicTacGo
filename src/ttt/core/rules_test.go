@@ -49,7 +49,7 @@ func TestKnowsTheWinnerWhenX(t *testing.T) {
 		"O", "X", "O",
 		"O", "X", "O"})
 
-	assert.Equal(t, "X", rules.winner(board, "X", "O"))
+	assert.Equal(t, "X", rules.Winner(board, "X", "O"))
 }
 
 func TestKnowsTheWinnerWhenO(t *testing.T) {
@@ -58,7 +58,7 @@ func TestKnowsTheWinnerWhenO(t *testing.T) {
 		"", "", "",
 		"", "", ""})
 
-	assert.Equal(t, "O", rules.winner(board, "X", "O"))
+	assert.Equal(t, "O", rules.Winner(board, "X", "O"))
 }
 
 func TestKnowsThereIsNoWinner(t *testing.T) {
@@ -67,5 +67,23 @@ func TestKnowsThereIsNoWinner(t *testing.T) {
 		"", "", "",
 		"", "", ""})
 
-	assert.Equal(t, "", rules.winner(board, "X", "O"))
+	assert.Equal(t, "", rules.Winner(board, "X", "O"))
+}
+
+func TestKnowsItIsOverWhenADraw(t *testing.T) {
+	board := NewMarkedBoard([]string{
+		"X", "O", "X",
+		"O", "X", "O",
+		"O", "X", "O"})
+
+	assert.True(t, rules.IsOver(board, "X", "O"))
+}
+
+func TestKnowsItIsOverWhenAWin(t *testing.T) {
+	board := NewMarkedBoard([]string{
+		"X", "X", "O",
+		"O", "X", "O",
+		"O", "X", "O"})
+
+	assert.True(t, rules.IsOver(board, "X", "O"))
 }

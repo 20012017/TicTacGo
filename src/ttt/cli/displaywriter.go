@@ -9,7 +9,7 @@ type DisplayWriter interface {
 
 	Prompt()
 
-	ShowBoard(board core.TTTBoard)
+	ShowBoard(board core.Board)
 
 	Draw()
 

@@ -19,7 +19,7 @@ func (player *Fake) Mark() string {
 	return player.mark
 }
 
-func (player *Fake) Move(board core.TTTBoard) (int, error) {
+func (player *Fake) Move(board core.Board) (int, error) {
 	move := player.moves[player.currentMove]
 	player.currentMove = player.currentMove + 1
 	return move, player.setError(move)
