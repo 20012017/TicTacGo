@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"ttt/cli/input"
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
@@ -26,21 +27,26 @@ func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory
 }
 
 func (menu Menu) show() core.Game {
+	menu.display.Clear()
+	menu.display.Welcome()
 	menu.display.Menu()
 	choice := menu.inputReader.Read()
 	valid, err := menu.menuValidator.Validate(choice)
 	for valid != true {
-		menu.display.Write(err.Error())
+		menu.display.Write(fmt.Sprintf("%s\n", err.Error()))
 		menu.display.InvalidChoice()
 		choice = menu.inputReader.Read()
 		valid, err = menu.menuValidator.Validate(choice)
 	}
 	gameChoice := menu.menuValidator.ValidChoice(choice)
+	return menu.createGame(gameChoice)
+}
+
+func (menu Menu) createGame(gameChoice int) core.Game {
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
 	playerOne := menu.playerFactory.Create(playerOneType, core.MarkX())
 	playerTwo := menu.playerFactory.Create(playerTwoType, core.MarkO())
-	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	return game
+	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 }
 
 func (menu Menu) getPlayerTypes(choice int) (int, int) {
