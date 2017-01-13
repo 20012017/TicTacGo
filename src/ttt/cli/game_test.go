@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/cli/display"
@@ -37,7 +36,6 @@ func TestPlaysADrawnGame(t *testing.T) {
 
 	cliGame.Start()
 
-	fmt.Println(game.Board().Grid())
 	assert.True(t, game.IsOver())
 	assert.True(t, game.IsADraw())
 	assert.True(t, displaySpy.DrawHasBeenCalled)

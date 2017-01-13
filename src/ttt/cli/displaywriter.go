@@ -20,4 +20,6 @@ type DisplayWriter interface {
 	Clear()
 
 	Menu()
+
+	InvalidChoice()
 }

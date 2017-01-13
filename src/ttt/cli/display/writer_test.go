@@ -81,7 +81,17 @@ func TestMenu(t *testing.T) {
 
 	writer.Menu()
 
-	assert.Equal(t, "Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n", buffer.String())
+	assert.Equal(t,
+		"Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n",
+		buffer.String())
+}
+
+func TestInvalidChoice(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.InvalidChoice()
+
+	assert.Equal(t, "Please enter a number between 1 and 4", buffer.String())
 }
 
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {

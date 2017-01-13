@@ -25,3 +25,7 @@ func (script Script) win(mark string) string {
 func (script Script) menu() string {
 	return "Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n"
 }
+
+func (script Script) invalidChoice() string {
+	return "Please enter a number between 1 and 4"
+}

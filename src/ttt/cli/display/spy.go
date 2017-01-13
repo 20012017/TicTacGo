@@ -13,6 +13,7 @@ type Spy struct {
 	WriteHasBeenCalled     bool
 	WriteArgument          string
 	MenuWasCalled          bool
+	InvalidChoiceWasCalled bool
 }
 
 func (displaySpy *Spy) Write(message string) {
@@ -50,4 +51,8 @@ func (displaySpy *Spy) Clear() {
 
 func (displaySpy *Spy) Menu() {
 	displaySpy.MenuWasCalled = true
+}
+
+func (displaySpy *Spy) InvalidChoice() {
+	displaySpy.InvalidChoiceWasCalled = true
 }

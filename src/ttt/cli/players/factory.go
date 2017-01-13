@@ -15,7 +15,7 @@ func NewPlayerFactory(inputReader input.InputReader) Factory {
 	return Factory{inputReader}
 }
 
-func (factory Factory) player(choice int, mark string) core.Player {
+func (factory Factory) Create(choice int, mark string) core.Player {
 	if choice == 1 {
 		moveValidator := new(validators.Move)
 		return NewHuman(mark, factory.inputReader, moveValidator)

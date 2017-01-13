@@ -10,7 +10,7 @@ import (
 func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
 	playerFactory := NewPlayerFactory(new(InputReaderDummy))
 
-	player := playerFactory.player(1, "X")
+	player := playerFactory.Create(1, "X")
 	typeOfPlayer := reflect.TypeOf(player)
 
 	assert.Equal(t, "*players.Human", fmt.Sprint(typeOfPlayer))
@@ -20,7 +20,7 @@ func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
 func TestPlayerFactoryReturnsComputerPlayer(t *testing.T) {
 	playerFactory := NewPlayerFactory(new(InputReaderDummy))
 
-	player := playerFactory.player(2, "X")
+	player := playerFactory.Create(2, "X")
 	typeOfPlayer := reflect.TypeOf(player)
 
 	assert.Equal(t, "*player.Computer", fmt.Sprint(typeOfPlayer))

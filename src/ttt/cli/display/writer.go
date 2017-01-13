@@ -50,3 +50,7 @@ func (writer Writer) Clear() {
 func (writer Writer) Menu() {
 	writer.Write(writer.script.menu())
 }
+
+func (writer Writer) InvalidChoice() {
+	writer.Write(writer.script.invalidChoice())
+}
