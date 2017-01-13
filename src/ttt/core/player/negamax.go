@@ -26,10 +26,10 @@ func (negamax *Negamax) move(board core.Board, mark string) int {
 }
 
 func (negamax Negamax) opponentMark(mark string) string {
-	if mark == "X" {
-		return "O"
+	if mark == core.MarkX() {
+		return core.MarkO()
 	}
-	return "X"
+	return core.MarkX()
 }
 
 func (negamax Negamax) firstMove(board core.Board) (bool, int) {

@@ -32,6 +32,6 @@ func (ttt TTT) createPlayers() (core.Player, core.Player) {
 	reader := input.NewReader(bufio.NewReader(os.Stdin))
 	validator := new(validators.Move)
 	playerOne := players.NewHuman("X", reader, validator)
-	playerTwo := player.NewComputer("O", "X", new(core.Rules))
+	playerTwo := player.NewComputer("O", player.NewNegamax(new(core.Rules)))
 	return playerOne, playerTwo
 }

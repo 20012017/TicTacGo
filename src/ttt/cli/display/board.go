@@ -24,7 +24,7 @@ func (display Board) formatBoard(board core.Board) []string {
 }
 
 func (display Board) formatCell(cell string) string {
-	if cell == "" {
+	if cell == core.EmptyMark() {
 		return "-"
 	}
 	return cell

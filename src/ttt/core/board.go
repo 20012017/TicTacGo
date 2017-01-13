@@ -5,7 +5,7 @@ import (
 	"ttt/core/grid"
 )
 
-const empty string = ""
+var emptyCell string = EmptyMark()
 
 type Board struct {
 	grid grid.Grid

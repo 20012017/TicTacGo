@@ -1,9 +1,18 @@
 package core
 
-type Mark struct {
-	X, O, Empty string
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
+
+func TestHasAnXMark(t *testing.T) {
+	assert.Equal(t, "X", MarkX())
 }
 
-func NewMarks(x, o, empty string) Mark {
-	return Mark{x, o, empty}
+func TestHasAnOMark(t *testing.T) {
+	assert.Equal(t, "O", MarkO())
+}
+
+func TestHasAnEmptyMark(t *testing.T) {
+	assert.Equal(t, "", EmptyMark())
 }

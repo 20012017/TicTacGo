@@ -1,24 +1,17 @@
 package core
 
-import (
-	"github.com/stretchr/testify/assert"
-	"testing"
-)
+const x string = "X"
+const o string = "O"
+const empty string = ""
 
-func TestHasAnXMark(t *testing.T) {
-	marks := NewMarks("X", "O", "")
-
-	assert.Equal(t, "X", marks.X)
+func MarkX() string {
+	return x
 }
 
-func TestHasAnOMark(t *testing.T) {
-	marks := NewMarks("X", "O", "")
-
-	assert.Equal(t, "O", marks.O)
+func MarkO() string {
+	return o
 }
 
-func TestHasAnEmptyMark(t *testing.T) {
-	marks := NewMarks("X", "O", "")
-
-	assert.Equal(t, "", marks.Empty)
+func EmptyMark() string {
+	return empty
 }
