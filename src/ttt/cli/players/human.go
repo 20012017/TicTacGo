@@ -12,8 +12,8 @@ type Human struct {
 	moveValidator *validators.Move
 }
 
-func NewHuman(mark string, inputReader input.InputReader, moveValidator *validators.Move) Human {
-	return Human{mark, inputReader, moveValidator}
+func NewHuman(mark string, inputReader input.InputReader, moveValidator *validators.Move) *Human {
+	return &Human{mark, inputReader, moveValidator}
 }
 
 func (player Human) Mark() string {

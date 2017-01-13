@@ -11,8 +11,8 @@ type Computer struct {
 	scores             map[int]int
 }
 
-func NewComputer(mark, opponentMark string, rules *core.Rules) Computer {
-	return Computer{mark, opponentMark, rules, make(map[int]int)}
+func NewComputer(mark, opponentMark string, rules *core.Rules) *Computer {
+	return &Computer{mark, opponentMark, rules, make(map[int]int)}
 }
 
 func (computer Computer) Mark() string {
