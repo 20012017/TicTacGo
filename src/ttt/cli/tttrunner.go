@@ -13,7 +13,7 @@ import (
 
 type TTT struct{}
 
-func (ttt TTT) CreateCliGame() CliGame {
+func (ttt TTT) CreateCliGame() Game {
 	return NewCliGame(ttt.createGame(), ttt.createDisplay())
 }
 
