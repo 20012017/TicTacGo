@@ -8,30 +8,39 @@ import (
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
-	"ttt/core/player"
 )
 
 type TTT struct{}
 
-func (ttt TTT) CreateCliGame() Game {
-	return NewCliGame(ttt.createGame(), ttt.createDisplay())
+func (ttt TTT) Start() {
+	game := ttt.CreateMenu().show()
+	ttt.CreateCliGame(&game).Start()
+}
+
+func (ttt TTT) CreateCliGame(game *core.Game) Game {
+	return NewCliGame(game, ttt.createDisplay())
+}
+
+func (ttt TTT) CreateMenu() Menu {
+	return NewMenu(
+		ttt.createDisplay(),
+		ttt.createReader(),
+		ttt.createPlayerFactory(),
+		ttt.createInputValidator())
+}
+
+func (ttt TTT) createInputValidator() validators.Input {
+	return validators.NewInputValidator(1, 4)
+}
+
+func (ttt TTT) createPlayerFactory() players.Factory {
+	return players.NewPlayerFactory(ttt.createReader())
 }
 
 func (ttt TTT) createDisplay() DisplayWriter {
 	return display.NewDisplayWriter(os.Stdout, new(display.Script))
 }
 
-func (ttt TTT) createGame() *core.Game {
-	playerOne, playerTwo := ttt.createPlayers()
-	board := core.NewBoard(9)
-	game := core.NewGame(playerOne, playerTwo, board, new(core.Rules))
-	return &game
-}
-
-func (ttt TTT) createPlayers() (core.Player, core.Player) {
-	reader := input.NewReader(bufio.NewReader(os.Stdin))
-	validator := new(validators.Move)
-	playerOne := players.NewHuman("X", reader, validator)
-	playerTwo := player.NewComputer("O", player.NewNegamax(new(core.Rules)))
-	return playerOne, playerTwo
+func (ttt TTT) createReader() input.InputReader {
+	return input.NewReader(bufio.NewReader(os.Stdin))
 }
