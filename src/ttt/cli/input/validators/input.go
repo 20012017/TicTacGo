@@ -2,6 +2,7 @@ package validators
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -33,7 +34,8 @@ func (inputValidator Input) validations() []func(int, error) (int, error) {
 
 func (inputValidator Input) validateRange(choice int, err error) (int, error) {
 	if choice < inputValidator.start || choice > inputValidator.end {
-		return 0, errors.New("Not in menu")
+		return 0, errors.New(fmt.Sprintf("Not between %d and %d",
+			inputValidator.start, inputValidator.end))
 	}
 	return choice, nil
 }

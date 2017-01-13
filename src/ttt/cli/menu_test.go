@@ -18,7 +18,7 @@ var menuTest MenuTest = MenuTest{}
 
 var playerFactory players.Factory = players.NewPlayerFactory(input.NewInputReaderSpy("1\n"))
 var displaySpy *display.Spy = new(display.Spy)
-var menuValidator validators.Menu = validators.NewMenuValidator(1, 4)
+var menuValidator validators.Input = validators.NewInputValidator(1, 4)
 
 func TestPrintsAMenuOfGameChoices(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")

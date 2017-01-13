@@ -20,7 +20,7 @@ func TestDoesNotValidateAMoveLargerThanTheInput(t *testing.T) {
 	choice, err := inputValidator.Validate("10\n")
 
 	assert.Equal(t, 0, choice)
-	assert.Equal(t, "Not in menu", err.Error())
+	assert.Equal(t, "Not between 1 and 4", err.Error())
 }
 
 func TestDoesNotValidateAMoveSmallerThanTheInput(t *testing.T) {
@@ -29,7 +29,7 @@ func TestDoesNotValidateAMoveSmallerThanTheInput(t *testing.T) {
 	choice, err := inputValidator.Validate("-1\n")
 
 	assert.Equal(t, 0, choice)
-	assert.Equal(t, "Not in menu", err.Error())
+	assert.Equal(t, "Not between 1 and 4", err.Error())
 }
 
 func TestValidatesAValidChoice(t *testing.T) {

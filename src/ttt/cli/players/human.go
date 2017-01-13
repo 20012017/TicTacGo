@@ -22,9 +22,9 @@ func (player Human) Mark() string {
 
 func (player Human) Move(board core.Board) (int, error) {
 	move := player.inputReader.Read()
-	_, err := player.moveValidator.Validate(move, board)
+	validatedMove, err := player.moveValidator.Validate(move, board)
 	if err != nil {
-		return 0, err
+		return validatedMove, err
 	}
-	return player.moveValidator.ValidMove(move), nil
+	return validatedMove, nil
 }
