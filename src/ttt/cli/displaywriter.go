@@ -18,4 +18,8 @@ type DisplayWriter interface {
 	Win(mark string)
 
 	Clear()
+
+	Menu()
+
+	InvalidChoice()
 }

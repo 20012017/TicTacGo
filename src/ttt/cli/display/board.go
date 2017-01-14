@@ -5,9 +5,17 @@ import (
 	"ttt/core"
 )
 
+const emptyCell string = "-"
+
 type Board struct{}
 
-const emptyBoard string = "-------------\n|[%1s]|[%1s]|[%1s]|\n-------------\n|[%1s]|[%1s]|[%1s]|\n-------------\n|[%1s]|[%1s]|[%1s]|\n-------------\n"
+const emptyBoard string = "-------------\n" +
+	"|[%1s]|[%1s]|[%1s]|" +
+	"\n-------------\n" +
+	"|[%1s]|[%1s]|[%1s]|" +
+	"\n-------------\n" +
+	"|[%1s]|[%1s]|[%1s]|" +
+	"\n-------------\n"
 
 func (display Board) show(board core.Board) string {
 	c := display.formatBoard(board)
@@ -25,7 +33,7 @@ func (display Board) formatBoard(board core.Board) []string {
 
 func (display Board) formatCell(cell string) string {
 	if cell == core.EmptyMark() {
-		return "-"
+		return emptyCell
 	}
 	return cell
 }

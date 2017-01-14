@@ -2,76 +2,36 @@ package validators
 
 import (
 	"errors"
-	"strconv"
-	"strings"
 	"ttt/core"
 )
 
-const numberError, boundsError, takenError string = "Not a number",
-	"Out of bounds",
-	"Already taken"
+const takenError string = "Already taken"
+
+const minimumMove, indexDifference, invalidMove int = 1, 1, -1
 
 type Move struct{}
 
-func (validator Move) Validate(move string, board core.Board) (bool, error) {
-	numberMove, err := validator.convertToInt(validator.formatInput(move))
-	if validator.isNotANumber(err) {
-		return false, errors.New(numberError)
+func (validator Move) Validate(move string, board core.Board) (int, error) {
+	inputValidator := NewInputValidator(minimumMove, board.Size())
+	numberMove, err := inputValidator.Validate(move)
+	if err != nil {
+		return invalidMove, err
 	}
-	for _, validation := range validator.validations() {
-		valid, err := validation(numberMove, board)
-		if err != nil {
-			return valid, err
-		}
-	}
-	return true, nil
+	return validator.validateIndex(numberMove, board)
 }
 
-func (validator Move) ValidMove(move string) int {
-	numberMove, _ := validator.convertToInt(validator.formatInput(move))
-	return validator.convertToIndex(numberMove)
-}
-
-func (validator Move) validations() []func(int, core.Board) (bool, error) {
-	return []func(int, core.Board) (bool, error){
-		validator.validateBounds,
-		validator.validateIndex}
-}
-
-func (validator Move) validateIndex(move int, board core.Board) (bool, error) {
-	if validator.isInvalidCell(move-1, board) {
-		return false, errors.New(takenError)
+func (validator Move) validateIndex(move int, board core.Board) (int, error) {
+	index := validator.convertToIndex(move)
+	if validator.isInvalidCell(index, board) {
+		return invalidMove, errors.New(takenError)
 	}
-	return true, nil
-}
-
-func (validator Move) validateBounds(move int, board core.Board) (bool, error) {
-	if validator.isOutOfBounds(move, board) {
-		return false, errors.New(boundsError)
-	}
-	return true, nil
+	return index, nil
 }
 
 func (validator Move) convertToIndex(move int) int {
-	return move - 1
+	return move - indexDifference
 }
 
 func (validator Move) isInvalidCell(index int, board core.Board) bool {
-	return board.MarkAt(index) != ""
-}
-
-func (validator Move) isOutOfBounds(move int, board core.Board) bool {
-	return move >= board.Size()+1 || move < 1
-}
-
-func (validator Move) isNotANumber(err error) bool {
-	return err != nil
-}
-
-func (validator Move) convertToInt(move string) (int, error) {
-	return strconv.Atoi(move)
-}
-
-func (validator Move) formatInput(input string) string {
-	return strings.TrimSpace(input)
+	return board.MarkAt(index) != core.EmptyMark()
 }

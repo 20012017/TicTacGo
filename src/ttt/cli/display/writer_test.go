@@ -24,7 +24,9 @@ func TestWelcomesPlayer(t *testing.T) {
 
 	writer.Welcome()
 
-	assert.Equal(t, "Welcome to Tic Tac Toe\n", buffer.String())
+	assert.Equal(t,
+		"**********************Welcome to Tic Tac Toe**********************\n",
+		buffer.String())
 }
 
 func TestPrintsBoard(t *testing.T) {
@@ -41,7 +43,9 @@ func TestPromptsForMove(t *testing.T) {
 
 	writer.Prompt()
 
-	assert.Equal(t, "Where would you like to make a move?\nPlease choose a space between 1 and 9\n", buffer.String())
+	assert.Equal(t,
+		"Where would you like to make a move?\nPlease choose a space between 1 and 9\n",
+		buffer.String())
 }
 
 func TestDraw(t *testing.T) {
@@ -74,6 +78,24 @@ func TestClearScreen(t *testing.T) {
 	writer.Clear()
 
 	assert.Equal(t, "\033[2J\033[;H", buffer.String())
+}
+
+func TestMenu(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.Menu()
+
+	assert.Equal(t,
+		"Please choose a game option:\n1: Human v Human\n2: Human v Computer\n3: Computer v Human\n4: Computer v Computer\n",
+		buffer.String())
+}
+
+func TestInvalidChoice(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.InvalidChoice()
+
+	assert.Equal(t, "Please enter a number between 1 and 4\n", buffer.String())
 }
 
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {

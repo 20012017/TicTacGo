@@ -3,6 +3,7 @@ package players
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/cli/input"
 	"ttt/cli/input/validators"
 	"ttt/core"
 )
@@ -26,12 +27,12 @@ func TestReturnsMark(t *testing.T) {
 }
 
 func TestReadsUserInput(t *testing.T) {
-	inputReader := &InputReaderDouble{move: "1\n"}
+	inputReader := input.NewInputReaderSpy("1\n")
 	player := Human{"X", inputReader, new(validators.Move)}
 
 	player.Move(humanPlayerTest.board)
 
-	assert.True(t, inputReader.called())
+	assert.True(t, inputReader.WasCalled)
 }
 
 func TestReturnsErrorIfMoveIsInvalid(t *testing.T) {
@@ -51,24 +52,6 @@ func TestReturnsMoveValid(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func (humanPlayerTest HumanTest) newPlayer(move string) Human {
-	return Human{"X", &InputReaderDouble{move: move}, new(validators.Move)}
-}
-
-type InputReaderDouble struct {
-	move      string
-	wasCalled bool
-}
-
-func (reader *InputReaderDouble) setCalled(called bool) {
-	reader.wasCalled = called
-}
-
-func (reader *InputReaderDouble) called() bool {
-	return reader.wasCalled
-}
-
-func (reader *InputReaderDouble) Read() string {
-	reader.setCalled(true)
-	return reader.move
+func (humanTest HumanTest) newPlayer(move string) Human {
+	return Human{"X", input.NewInputReaderSpy(move), new(validators.Move)}
 }
