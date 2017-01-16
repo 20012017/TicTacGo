@@ -66,7 +66,7 @@ func TestReturnsAHumanVComputerGame(t *testing.T) {
 	playerOneType, playerTwoType := menuTest.getPlayerTypes(playerOne, playerTwo)
 
 	assert.Equal(t, "*players.Human", playerOneType)
-	assert.Equal(t, "*player.Computer", playerTwoType)
+	assert.Equal(t, "players.DelayedPlayer", playerTwoType)
 }
 
 func TestReturnsAComputerVHumanGame(t *testing.T) {
@@ -76,7 +76,7 @@ func TestReturnsAComputerVHumanGame(t *testing.T) {
 	playerOne, playerTwo := menuTest.getPlayers(game)
 	playerOneType, playerTwoType := menuTest.getPlayerTypes(playerOne, playerTwo)
 
-	assert.Equal(t, "*player.Computer", playerOneType)
+	assert.Equal(t, "players.DelayedPlayer", playerOneType)
 	assert.Equal(t, "*players.Human", playerTwoType)
 }
 
@@ -87,8 +87,8 @@ func TestReturnsAComputerVComputerGame(t *testing.T) {
 	playerOne, playerTwo := menuTest.getPlayers(game)
 	playerOneType, playerTwoType := menuTest.getPlayerTypes(playerOne, playerTwo)
 
-	assert.Equal(t, "*player.Computer", playerOneType)
-	assert.Equal(t, "*player.Computer", playerTwoType)
+	assert.Equal(t, "players.DelayedPlayer", playerOneType)
+	assert.Equal(t, "players.DelayedPlayer", playerTwoType)
 }
 
 func TestLoopsForANumber(t *testing.T) {
