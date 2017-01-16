@@ -14,7 +14,7 @@ type TTT struct{}
 
 func (ttt TTT) Start() {
 	game := ttt.CreateMenu().show()
-	ttt.CreateCliGame(&game).Start()
+	game.Start()
 }
 
 func (ttt TTT) CreateCliGame(game *core.Game) Game {

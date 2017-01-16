@@ -73,3 +73,7 @@ func (cliGame Game) board() core.Board {
 func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
 }
+
+func (cliGame Game) Game() *core.Game {
+	return cliGame.game
+}

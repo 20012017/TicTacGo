@@ -22,11 +22,14 @@ type Menu struct {
 	menuValidator validators.Input
 }
 
-func NewMenu(display DisplayWriter, inputReader input.InputReader, playerFactory players.Factory, menuValidator validators.Input) Menu {
+func NewMenu(display DisplayWriter,
+	inputReader input.InputReader,
+	playerFactory players.Factory,
+	menuValidator validators.Input) Menu {
 	return Menu{display, inputReader, playerFactory, menuValidator}
 }
 
-func (menu Menu) show() core.Game {
+func (menu Menu) show() Game {
 	menu.welcome()
 	choice := menu.validGameChoice()
 	return menu.createGame(choice)
@@ -58,10 +61,11 @@ func (menu Menu) welcome() {
 	menu.display.Menu()
 }
 
-func (menu Menu) createGame(gameChoice int) core.Game {
+func (menu Menu) createGame(gameChoice int) Game {
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
 	playerOne, playerTwo := menu.createPlayers(playerOneType, playerTwoType)
-	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
+	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
+	return NewCliGame(&game, menu.display)
 }
 
 func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, core.Player) {
