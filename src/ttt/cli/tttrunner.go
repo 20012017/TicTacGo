@@ -7,18 +7,12 @@ import (
 	"ttt/cli/input"
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
-	"ttt/core"
 )
 
 type TTT struct{}
 
 func (ttt TTT) Start() {
-	game := ttt.CreateMenu().show()
-	game.Start()
-}
-
-func (ttt TTT) CreateCliGame(game *core.Game) Game {
-	return NewCliGame(game, ttt.createDisplay())
+	NewGameRunner(ttt.CreateMenu()).Run()
 }
 
 func (ttt TTT) CreateMenu() Menu {

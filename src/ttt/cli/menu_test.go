@@ -178,8 +178,8 @@ func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
 	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
 }
 
-func (menuTest MenuTest) getPlayers(game Game) (playerOne, playerTwo core.Player) {
-	coreGame := game.Game()
+func (menuTest MenuTest) getPlayers(game CliGame) (playerOne, playerTwo core.Player) {
+	coreGame := game.(Game).Game()
 	playerOne = coreGame.CurrentPlayer()
 	coreGame.Play(0)
 	playerTwo = coreGame.CurrentPlayer()

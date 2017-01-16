@@ -29,7 +29,7 @@ func NewMenu(display DisplayWriter,
 	return Menu{display, inputReader, playerFactory, menuValidator}
 }
 
-func (menu Menu) show() Game {
+func (menu Menu) show() CliGame {
 	menu.welcome()
 	choice := menu.validGameChoice()
 	return menu.createGame(choice)
