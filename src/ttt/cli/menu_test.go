@@ -132,6 +132,14 @@ func TestWelcomesThePlayer(t *testing.T) {
 	assert.True(t, displaySpy.WelcomeHasBeenCalled)
 }
 
+func TestAsksForReplay(t *testing.T) {
+	menu := menuTest.newMenuWithInput("4\n")
+
+	menu.replay()
+
+	assert.True(t, displaySpy.ReplayHasBeenCalled)
+}
+
 func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
 	inputReader := input.NewInputReaderSpy(userInput, "1\n")
 	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)

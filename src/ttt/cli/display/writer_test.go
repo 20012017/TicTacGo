@@ -98,6 +98,14 @@ func TestInvalidChoice(t *testing.T) {
 	assert.Equal(t, "Please enter a number between 1 and 4\n", buffer.String())
 }
 
+func TestReplay(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.Replay()
+
+	assert.Equal(t, "Would you like to play again?\nPlease type yes to replay\n", buffer.String())
+}
+
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	writer := NewDisplayWriter(buffer, script)

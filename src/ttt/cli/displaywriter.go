@@ -22,4 +22,6 @@ type DisplayWriter interface {
 	Menu()
 
 	InvalidChoice()
+
+	Replay()
 }

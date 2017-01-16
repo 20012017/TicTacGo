@@ -35,6 +35,11 @@ func (menu Menu) show() Game {
 	return menu.createGame(choice)
 }
 
+func (menu Menu) replay() bool {
+	menu.display.Replay()
+	return false
+}
+
 func (menu Menu) validGameChoice() int {
 	choice := menu.readInput()
 	gameChoice, err := menu.menuValidator.Validate(choice)

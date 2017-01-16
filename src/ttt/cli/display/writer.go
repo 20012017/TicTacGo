@@ -54,3 +54,7 @@ func (writer Writer) Menu() {
 func (writer Writer) InvalidChoice() {
 	writer.Write(writer.script.invalidChoice())
 }
+
+func (writer Writer) Replay() {
+	writer.Write(writer.script.replay())
+}
