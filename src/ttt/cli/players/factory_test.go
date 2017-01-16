@@ -18,12 +18,12 @@ func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
 	assert.Equal(t, "X", player.Mark())
 }
 
-func TestPlayerFactoryReturnsComputerPlayer(t *testing.T) {
+func TestPlayerFactoryReturnsDelayedPlayer(t *testing.T) {
 	player := playerFactory.Create(2, "O")
 
 	typeOfPlayer := reflect.TypeOf(player)
 
-	assert.Equal(t, "*player.Computer", fmt.Sprint(typeOfPlayer))
+	assert.Equal(t, "players.DelayedPlayer", fmt.Sprint(typeOfPlayer))
 	assert.Equal(t, "O", player.Mark())
 }
 

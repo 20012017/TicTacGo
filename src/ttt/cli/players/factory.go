@@ -29,5 +29,6 @@ func (factory Factory) createHumanPlayer(mark string) core.Player {
 
 func (factory Factory) createComputerPlayer(mark string) core.Player {
 	negamax := player.NewNegamax(new(core.Rules))
-	return player.NewComputer(mark, negamax)
+	computerPlayer := player.NewComputer(mark, negamax)
+	return NewDelayedPlayer(computerPlayer, TimeDelay{})
 }
