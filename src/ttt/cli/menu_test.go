@@ -165,6 +165,14 @@ func TestReplayIsTrueIfInputIsNotYes(t *testing.T) {
 	assert.False(t, replay)
 }
 
+func TestSaysGoodbye(t *testing.T) {
+	menu := menuTest.newMenuWithInput("no\n")
+
+	menu.replay()
+
+	assert.True(t, displaySpy.GoodbyeHasBeenCalled)
+}
+
 func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
 	inputReader := input.NewInputReaderSpy(userInput, "1\n")
 	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)

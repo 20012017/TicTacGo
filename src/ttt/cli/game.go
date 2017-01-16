@@ -23,7 +23,6 @@ func (cliGame Game) Start() {
 func (cliGame Game) end() {
 	cliGame.showBoard()
 	cliGame.displayResult(cliGame.game.Result())
-	cliGame.display.Goodbye()
 }
 
 func (cliGame Game) displayResult(isWon bool, winner string) {

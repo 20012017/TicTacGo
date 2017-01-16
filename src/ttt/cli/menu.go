@@ -38,7 +38,11 @@ func (menu Menu) show() Game {
 func (menu Menu) replay() bool {
 	menu.display.Replay()
 	input := menu.readInput()
-	return input == "yes\n"
+	replay := input == "yes\n"
+	if !replay {
+		menu.display.Goodbye()
+	}
+	return replay
 }
 
 func (menu Menu) validGameChoice() int {
