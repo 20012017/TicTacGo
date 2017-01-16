@@ -24,18 +24,33 @@ func TestStartsTheGame(t *testing.T) {
 	assert.True(t, gameSpy.startWasCalled)
 }
 
+func TestAsksForReply(t *testing.T) {
+	menuSpy := NewMenuSpy(new(CliGameSpy))
+	gameRunner := NewGameRunner(menuSpy)
+
+	gameRunner.Run()
+
+	assert.True(t, menuSpy.replayWasCalled)
+}
+
 type MenuSpy struct {
-	game          CliGame
-	showWasCalled bool
+	game            CliGame
+	showWasCalled   bool
+	replayWasCalled bool
 }
 
 func NewMenuSpy(cliGame CliGame) *MenuSpy {
-	return &MenuSpy{cliGame, false}
+	return &MenuSpy{cliGame, false, false}
 }
 
 func (menuSpy *MenuSpy) show() CliGame {
 	menuSpy.showWasCalled = true
 	return menuSpy.game
+}
+
+func (menuSpy *MenuSpy) replay() bool {
+	menuSpy.replayWasCalled = true
+	return false
 }
 
 type CliGameSpy struct {

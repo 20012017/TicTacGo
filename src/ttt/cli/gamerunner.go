@@ -9,6 +9,10 @@ func NewGameRunner(menu CliMenu) GameRunner {
 }
 
 func (gameRunner GameRunner) Run() {
-	game := gameRunner.menu.show()
-	game.Start()
+	replay := true
+	for replay == true {
+		game := gameRunner.menu.show()
+		game.Start()
+		replay = gameRunner.menu.replay()
+	}
 }
