@@ -132,15 +132,57 @@ func TestWelcomesThePlayer(t *testing.T) {
 	assert.True(t, displaySpy.WelcomeHasBeenCalled)
 }
 
+func TestAsksForReplay(t *testing.T) {
+	menu := menuTest.newMenuWithInput("4\n")
+
+	menu.replay()
+
+	assert.True(t, displaySpy.ReplayHasBeenCalled)
+}
+
+func TestReplayReadsUserInput(t *testing.T) {
+	inputReader := input.NewInputReaderSpy("1\n")
+	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+
+	menu.replay()
+
+	assert.True(t, inputReader.WasCalled)
+}
+
+func TestReplayIsTrueIfInputIsYes(t *testing.T) {
+	menu := menuTest.newMenuWithInput("yes\n")
+
+	replay := menu.replay()
+
+	assert.True(t, replay)
+}
+
+func TestReplayIsTrueIfInputIsNotYes(t *testing.T) {
+	menu := menuTest.newMenuWithInput("no\n")
+
+	replay := menu.replay()
+
+	assert.False(t, replay)
+}
+
+func TestSaysGoodbye(t *testing.T) {
+	menu := menuTest.newMenuWithInput("no\n")
+
+	menu.replay()
+
+	assert.True(t, displaySpy.GoodbyeHasBeenCalled)
+}
+
 func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
 	inputReader := input.NewInputReaderSpy(userInput, "1\n")
 	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
 }
 
-func (menuTest MenuTest) getPlayers(game core.Game) (playerOne, playerTwo core.Player) {
-	playerOne = game.CurrentPlayer()
-	game.Play(0)
-	playerTwo = game.CurrentPlayer()
+func (menuTest MenuTest) getPlayers(game CliGame) (playerOne, playerTwo core.Player) {
+	coreGame := game.(Game).Game()
+	playerOne = coreGame.CurrentPlayer()
+	coreGame.Play(0)
+	playerTwo = coreGame.CurrentPlayer()
 	return playerOne, playerTwo
 }
 

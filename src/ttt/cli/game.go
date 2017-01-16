@@ -23,7 +23,6 @@ func (cliGame Game) Start() {
 func (cliGame Game) end() {
 	cliGame.showBoard()
 	cliGame.displayResult(cliGame.game.Result())
-	cliGame.display.Goodbye()
 }
 
 func (cliGame Game) displayResult(isWon bool, winner string) {
@@ -72,4 +71,8 @@ func (cliGame Game) board() core.Board {
 
 func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
+}
+
+func (cliGame Game) Game() *core.Game {
+	return cliGame.game
 }

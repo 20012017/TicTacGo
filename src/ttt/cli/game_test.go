@@ -39,7 +39,6 @@ func TestPlaysADrawnGame(t *testing.T) {
 	assert.True(t, game.IsOver())
 	assert.True(t, game.IsADraw())
 	assert.True(t, displaySpy.DrawHasBeenCalled)
-	assert.True(t, displaySpy.GoodbyeHasBeenCalled)
 }
 
 func TestPlaysAWonGame(t *testing.T) {
@@ -54,7 +53,6 @@ func TestPlaysAWonGame(t *testing.T) {
 	assert.True(t, game.IsOver())
 	assert.True(t, game.IsAWin())
 	assert.True(t, displaySpy.WinHasBeenCalled)
-	assert.True(t, displaySpy.GoodbyeHasBeenCalled)
 }
 
 func TestDisplayErrorsForInvalidMove(t *testing.T) {

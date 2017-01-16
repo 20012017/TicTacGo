@@ -38,3 +38,7 @@ func (script Script) menu() string {
 func (script Script) invalidChoice() string {
 	return "Please enter a number between 1 and 4\n"
 }
+
+func (script Script) replay() string {
+	return "Would you like to play again?\nPlease type yes to replay\n"
+}

@@ -14,6 +14,7 @@ type Spy struct {
 	WriteArgument          string
 	MenuWasCalled          bool
 	InvalidChoiceWasCalled bool
+	ReplayHasBeenCalled    bool
 }
 
 func (displaySpy *Spy) Write(message string) {
@@ -55,4 +56,8 @@ func (displaySpy *Spy) Menu() {
 
 func (displaySpy *Spy) InvalidChoice() {
 	displaySpy.InvalidChoiceWasCalled = true
+}
+
+func (displaySpy *Spy) Replay() {
+	displaySpy.ReplayHasBeenCalled = true
 }
