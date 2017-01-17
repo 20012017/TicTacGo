@@ -25,7 +25,7 @@ func TestPrintsAMenuOfGameChoices(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.MenuWasCalled)
+	assert.True(t, displaySpy.MenuHasBeenCalled)
 }
 
 func TestReadsInput(t *testing.T) {
@@ -96,7 +96,7 @@ func TestLoopsForANumber(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.InvalidChoiceWasCalled)
+	assert.True(t, displaySpy.InvalidChoiceHasBeenCalled)
 }
 
 func TestLoopsForAValidNumber(t *testing.T) {
@@ -104,7 +104,7 @@ func TestLoopsForAValidNumber(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.InvalidChoiceWasCalled)
+	assert.True(t, displaySpy.InvalidChoiceHasBeenCalled)
 }
 
 func TestDisplaysTheError(t *testing.T) {
