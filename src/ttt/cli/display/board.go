@@ -17,29 +17,21 @@ const emptyBoard string = "-------------\n" +
 	"|[%1s]|[%1s]|[%1s]|" +
 	"\n-------------\n"
 
-func (displayBoard Board) show(board core.Board) string {
-	cells := displayBoard.formatBoard(board)
+func (display Board) show(board core.Board) string {
+	c := display.formatBoard(board)
 	return fmt.Sprintf(emptyBoard,
-		cells[0],
-		cells[1],
-		cells[2],
-		cells[3],
-		cells[4],
-		cells[5],
-		cells[6],
-		cells[7],
-		cells[8])
+		c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8])
 }
 
-func (displayBoard Board) formatBoard(board core.Board) []string {
-	formattedBoard := []string{}
+func (display Board) formatBoard(board core.Board) []string {
+	var formattedBoard []string
 	for _, cell := range board.Grid().Cells() {
-		formattedBoard = append(formattedBoard, displayBoard.formatCell(cell))
+		formattedBoard = append(formattedBoard, display.formatCell(cell))
 	}
 	return formattedBoard
 }
 
-func (displayBoard Board) formatCell(cell string) string {
+func (display Board) formatCell(cell string) string {
 	if cell == core.EmptyMark() {
 		return emptyCell
 	}

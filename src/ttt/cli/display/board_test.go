@@ -14,17 +14,19 @@ var markedBoard core.Board = core.NewMarkedBoard([]string{"X", "", "", "", "", "
 func TestDisplaysAnEmptyBoard(t *testing.T) {
 	displayBoard, board := Board{}, core.NewBoard(9)
 
-	emptyStringBoard := displayBoardTest.emptyStringBoard()
+	expectedBoard := displayBoardTest.emptyStringBoard()
+	stringBoard := displayBoard.show(board)
 
-	assert.Equal(t, emptyStringBoard, displayBoard.show(board))
+	assert.Equal(t, expectedBoard, stringBoard)
 }
 
 func TestDisplaysAMarkedBoard(t *testing.T) {
 	displayBoard, board := Board{}, markedBoard
 
-	markedStringBoard := displayBoardTest.markedStringBoard()
+	expectedBoard := displayBoardTest.markedStringBoard()
+	stringBoard := displayBoard.show(board)
 
-	assert.Equal(t, markedStringBoard, displayBoard.show(board))
+	assert.Equal(t, expectedBoard, stringBoard)
 }
 
 func (displayBoardTest DisplayBoardTest) emptyStringBoard() string {
