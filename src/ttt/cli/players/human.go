@@ -4,19 +4,20 @@ import (
 	"ttt/cli/input"
 	"ttt/cli/input/validators"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Human struct {
-	mark          string
+	mark          marks.Mark
 	inputReader   input.InputReader
 	moveValidator *validators.Move
 }
 
-func NewHuman(mark string, inputReader input.InputReader, moveValidator *validators.Move) *Human {
+func NewHuman(mark marks.Mark, inputReader input.InputReader, moveValidator *validators.Move) *Human {
 	return &Human{mark, inputReader, moveValidator}
 }
 
-func (player Human) Mark() string {
+func (player Human) Mark() marks.Mark {
 	return player.mark
 }
 

@@ -6,7 +6,7 @@ import (
 )
 
 func TestShowsTheMenu(t *testing.T) {
-	menuSpy := NewMenuSpy(new(CliGameSpy))
+	menuSpy := NewMenuSpy(new(cliGameSpy))
 	gameRunner := NewGameRunner(menuSpy)
 
 	gameRunner.Run()
@@ -15,7 +15,7 @@ func TestShowsTheMenu(t *testing.T) {
 }
 
 func TestStartsTheGame(t *testing.T) {
-	gameSpy := new(CliGameSpy)
+	gameSpy := new(cliGameSpy)
 	menuSpy := NewMenuSpy(gameSpy)
 	gameRunner := NewGameRunner(menuSpy)
 
@@ -25,7 +25,7 @@ func TestStartsTheGame(t *testing.T) {
 }
 
 func TestAsksForReply(t *testing.T) {
-	menuSpy := NewMenuSpy(new(CliGameSpy))
+	menuSpy := NewMenuSpy(new(cliGameSpy))
 	gameRunner := NewGameRunner(menuSpy)
 
 	gameRunner.Run()
@@ -33,30 +33,30 @@ func TestAsksForReply(t *testing.T) {
 	assert.True(t, menuSpy.replayWasCalled)
 }
 
-type MenuSpy struct {
+type menuTestSpy struct {
 	game            CliGame
 	showWasCalled   bool
 	replayWasCalled bool
 }
 
-func NewMenuSpy(cliGame CliGame) *MenuSpy {
-	return &MenuSpy{cliGame, false, false}
+func NewMenuSpy(cliGame CliGame) *menuTestSpy {
+	return &menuTestSpy{cliGame, false, false}
 }
 
-func (menuSpy *MenuSpy) show() CliGame {
+func (menuSpy *menuTestSpy) show() CliGame {
 	menuSpy.showWasCalled = true
 	return menuSpy.game
 }
 
-func (menuSpy *MenuSpy) replay() bool {
+func (menuSpy *menuTestSpy) replay() bool {
 	menuSpy.replayWasCalled = true
 	return false
 }
 
-type CliGameSpy struct {
+type cliGameSpy struct {
 	startWasCalled bool
 }
 
-func (gameSpy *CliGameSpy) Start() {
+func (gameSpy *cliGameSpy) Start() {
 	gameSpy.startWasCalled = true
 }

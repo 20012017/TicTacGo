@@ -4,30 +4,33 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
-type DisplayBoardTest struct{}
+type displayBoardTests struct{}
 
-var displayBoardTest DisplayBoardTest = DisplayBoardTest{}
-var markedBoard core.Board = core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
+var displayBoardTest displayBoardTests = displayBoardTests{}
+var markedBoard core.Board = core.NewMarkedBoard([]marks.Mark{"X", "", "", "", "", "", "", "", ""})
 
 func TestDisplaysAnEmptyBoard(t *testing.T) {
 	displayBoard, board := Board{}, core.NewBoard(9)
 
-	emptyStringBoard := displayBoardTest.emptyStringBoard()
+	expectedBoard := displayBoardTest.emptyStringBoard()
+	stringBoard := displayBoard.show(board)
 
-	assert.Equal(t, emptyStringBoard, displayBoard.show(board))
+	assert.Equal(t, expectedBoard, stringBoard)
 }
 
 func TestDisplaysAMarkedBoard(t *testing.T) {
 	displayBoard, board := Board{}, markedBoard
 
-	markedStringBoard := displayBoardTest.markedStringBoard()
+	expectedBoard := displayBoardTest.markedStringBoard()
+	stringBoard := displayBoard.show(board)
 
-	assert.Equal(t, markedStringBoard, displayBoard.show(board))
+	assert.Equal(t, expectedBoard, stringBoard)
 }
 
-func (displayBoardTest DisplayBoardTest) emptyStringBoard() string {
+func (displayBoardTest displayBoardTests) emptyStringBoard() string {
 	return "-------------\n" +
 		"|[-]|[-]|[-]|\n" +
 		"-------------\n" +
@@ -37,7 +40,7 @@ func (displayBoardTest DisplayBoardTest) emptyStringBoard() string {
 		"-------------\n"
 }
 
-func (displayBoardTest DisplayBoardTest) markedStringBoard() string {
+func (displayBoardTest displayBoardTests) markedStringBoard() string {
 	return "-------------\n" +
 		"|[X]|[-]|[-]|\n" +
 		"-------------\n" +

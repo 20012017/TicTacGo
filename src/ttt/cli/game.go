@@ -3,15 +3,18 @@ package cli
 import (
 	"fmt"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Game struct {
-	game    *core.Game
-	display DisplayWriter
+	game       *core.Game
+	display    DisplayWriter
+	prompter   Prompter
+	gameChoice int
 }
 
-func NewCliGame(game *core.Game, display DisplayWriter) Game {
-	return Game{game, display}
+func NewCliGame(game *core.Game, display DisplayWriter, prompter Prompter, gameChoice int) Game {
+	return Game{game, display, prompter, gameChoice}
 }
 
 func (cliGame Game) Start() {
@@ -25,7 +28,7 @@ func (cliGame Game) end() {
 	cliGame.displayResult(cliGame.game.Result())
 }
 
-func (cliGame Game) displayResult(isWon bool, winner string) {
+func (cliGame Game) displayResult(isWon bool, winner marks.Mark) {
 	if isWon {
 		cliGame.display.Win(winner)
 	} else {
@@ -43,8 +46,9 @@ func (cliGame *Game) play() {
 func (cliGame Game) getValidMove() int {
 	move, err := cliGame.currentPlayer().Move(cliGame.board())
 	for err != nil {
+		cliGame.showBoard()
 		cliGame.display.Write(fmt.Sprintf("%s\n", err.Error()))
-		cliGame.display.Prompt()
+		cliGame.prompt()
 		move, err = cliGame.currentPlayer().Move(cliGame.board())
 	}
 	return move
@@ -52,7 +56,7 @@ func (cliGame Game) getValidMove() int {
 
 func (cliGame Game) initializeTurn() {
 	cliGame.showBoard()
-	cliGame.display.Prompt()
+	cliGame.prompt()
 }
 
 func (cliGame Game) welcome() {
@@ -73,6 +77,14 @@ func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
 }
 
+func (cliGame Game) currentMark() marks.Mark {
+	return cliGame.game.CurrentPlayer().Mark()
+}
+
 func (cliGame Game) Game() *core.Game {
 	return cliGame.game
+}
+
+func (cliGame Game) prompt() {
+	cliGame.prompter.Prompt(cliGame.gameChoice, cliGame.currentMark(), cliGame.display)
 }

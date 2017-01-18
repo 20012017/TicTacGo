@@ -6,29 +6,32 @@ import (
 	"ttt/cli/input"
 	"ttt/cli/input/validators"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
-type HumanTest struct {
+var X marks.Mark = marks.X
+
+type humanTests struct {
 	board core.Board
 }
 
-var humanPlayerTest HumanTest = HumanTest{core.NewBoard(9)}
+var humanPlayerTest humanTests = humanTests{core.NewBoard(9)}
 
 func TestHasAMark(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
 
-	assert.Equal(t, "X", player.mark)
+	assert.Equal(t, X, player.mark)
 }
 
 func TestReturnsMark(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
 
-	assert.Equal(t, "X", player.Mark())
+	assert.Equal(t, X, player.Mark())
 }
 
 func TestReadsUserInput(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")
-	player := Human{"X", inputReader, new(validators.Move)}
+	player := Human{X, inputReader, new(validators.Move)}
 
 	player.Move(humanPlayerTest.board)
 
@@ -52,6 +55,6 @@ func TestReturnsMoveValid(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func (humanTest HumanTest) newPlayer(move string) Human {
-	return Human{"X", input.NewInputReaderSpy(move), new(validators.Move)}
+func (humanTest humanTests) newPlayer(move string) Human {
+	return Human{X, input.NewInputReaderSpy(move), new(validators.Move)}
 }

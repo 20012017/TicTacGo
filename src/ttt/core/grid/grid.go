@@ -1,33 +1,35 @@
 package grid
 
+import "ttt/core/marks"
+
 type Grid struct {
-	cells []string
+	cells []marks.Mark
 }
 
 func NewGrid(size int) Grid {
-	cells := make([]string, size)
+	cells := make([]marks.Mark, size)
 	return Grid{cells}
 }
 
-func NewPopulatedGrid(cells []string) Grid {
+func NewPopulatedGrid(cells []marks.Mark) Grid {
 	return Grid{cells}
 }
 
-func (grid Grid) Cells() []string {
+func (grid Grid) Cells() []marks.Mark {
 	return grid.cells
 }
 
-func (grid Grid) Any(str string) bool {
+func (grid Grid) Any(mark marks.Mark) bool {
 	for _, cell := range grid.cells {
-		if cell == str {
+		if cell == mark {
 			return true
 		}
 	}
 	return false
 }
 
-func (grid Grid) Mark(move int, mark string) Grid {
-	cells := make([]string, 9)
+func (grid Grid) Mark(move int, mark marks.Mark) Grid {
+	cells := make([]marks.Mark, 9)
 	copy(cells, grid.Cells())
 	cells[move] = mark
 	return NewPopulatedGrid(cells)
@@ -38,7 +40,7 @@ func (grid Grid) split(delimiter int) []Line {
 }
 
 func (grid Grid) reverseSplit(delimiter int) []Line {
-	reversedLines := []Line{}
+	var reversedLines []Line
 	for _, line := range grid.splitLines(delimiter) {
 		reversedLines = append(reversedLines, line.reverse())
 	}
@@ -46,7 +48,8 @@ func (grid Grid) reverseSplit(delimiter int) []Line {
 }
 
 func (grid Grid) transpose(delimiter int) []Line {
-	transposedGrid, rows := []Line{}, grid.split(delimiter)
+	var transposedGrid []Line
+	rows := grid.split(delimiter)
 	for i := 0; i < delimiter; i++ {
 		transposedGrid = append(transposedGrid, grid.getCellsAt(rows, i))
 	}
@@ -70,7 +73,7 @@ func (grid Grid) splitCells(start, end int) Line {
 }
 
 func (grid Grid) splitLines(delimiter int) []Line {
-	splitGrid := []Line{}
+	var splitGrid []Line
 	for i := 0; i < len(grid.cells); i = i + delimiter {
 		splitGrid = append(splitGrid, grid.splitCells(i, i+delimiter))
 	}

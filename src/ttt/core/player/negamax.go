@@ -2,6 +2,7 @@ package player
 
 import (
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 const winScore, lossScore, drawScore int = 10, -10, 0
@@ -16,28 +17,28 @@ func NewNegamax(rules *core.Rules) *Negamax {
 	return &Negamax{make(map[int]int), rules, 1, -9999, 9999}
 }
 
-func (negamax *Negamax) move(board core.Board, mark string) int {
+func (negamax *Negamax) move(board core.Board, mark marks.Mark) int {
 	opponentMark := negamax.opponentMark(mark)
 	alpha, beta, colour := negamax.alpha, negamax.beta, negamax.colour
 	_, move := negamax.negamax(board, alpha, beta, colour, mark, opponentMark)
 	return move
 }
 
-func (negamax *Negamax) opponentMark(mark string) string {
-	if mark == core.MarkX() {
-		return core.MarkO()
+func (negamax *Negamax) opponentMark(mark marks.Mark) marks.Mark {
+	if mark == marks.X {
+		return marks.O
 	}
-	return core.MarkX()
+	return marks.X
 }
 
-func (negamax *Negamax) currentMark(color int, mark, opponentMark string) string {
+func (negamax *Negamax) currentMark(color int, mark, opponentMark marks.Mark) marks.Mark {
 	if color == negamax.colour {
 		return mark
 	}
 	return opponentMark
 }
 
-func (negamax Negamax) negamax(board core.Board, alpha, beta, colour int, mark, opponentMark string) (int, int) {
+func (negamax Negamax) negamax(board core.Board, alpha, beta, colour int, mark, opponentMark marks.Mark) (int, int) {
 	if negamax.rules.IsOver(board, mark, opponentMark) {
 		return colour * negamax.score(board, mark, opponentMark), -1
 	}
@@ -57,7 +58,7 @@ func (negamax Negamax) negamax(board core.Board, alpha, beta, colour int, mark, 
 	return alpha, move
 }
 
-func (negamax Negamax) score(board core.Board, mark, opponentMark string) (score int) {
+func (negamax Negamax) score(board core.Board, mark, opponentMark marks.Mark) (score int) {
 	winner := negamax.rules.Winner(board, mark, opponentMark)
 	if winner == mark {
 		return winScore

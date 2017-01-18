@@ -8,7 +8,7 @@ import (
 )
 
 const numberError, rangeError string = "Not a number", "Not between %d and %d"
-const invalidChoice = 0
+const invalidChoice int = 0
 
 type Input struct {
 	start, end int

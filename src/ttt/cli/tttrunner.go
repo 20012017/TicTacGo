@@ -20,7 +20,8 @@ func (ttt TTT) CreateMenu() Menu {
 		ttt.createDisplay(),
 		ttt.createReader(),
 		ttt.createPlayerFactory(),
-		ttt.createInputValidator())
+		ttt.createInputValidator(),
+		GameOptions)
 }
 
 func (ttt TTT) createInputValidator() validators.Input {

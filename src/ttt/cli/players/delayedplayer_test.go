@@ -4,23 +4,22 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
-type DelayPlayerTest struct{}
-
 func TestHasMark(t *testing.T) {
-	playerSpy := NewPlayerSpy("X", 1)
-	delayedPlayer := NewDelayedPlayer(playerSpy, &DelaySpy{})
+	playerSpy := newPlayerSpy(marks.X, 1)
+	delayedPlayer := NewDelayedPlayer(playerSpy, new(delaySpy))
 
 	mark := delayedPlayer.Mark()
 
 	assert.True(t, playerSpy.markHasBeenCalled)
-	assert.Equal(t, "X", mark)
+	assert.Equal(t, marks.X, mark)
 }
 
 func TestHasAMove(t *testing.T) {
-	playerSpy := NewPlayerSpy("X", 1)
-	delayedPlayer := NewDelayedPlayer(playerSpy, &DelaySpy{})
+	playerSpy := newPlayerSpy(marks.X, 1)
+	delayedPlayer := NewDelayedPlayer(playerSpy, new(delaySpy))
 
 	move, _ := delayedPlayer.Move(core.NewBoard(9))
 
@@ -29,39 +28,39 @@ func TestHasAMove(t *testing.T) {
 }
 
 func TestDelaysTheMove(t *testing.T) {
-	delaySpy := DelaySpy{}
-	delayedPlayer := NewDelayedPlayer(NewPlayerSpy("X", 1), &delaySpy)
+	delay := new(delaySpy)
+	delayedPlayer := NewDelayedPlayer(newPlayerSpy(marks.X, 1), delay)
 
 	delayedPlayer.Move(core.NewBoard(9))
 
-	assert.True(t, delaySpy.hasBeenCalled)
+	assert.True(t, delay.hasBeenCalled)
 }
 
-type DelaySpy struct {
+type delaySpy struct {
 	hasBeenCalled bool
 }
 
-func (delaySpy *DelaySpy) delay(duration int) {
-	delaySpy.hasBeenCalled = true
+func (delay *delaySpy) delay(duration int) {
+	delay.hasBeenCalled = true
 }
 
-type PlayerSpy struct {
-	mark              string
+type delayPlayerSpy struct {
+	mark              marks.Mark
 	move              int
 	markHasBeenCalled bool
 	moveHasBeenCalled bool
 }
 
-func NewPlayerSpy(mark string, move int) *PlayerSpy {
-	return &PlayerSpy{mark, move, false, false}
+func newPlayerSpy(mark marks.Mark, move int) *delayPlayerSpy {
+	return &delayPlayerSpy{mark, move, false, false}
 }
 
-func (playerSpy *PlayerSpy) Move(board core.Board) (int, error) {
+func (playerSpy *delayPlayerSpy) Move(board core.Board) (int, error) {
 	playerSpy.moveHasBeenCalled = true
 	return playerSpy.move, nil
 }
 
-func (playerSpy *PlayerSpy) Mark() string {
+func (playerSpy *delayPlayerSpy) Mark() marks.Mark {
 	playerSpy.markHasBeenCalled = true
 	return playerSpy.mark
 }

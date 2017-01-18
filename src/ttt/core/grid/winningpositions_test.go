@@ -3,9 +3,10 @@ package grid
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core/marks"
 )
 
-var numberedBoard []string = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+var numberedBoard []marks.Mark = []marks.Mark{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 var winningPositions WinningPositions = NewWinningPositions(
 	NewPopulatedGrid(numberedBoard), 3)
 

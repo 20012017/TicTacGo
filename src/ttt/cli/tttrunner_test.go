@@ -16,3 +16,15 @@ func TestCreatesDisplay(t *testing.T) {
 
 	assert.NotNil(t, display)
 }
+
+func TestCreatesPlayerFactory(t *testing.T) {
+	playerFactory := new(TTT).createPlayerFactory()
+
+	assert.NotNil(t, playerFactory)
+}
+
+func TestCreatesInputValidator(t *testing.T) {
+	inputValidator := new(TTT).createInputValidator()
+
+	assert.NotNil(t, inputValidator)
+}

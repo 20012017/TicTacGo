@@ -3,19 +3,20 @@ package players
 import (
 	"errors"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Fake struct {
-	mark        string
+	mark        marks.Mark
 	currentMove int
 	moves       []int
 }
 
-func NewFake(mark string, currentMove int, moves ...int) *Fake {
+func NewFake(mark marks.Mark, currentMove int, moves ...int) *Fake {
 	return &Fake{mark, currentMove, moves}
 }
 
-func (player *Fake) Mark() string {
+func (player *Fake) Mark() marks.Mark {
 	return player.mark
 }
 

@@ -3,12 +3,14 @@ package core
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core/marks"
 )
 
-type GameTest struct{}
+type gameTests struct{}
 
-var gameTest GameTest = GameTest{}
-var playerOne, playerTwo Player = PlayerDouble{"X"}, PlayerDouble{"O"}
+var gameTest gameTests = gameTests{}
+
+var playerOne, playerTwo Player = playerStub{X}, playerStub{O}
 var rule *Rules = new(Rules)
 
 func TestCanPlayAMark(t *testing.T) {
@@ -16,7 +18,7 @@ func TestCanPlayAMark(t *testing.T) {
 
 	markedBoard := game.Play(0)
 
-	assert.Equal(t, "X", markedBoard.MarkAt(0))
+	assert.Equal(t, X, markedBoard.MarkAt(0))
 }
 
 func TestCanPlayTwoMarks(t *testing.T) {
@@ -25,8 +27,8 @@ func TestCanPlayTwoMarks(t *testing.T) {
 	game.Play(0)
 	game.Play(1)
 
-	assert.Equal(t, "X", game.board.MarkAt(0))
-	assert.Equal(t, "O", game.board.MarkAt(1))
+	assert.Equal(t, X, game.board.MarkAt(0))
+	assert.Equal(t, O, game.board.MarkAt(1))
 }
 
 func TestKnowsWhenGameIsOverWhenDrawn(t *testing.T) {
@@ -64,7 +66,7 @@ func TestKnowsTheGameWinner(t *testing.T) {
 
 	isWin, winner := game.Result()
 
-	assert.Equal(t, "X", winner)
+	assert.Equal(t, X, winner)
 	assert.True(t, isWin)
 }
 
@@ -73,7 +75,7 @@ func TestKnowsWhenThereIsNoWinner(t *testing.T) {
 
 	isWin, winner := game.Result()
 
-	assert.Equal(t, "", winner)
+	assert.Equal(t, EMPTY, winner)
 	assert.False(t, isWin)
 }
 
@@ -82,7 +84,7 @@ func TestKnowsTheCurrentPlayer(t *testing.T) {
 
 	player := game.CurrentPlayer()
 
-	assert.Equal(t, "X", player.Mark())
+	assert.Equal(t, X, player.Mark())
 }
 
 func TestSwitchesThePlayer(t *testing.T) {
@@ -92,37 +94,37 @@ func TestSwitchesThePlayer(t *testing.T) {
 	player := game.CurrentPlayer()
 	game.Play(1)
 
-	assert.Equal(t, "O", player.Mark())
-	assert.Equal(t, "X", game.board.MarkAt(0))
-	assert.Equal(t, "O", game.board.MarkAt(1))
+	assert.Equal(t, O, player.Mark())
+	assert.Equal(t, X, game.board.MarkAt(0))
+	assert.Equal(t, O, game.board.MarkAt(1))
 }
 
-func (gameTest GameTest) game(tttboard Board) Game {
+func (gameTest gameTests) game(tttboard Board) Game {
 	return NewGame(playerOne, playerTwo, tttboard, rule)
 }
 
-func (gameTest GameTest) wonBoard() Board {
-	return NewMarkedBoard([]string{
-		"X", "O", "X",
-		"O", "X", "O",
-		"X", "O", ""})
+func (gameTest gameTests) wonBoard() Board {
+	return NewMarkedBoard([]marks.Mark{
+		X, O, X,
+		O, X, O,
+		X, O, EMPTY})
 }
 
-func (gameTest GameTest) fullBoard() Board {
-	return NewMarkedBoard([]string{
-		"X", "O", "X",
-		"O", "X", "O",
-		"O", "X", "O"})
+func (gameTest gameTests) fullBoard() Board {
+	return NewMarkedBoard([]marks.Mark{
+		X, O, X,
+		O, X, O,
+		O, X, O})
 }
 
-type PlayerDouble struct {
-	mark string
+type playerStub struct {
+	mark marks.Mark
 }
 
-func (player PlayerDouble) Mark() string {
+func (player playerStub) Mark() marks.Mark {
 	return player.mark
 }
 
-func (player PlayerDouble) Move(board Board) (int, error) {
+func (player playerStub) Move(board Board) (int, error) {
 	return 0, nil
 }

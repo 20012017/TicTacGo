@@ -10,11 +10,12 @@ import (
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
-type MenuTest struct{}
+type menuTests struct{}
 
-var menuTest MenuTest = MenuTest{}
+var menuTest menuTests = menuTests{}
 
 var playerFactory players.Factory = players.NewPlayerFactory(input.NewInputReaderSpy("1\n"))
 var displaySpy *display.Spy = new(display.Spy)
@@ -25,12 +26,12 @@ func TestPrintsAMenuOfGameChoices(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.MenuWasCalled)
+	assert.True(t, displaySpy.MenuHasBeenCalled)
 }
 
 func TestReadsInput(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 
 	menu.show()
 
@@ -43,8 +44,8 @@ func TestReturnsTheCorrectMarksForPlayers(t *testing.T) {
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
 
-	assert.Equal(t, "X", playerOne.Mark())
-	assert.Equal(t, "O", playerTwo.Mark())
+	assert.Equal(t, marks.X, playerOne.Mark())
+	assert.Equal(t, marks.O, playerTwo.Mark())
 }
 
 func TestReturnsAHumanVHumanGame(t *testing.T) {
@@ -96,7 +97,7 @@ func TestLoopsForANumber(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.InvalidChoiceWasCalled)
+	assert.True(t, displaySpy.InvalidChoiceHasBeenCalled)
 }
 
 func TestLoopsForAValidNumber(t *testing.T) {
@@ -104,7 +105,7 @@ func TestLoopsForAValidNumber(t *testing.T) {
 
 	menu.show()
 
-	assert.True(t, displaySpy.InvalidChoiceWasCalled)
+	assert.True(t, displaySpy.InvalidChoiceHasBeenCalled)
 }
 
 func TestDisplaysTheError(t *testing.T) {
@@ -142,7 +143,7 @@ func TestAsksForReplay(t *testing.T) {
 
 func TestReplayReadsUserInput(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 
 	menu.replay()
 
@@ -173,12 +174,12 @@ func TestSaysGoodbye(t *testing.T) {
 	assert.True(t, displaySpy.GoodbyeHasBeenCalled)
 }
 
-func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
+func (menuTest menuTests) newMenuWithInput(userInput string) Menu {
 	inputReader := input.NewInputReaderSpy(userInput, "1\n")
-	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 }
 
-func (menuTest MenuTest) getPlayers(game CliGame) (playerOne, playerTwo core.Player) {
+func (menuTest menuTests) getPlayers(game CliGame) (playerOne, playerTwo core.Player) {
 	coreGame := game.(Game).Game()
 	playerOne = coreGame.CurrentPlayer()
 	coreGame.Play(0)
@@ -186,12 +187,12 @@ func (menuTest MenuTest) getPlayers(game CliGame) (playerOne, playerTwo core.Pla
 	return playerOne, playerTwo
 }
 
-func (menuTest MenuTest) getPlayerTypes(playerOne, playerTwo core.Player) (string, string) {
+func (menuTest menuTests) getPlayerTypes(playerOne, playerTwo core.Player) (string, string) {
 	return menuTest.getPlayerType(playerOne),
 		menuTest.getPlayerType(playerTwo)
 }
 
-func (menuTest MenuTest) getPlayerType(player core.Player) string {
+func (menuTest menuTests) getPlayerType(player core.Player) string {
 	playerType := reflect.TypeOf(player)
 	return fmt.Sprint(playerType)
 }

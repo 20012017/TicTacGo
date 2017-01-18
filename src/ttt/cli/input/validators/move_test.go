@@ -4,10 +4,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 var moveValidator Move = Move{}
-var markedBoard = core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
+var markedBoard = core.NewMarkedBoard([]marks.Mark{"X", "", "", "", "", "", "", "", ""})
 
 func TestDoesNotValidateAWord(t *testing.T) {
 	move, err := moveValidator.Validate("hello\n", core.NewBoard(9))

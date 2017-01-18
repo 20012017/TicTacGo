@@ -7,9 +7,9 @@ import (
 	"ttt/core"
 )
 
-type WriterTest struct{}
+type writerTests struct{}
 
-var writerTest WriterTest = WriterTest{}
+var writerTest writerTests = writerTests{}
 
 func TestWritesToWriter(t *testing.T) {
 	buffer, writer := writerTest.setUpWriter()
@@ -41,7 +41,7 @@ func TestPrintsBoard(t *testing.T) {
 func TestPromptsForMove(t *testing.T) {
 	buffer, writer := writerTest.setUpWriter()
 
-	writer.Prompt()
+	writer.HumanPrompt()
 
 	assert.Equal(t,
 		"Where would you like to make a move?\nPlease choose a space between 1 and 9\n",
@@ -106,19 +106,26 @@ func TestReplay(t *testing.T) {
 	assert.Equal(t, "Would you like to play again?\nPlease type yes to replay\n", buffer.String())
 }
 
-func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
+func TestComputerPrompt(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.ComputerPrompt()
+
+	assert.Equal(t, "Computer is making a move...\n", buffer.String())
+}
+
+func (writerTest writerTests) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	writer := NewDisplayWriter(buffer, script)
 	return buffer, writer
 }
 
-func (writerTest WriterTest) newBoard() string {
-	return `-------------
-|[-]|[-]|[-]|
--------------
-|[-]|[-]|[-]|
--------------
-|[-]|[-]|[-]|
--------------
-`
+func (writerTest writerTests) newBoard() string {
+	return "-------------\n" +
+		"|[-]|[-]|[-]|\n" +
+		"-------------\n" +
+		"|[-]|[-]|[-]|\n" +
+		"-------------\n" +
+		"|[-]|[-]|[-]|\n" +
+		"-------------\n"
 }
