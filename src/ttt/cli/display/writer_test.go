@@ -7,9 +7,9 @@ import (
 	"ttt/core"
 )
 
-type WriterTest struct{}
+type writerTests struct{}
 
-var writerTest WriterTest = WriterTest{}
+var writerTest writerTests = writerTests{}
 
 func TestWritesToWriter(t *testing.T) {
 	buffer, writer := writerTest.setUpWriter()
@@ -114,13 +114,13 @@ func TestComputerPrompt(t *testing.T) {
 	assert.Equal(t, "Computer is making a move...\n", buffer.String())
 }
 
-func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
+func (writerTest writerTests) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	writer := NewDisplayWriter(buffer, script)
 	return buffer, writer
 }
 
-func (writerTest WriterTest) newBoard() string {
+func (writerTest writerTests) newBoard() string {
 	return "-------------\n" +
 		"|[-]|[-]|[-]|\n" +
 		"-------------\n" +

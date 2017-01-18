@@ -7,8 +7,6 @@ import (
 	"ttt/core/marks"
 )
 
-type DelayPlayerTest struct{}
-
 func TestHasMark(t *testing.T) {
 	playerSpy := NewPlayerSpy(marks.X, 1)
 	delayedPlayer := NewDelayedPlayer(playerSpy, &DelaySpy{})

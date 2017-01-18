@@ -11,11 +11,11 @@ import (
 
 var X marks.Mark = marks.X
 
-type HumanTest struct {
+type humanTests struct {
 	board core.Board
 }
 
-var humanPlayerTest HumanTest = HumanTest{core.NewBoard(9)}
+var humanPlayerTest humanTests = humanTests{core.NewBoard(9)}
 
 func TestHasAMark(t *testing.T) {
 	player := humanPlayerTest.newPlayer("1\n")
@@ -55,6 +55,6 @@ func TestReturnsMoveValid(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func (humanTest HumanTest) newPlayer(move string) Human {
+func (humanTest humanTests) newPlayer(move string) Human {
 	return Human{X, input.NewInputReaderSpy(move), new(validators.Move)}
 }

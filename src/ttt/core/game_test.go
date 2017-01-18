@@ -6,9 +6,10 @@ import (
 	"ttt/core/marks"
 )
 
-type GameTest struct{}
+type gameTests struct{}
 
-var gameTest GameTest = GameTest{}
+var gameTest gameTests = gameTests{}
+
 var playerOne, playerTwo Player = PlayerDouble{X}, PlayerDouble{O}
 var rule *Rules = new(Rules)
 
@@ -98,18 +99,18 @@ func TestSwitchesThePlayer(t *testing.T) {
 	assert.Equal(t, O, game.board.MarkAt(1))
 }
 
-func (gameTest GameTest) game(tttboard Board) Game {
+func (gameTest gameTests) game(tttboard Board) Game {
 	return NewGame(playerOne, playerTwo, tttboard, rule)
 }
 
-func (gameTest GameTest) wonBoard() Board {
+func (gameTest gameTests) wonBoard() Board {
 	return NewMarkedBoard([]marks.Mark{
 		X, O, X,
 		O, X, O,
 		X, O, EMPTY})
 }
 
-func (gameTest GameTest) fullBoard() Board {
+func (gameTest gameTests) fullBoard() Board {
 	return NewMarkedBoard([]marks.Mark{
 		X, O, X,
 		O, X, O,

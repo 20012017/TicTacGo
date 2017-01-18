@@ -6,9 +6,9 @@ import (
 	"ttt/core/marks"
 )
 
-type GridTest struct{}
+type gridTests struct{}
 
-var gridTest GridTest = GridTest{}
+var gridTest gridTests = gridTests{}
 var numberedSlice []marks.Mark = []marks.Mark{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 func TestEmptyGrid(t *testing.T) {
@@ -59,16 +59,16 @@ func TestFull(t *testing.T) {
 func TestMark(t *testing.T) {
 	grid := NewGrid(9)
 
-	markedGrid := grid.Mark(0, "X")
+	markedGrid := grid.Mark(0, marks.X)
 
 	assert.Equal(t,
 		[]marks.Mark{"", "", "", "", "", "", "", "", ""},
 		grid.Cells())
 	assert.Equal(t,
-		[]marks.Mark{"X", "", "", "", "", "", "", "", ""},
+		[]marks.Mark{marks.X, "", "", "", "", "", "", "", ""},
 		markedGrid.Cells())
 }
 
-func (gridTest GridTest) grid() Grid {
+func (gridTest gridTests) grid() Grid {
 	return NewPopulatedGrid(numberedSlice)
 }

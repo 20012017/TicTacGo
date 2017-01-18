@@ -7,9 +7,9 @@ import (
 	"ttt/core/marks"
 )
 
-var boardTest BoardTest = BoardTest{}
+type boardTests struct{}
 
-type BoardTest struct{}
+var boardTest boardTests = boardTests{}
 
 func TestEmptyBoardHasNineSpaces(t *testing.T) {
 	board := boardTest.newBoard()
@@ -104,7 +104,7 @@ func TestAvailableMovesDecreaseAfterMark(t *testing.T) {
 	assert.Equal(t, 6, len(newAvailablePositions))
 }
 
-func (boardTest BoardTest) allWinningPositions() []grid.Line {
+func (boardTest boardTests) allWinningPositions() []grid.Line {
 	return []grid.Line{
 		boardTest.newLine("1", "2", "3"),
 		boardTest.newLine("4", "5", "6"),
@@ -116,10 +116,10 @@ func (boardTest BoardTest) allWinningPositions() []grid.Line {
 		boardTest.newLine("3", "5", "7")}
 }
 
-func (boardTest BoardTest) newLine(cell1, cell2, cell3 marks.Mark) grid.Line {
+func (boardTest boardTests) newLine(cell1, cell2, cell3 marks.Mark) grid.Line {
 	return grid.NewLine(cell1, cell2, cell3)
 }
 
-func (boardTest BoardTest) newBoard() Board {
+func (boardTest boardTests) newBoard() Board {
 	return NewBoard(9)
 }

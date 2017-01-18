@@ -9,9 +9,9 @@ import (
 	"ttt/core/marks"
 )
 
-type GameTest struct{}
+type gameTests struct{}
 
-var cliGameTest *GameTest = new(GameTest)
+var cliGameTest *gameTests = new(gameTests)
 
 var playerPrompter Prompter = NewPrompter(GameOptions)
 
@@ -84,6 +84,6 @@ func TestPromptsTheCorrectPlayers(t *testing.T) {
 	assert.True(t, displaySpy.ComputerPromptHasBeenCalled)
 }
 
-func (gameTest GameTest) createGame(playerOne, playerTwo core.Player) core.Game {
+func (gameTest gameTests) createGame(playerOne, playerTwo core.Player) core.Game {
 	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 }

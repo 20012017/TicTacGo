@@ -4,27 +4,17 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/cli/display"
-	"ttt/cli/players"
 	"ttt/core/marks"
 )
 
-type PrompterTest struct{}
+type prompterTests struct{}
 
-var gameOptions map[int][]int = map[int][]int{
-	1: []int{players.HUMAN, players.HUMAN},
-	2: []int{players.HUMAN, players.COMPUTER},
-	3: []int{players.COMPUTER, players.HUMAN},
-	4: []int{players.COMPUTER, players.COMPUTER},
-}
+var gameOptions map[int][]int = GameOptions
 
-var prompterTest PrompterTest = PrompterTest{}
+var prompterTest prompterTests = prompterTests{}
 
 var prompter Prompter = Prompter{gameOptions}
 var X, O marks.Mark = marks.X, marks.O
-
-func (prompterTest PrompterTest) newSpy() *display.Spy {
-	return &display.Spy{}
-}
 
 func TestHumanVHumanGamePlayerOne(t *testing.T) {
 	displaySpy := prompterTest.newSpy()
@@ -88,4 +78,8 @@ func TestComputerVComputerGamePlayerTwo(t *testing.T) {
 	prompter.Prompt(4, O, displaySpy)
 
 	assert.True(t, displaySpy.ComputerPromptHasBeenCalled)
+}
+
+func (prompterTest prompterTests) newSpy() *display.Spy {
+	return &display.Spy{}
 }

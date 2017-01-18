@@ -9,9 +9,9 @@ import (
 
 var rules *core.Rules = new(core.Rules)
 var X, O, EMPTY marks.Mark = marks.X, marks.O, marks.EMPTY
+var negamax *Negamax = NewNegamax(rules)
 
 func TestScoresAWin(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, X, X, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY})
 
 	score := negamax.score(board, X, O)
@@ -20,7 +20,6 @@ func TestScoresAWin(t *testing.T) {
 }
 
 func TestScoresALoss(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{O, O, O, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY})
 
 	score := negamax.score(board, X, O)
@@ -29,7 +28,6 @@ func TestScoresALoss(t *testing.T) {
 }
 
 func TestScoresADraw(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{O, X, O, X, O, X, X, O, X})
 
 	score := negamax.score(board, X, O)
@@ -38,7 +36,6 @@ func TestScoresADraw(t *testing.T) {
 }
 
 func TestReturnsTheOnlyFreeSpaceOnBoard(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, O, X, O, X, O, O, X, EMPTY})
 
 	move := negamax.move(board, O)
@@ -47,7 +44,6 @@ func TestReturnsTheOnlyFreeSpaceOnBoard(t *testing.T) {
 }
 
 func TestReturnsTheOnlyFreeSpaceIfWin(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, O, X, X, X, O, EMPTY, X, O})
 
 	move := negamax.move(board, X)
@@ -56,7 +52,6 @@ func TestReturnsTheOnlyFreeSpaceIfWin(t *testing.T) {
 }
 
 func TestGoesForAWinOverALoss(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, O, O, X, X, EMPTY, O, O, EMPTY})
 
 	move := negamax.move(board, X)
@@ -65,7 +60,6 @@ func TestGoesForAWinOverALoss(t *testing.T) {
 }
 
 func TestGoesForAWinIfOneIsAvailable(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, X, EMPTY, O, O, EMPTY, EMPTY, EMPTY, EMPTY})
 
 	move := negamax.move(board, X)
@@ -74,7 +68,6 @@ func TestGoesForAWinIfOneIsAvailable(t *testing.T) {
 }
 
 func TestBlocksAWin(t *testing.T) {
-	negamax := NewNegamax(rules)
 	board := core.NewMarkedBoard([]marks.Mark{X, EMPTY, EMPTY, O, O, EMPTY, X, EMPTY, EMPTY})
 
 	move := negamax.move(board, X)
@@ -83,16 +76,12 @@ func TestBlocksAWin(t *testing.T) {
 }
 
 func TestReturnsTheTopCornerForAnEmptyBoard(t *testing.T) {
-	negamax := NewNegamax(rules)
-
 	move := negamax.move(core.NewBoard(9), X)
 
 	assert.Equal(t, 0, move)
 }
 
 func TestReturnsTheCentreIfTheCornerIsTaken(t *testing.T) {
-	negamax := NewNegamax(rules)
-
 	board := core.NewMarkedBoard([]marks.Mark{X, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY})
 	move := negamax.move(board, O)
 

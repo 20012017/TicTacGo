@@ -40,7 +40,7 @@ func (grid Grid) split(delimiter int) []Line {
 }
 
 func (grid Grid) reverseSplit(delimiter int) []Line {
-	reversedLines := []Line{}
+	var reversedLines []Line
 	for _, line := range grid.splitLines(delimiter) {
 		reversedLines = append(reversedLines, line.reverse())
 	}
@@ -48,7 +48,8 @@ func (grid Grid) reverseSplit(delimiter int) []Line {
 }
 
 func (grid Grid) transpose(delimiter int) []Line {
-	transposedGrid, rows := []Line{}, grid.split(delimiter)
+	var transposedGrid []Line
+	rows := grid.split(delimiter)
 	for i := 0; i < delimiter; i++ {
 		transposedGrid = append(transposedGrid, grid.getCellsAt(rows, i))
 	}
@@ -72,7 +73,7 @@ func (grid Grid) splitCells(start, end int) Line {
 }
 
 func (grid Grid) splitLines(delimiter int) []Line {
-	splitGrid := []Line{}
+	var splitGrid []Line
 	for i := 0; i < len(grid.cells); i = i + delimiter {
 		splitGrid = append(splitGrid, grid.splitCells(i, i+delimiter))
 	}

@@ -7,9 +7,9 @@ import (
 	"ttt/core/marks"
 )
 
-type DisplayBoardTest struct{}
+type displayBoardTests struct{}
 
-var displayBoardTest DisplayBoardTest = DisplayBoardTest{}
+var displayBoardTest displayBoardTests = displayBoardTests{}
 var markedBoard core.Board = core.NewMarkedBoard([]marks.Mark{"X", "", "", "", "", "", "", "", ""})
 
 func TestDisplaysAnEmptyBoard(t *testing.T) {
@@ -30,7 +30,7 @@ func TestDisplaysAMarkedBoard(t *testing.T) {
 	assert.Equal(t, expectedBoard, stringBoard)
 }
 
-func (displayBoardTest DisplayBoardTest) emptyStringBoard() string {
+func (displayBoardTest displayBoardTests) emptyStringBoard() string {
 	return "-------------\n" +
 		"|[-]|[-]|[-]|\n" +
 		"-------------\n" +
@@ -40,7 +40,7 @@ func (displayBoardTest DisplayBoardTest) emptyStringBoard() string {
 		"-------------\n"
 }
 
-func (displayBoardTest DisplayBoardTest) markedStringBoard() string {
+func (displayBoardTest displayBoardTests) markedStringBoard() string {
 	return "-------------\n" +
 		"|[X]|[-]|[-]|\n" +
 		"-------------\n" +
