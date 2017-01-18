@@ -3,11 +3,12 @@ package grid
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core/marks"
 )
 
 func TestLineCreatedWithCells(t *testing.T) {
 	line := NewLine("1", "2", "3")
-	expectedCells := []string{"1", "2", "3"}
+	expectedCells := []marks.Mark{"1", "2", "3"}
 
 	assert.Equal(t, expectedCells, line.cells)
 }
@@ -15,7 +16,7 @@ func TestLineCreatedWithCells(t *testing.T) {
 func TestEmptyNewLine(t *testing.T) {
 	line := NewLine()
 
-	assert.Equal(t, []string(nil), line.cells)
+	assert.Equal(t, []marks.Mark(nil), line.cells)
 }
 
 func TestAddCellToLine(t *testing.T) {
@@ -35,11 +36,11 @@ func TestLinesReverse(t *testing.T) {
 func TestLinesAt(t *testing.T) {
 	line := NewLine("1")
 
-	assert.Equal(t, "1", line.at(0))
+	assert.Equal(t, marks.Mark("1"), line.at(0))
 }
 
 func TestLinesAll(t *testing.T) {
-	isAOne := func(str string) bool {
+	isAOne := func(str marks.Mark) bool {
 		return str == "1"
 	}
 	sameLine := NewLine("1", "1", "1")

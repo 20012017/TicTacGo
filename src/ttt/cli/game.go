@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Game struct {
@@ -27,7 +28,7 @@ func (cliGame Game) end() {
 	cliGame.displayResult(cliGame.game.Result())
 }
 
-func (cliGame Game) displayResult(isWon bool, winner string) {
+func (cliGame Game) displayResult(isWon bool, winner marks.Mark) {
 	if isWon {
 		cliGame.display.Win(winner)
 	} else {
@@ -75,7 +76,7 @@ func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
 }
 
-func (cliGame Game) currentMark() string {
+func (cliGame Game) currentMark() marks.Mark {
 	return cliGame.game.CurrentPlayer().Mark()
 }
 

@@ -10,6 +10,7 @@ import (
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type MenuTest struct{}
@@ -43,8 +44,8 @@ func TestReturnsTheCorrectMarksForPlayers(t *testing.T) {
 	game := menu.show()
 	playerOne, playerTwo := menuTest.getPlayers(game)
 
-	assert.Equal(t, "X", playerOne.Mark())
-	assert.Equal(t, "O", playerTwo.Mark())
+	assert.Equal(t, marks.X, playerOne.Mark())
+	assert.Equal(t, marks.O, playerTwo.Mark())
 }
 
 func TestReturnsAHumanVHumanGame(t *testing.T) {

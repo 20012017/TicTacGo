@@ -6,6 +6,7 @@ import (
 	"ttt/cli/display"
 	"ttt/cli/players"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type GameTest struct{}
@@ -15,8 +16,8 @@ var cliGameTest *GameTest = new(GameTest)
 var playerPrompter Prompter = NewPrompter(GameOptions)
 
 func TestStartsAGame(t *testing.T) {
-	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
-	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
+	playerOne := players.NewFake(marks.X, 0, 0, 1, 6, 5, 8)
+	playerTwo := players.NewFake(marks.O, 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
 	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
@@ -30,8 +31,8 @@ func TestStartsAGame(t *testing.T) {
 }
 
 func TestPlaysADrawnGame(t *testing.T) {
-	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
-	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
+	playerOne := players.NewFake(marks.X, 0, 0, 1, 6, 5, 8)
+	playerTwo := players.NewFake(marks.O, 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
 	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
@@ -44,8 +45,8 @@ func TestPlaysADrawnGame(t *testing.T) {
 }
 
 func TestPlaysAWonGame(t *testing.T) {
-	playerOne := players.NewFake("X", 0, 0, 1, 2)
-	playerTwo := players.NewFake("O", 0, 6, 7)
+	playerOne := players.NewFake(marks.X, 0, 0, 1, 2)
+	playerTwo := players.NewFake(marks.O, 0, 6, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
 	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
@@ -58,8 +59,8 @@ func TestPlaysAWonGame(t *testing.T) {
 }
 
 func TestDisplayErrorsForInvalidMove(t *testing.T) {
-	playerOne := players.NewFake("X", 0, -1, 0, 1, 2)
-	playerTwo := players.NewFake("O", 0, 6, 7)
+	playerOne := players.NewFake(marks.X, 0, -1, 0, 1, 2)
+	playerTwo := players.NewFake(marks.O, 0, 6, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
 	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
@@ -71,8 +72,8 @@ func TestDisplayErrorsForInvalidMove(t *testing.T) {
 }
 
 func TestPromptsTheCorrectPlayers(t *testing.T) {
-	playerOne := players.NewFake("X", 0, -1, 0, 1, 2)
-	playerTwo := players.NewFake("O", 0, 6, 7)
+	playerOne := players.NewFake(marks.X, 0, -1, 0, 1, 2)
+	playerTwo := players.NewFake(marks.O, 0, 6, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
 	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 2)

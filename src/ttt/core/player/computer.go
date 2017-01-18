@@ -1,17 +1,20 @@
 package player
 
-import "ttt/core"
+import (
+	"ttt/core"
+	"ttt/core/marks"
+)
 
 type Computer struct {
-	mark    string
+	mark    marks.Mark
 	negamax *Negamax
 }
 
-func NewComputer(mark string, negamax *Negamax) *Computer {
+func NewComputer(mark marks.Mark, negamax *Negamax) *Computer {
 	return &Computer{mark, negamax}
 }
 
-func (computer Computer) Mark() string {
+func (computer Computer) Mark() marks.Mark {
 	return computer.mark
 }
 

@@ -20,7 +20,7 @@ var gameOptions map[int][]int = map[int][]int{
 var prompterTest PrompterTest = PrompterTest{}
 
 var prompter Prompter = Prompter{gameOptions}
-var X, O string = marks.X, marks.O
+var X, O marks.Mark = marks.X, marks.O
 
 func (prompterTest PrompterTest) newSpy() *display.Spy {
 	return &display.Spy{}

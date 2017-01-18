@@ -4,22 +4,23 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type DelayPlayerTest struct{}
 
 func TestHasMark(t *testing.T) {
-	playerSpy := NewPlayerSpy("X", 1)
+	playerSpy := NewPlayerSpy(marks.X, 1)
 	delayedPlayer := NewDelayedPlayer(playerSpy, &DelaySpy{})
 
 	mark := delayedPlayer.Mark()
 
 	assert.True(t, playerSpy.markHasBeenCalled)
-	assert.Equal(t, "X", mark)
+	assert.Equal(t, marks.X, mark)
 }
 
 func TestHasAMove(t *testing.T) {
-	playerSpy := NewPlayerSpy("X", 1)
+	playerSpy := NewPlayerSpy(marks.X, 1)
 	delayedPlayer := NewDelayedPlayer(playerSpy, &DelaySpy{})
 
 	move, _ := delayedPlayer.Move(core.NewBoard(9))
@@ -30,7 +31,7 @@ func TestHasAMove(t *testing.T) {
 
 func TestDelaysTheMove(t *testing.T) {
 	delaySpy := DelaySpy{}
-	delayedPlayer := NewDelayedPlayer(NewPlayerSpy("X", 1), &delaySpy)
+	delayedPlayer := NewDelayedPlayer(NewPlayerSpy(marks.X, 1), &delaySpy)
 
 	delayedPlayer.Move(core.NewBoard(9))
 
@@ -46,13 +47,13 @@ func (delaySpy *DelaySpy) delay(duration int) {
 }
 
 type PlayerSpy struct {
-	mark              string
+	mark              marks.Mark
 	move              int
 	markHasBeenCalled bool
 	moveHasBeenCalled bool
 }
 
-func NewPlayerSpy(mark string, move int) *PlayerSpy {
+func NewPlayerSpy(mark marks.Mark, move int) *PlayerSpy {
 	return &PlayerSpy{mark, move, false, false}
 }
 
@@ -61,7 +62,7 @@ func (playerSpy *PlayerSpy) Move(board core.Board) (int, error) {
 	return playerSpy.move, nil
 }
 
-func (playerSpy *PlayerSpy) Mark() string {
+func (playerSpy *PlayerSpy) Mark() marks.Mark {
 	playerSpy.markHasBeenCalled = true
 	return playerSpy.mark
 }

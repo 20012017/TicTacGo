@@ -3,7 +3,7 @@ package marks
 type Mark string
 
 const (
-	X     = "X"
-	O     = "O"
-	EMPTY = ""
+	X     = Mark("X")
+	O     = Mark("O")
+	EMPTY = Mark("")
 )

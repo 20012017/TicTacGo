@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core/grid"
+	"ttt/core/marks"
 )
 
 var boardTest BoardTest = BoardTest{}
@@ -19,29 +20,29 @@ func TestEmptyBoardHasNineSpaces(t *testing.T) {
 func TestCanPlaceAMarkOnBoard(t *testing.T) {
 	board := boardTest.newBoard()
 
-	board = board.PlaceMark(4, "X")
+	board = board.PlaceMark(4, X)
 
-	assert.Equal(t, "X", board.MarkAt(4))
+	assert.Equal(t, X, board.MarkAt(4))
 }
 
 func TestCanPlaceTwoMarksOnBoard(t *testing.T) {
 	board := boardTest.newBoard()
 
-	board = board.PlaceMark(4, "X")
-	board = board.PlaceMark(5, "0")
+	board = board.PlaceMark(4, X)
+	board = board.PlaceMark(5, O)
 
-	assert.Equal(t, "X", board.MarkAt(4))
-	assert.Equal(t, "0", board.MarkAt(5))
+	assert.Equal(t, X, board.MarkAt(4))
+	assert.Equal(t, O, board.MarkAt(5))
 }
 
 func TestBoardIsImmutable(t *testing.T) {
 	board := boardTest.newBoard()
 
-	board = board.PlaceMark(4, "X")
-	board.PlaceMark(5, "0")
+	board = board.PlaceMark(4, X)
+	board.PlaceMark(5, O)
 
-	assert.Equal(t, "X", board.MarkAt(4))
-	assert.Equal(t, "", board.MarkAt(5))
+	assert.Equal(t, X, board.MarkAt(4))
+	assert.Equal(t, EMPTY, board.MarkAt(5))
 }
 
 func TestKnowsTheRowWidth(t *testing.T) {
@@ -51,7 +52,7 @@ func TestKnowsTheRowWidth(t *testing.T) {
 }
 
 func TestKnowsIfFull(t *testing.T) {
-	fullBoard := []string{"X", "O", "X", "O", "X", "O", "O", "X", "O"}
+	fullBoard := []marks.Mark{X, O, X, O, X, O, O, X, O}
 
 	board := NewMarkedBoard(fullBoard)
 
@@ -59,7 +60,7 @@ func TestKnowsIfFull(t *testing.T) {
 }
 
 func TestKnowsAllWinningPositions(t *testing.T) {
-	numberedBoard := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+	numberedBoard := []marks.Mark{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 	board := NewMarkedBoard(numberedBoard)
 
@@ -67,7 +68,7 @@ func TestKnowsAllWinningPositions(t *testing.T) {
 }
 
 func TestCountMarks(t *testing.T) {
-	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	markedBoard := []marks.Mark{X, O, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
 
 	board := NewMarkedBoard(markedBoard)
 
@@ -83,7 +84,7 @@ func TestAvailableMovesOnEmptyBoard(t *testing.T) {
 }
 
 func TestAvailableMovesOnAMarkedBoard(t *testing.T) {
-	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	markedBoard := []marks.Mark{X, O, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
 	board := NewMarkedBoard(markedBoard)
 
 	availablePositions := board.AvailableMoves()
@@ -92,11 +93,11 @@ func TestAvailableMovesOnAMarkedBoard(t *testing.T) {
 }
 
 func TestAvailableMovesDecreaseAfterMark(t *testing.T) {
-	markedBoard := []string{"X", "O", "", "", "", "", "", "", ""}
+	markedBoard := []marks.Mark{X, O, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
 	board := NewMarkedBoard(markedBoard)
 
 	availablePositions := board.AvailableMoves()
-	board = board.PlaceMark(8, "X")
+	board = board.PlaceMark(8, X)
 	newAvailablePositions := board.AvailableMoves()
 
 	assert.Equal(t, 7, len(availablePositions))
@@ -115,7 +116,7 @@ func (boardTest BoardTest) allWinningPositions() []grid.Line {
 		boardTest.newLine("3", "5", "7")}
 }
 
-func (boardTest BoardTest) newLine(cell1, cell2, cell3 string) grid.Line {
+func (boardTest BoardTest) newLine(cell1, cell2, cell3 marks.Mark) grid.Line {
 	return grid.NewLine(cell1, cell2, cell3)
 }
 

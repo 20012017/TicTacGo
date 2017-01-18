@@ -1,5 +1,7 @@
 package core
 
+import "ttt/core/marks"
+
 type Game struct {
 	playerOne, playerTwo Player
 	board                Board
@@ -18,11 +20,11 @@ func (game Game) IsOver() bool {
 	return game.rules.IsOver(game.board, game.markOne(), game.markTwo())
 }
 
-func (game Game) Result() (bool, string) {
+func (game Game) Result() (bool, marks.Mark) {
 	if game.IsOver() && game.IsAWin() {
 		return true, game.winner()
 	}
-	return false, ""
+	return false, marks.EMPTY
 }
 
 func (game *Game) Play(move int) Board {
@@ -45,11 +47,11 @@ func (game Game) IsAWin() bool {
 	return game.rules.isAWin(game.data())
 }
 
-func (game Game) currentMark() string {
+func (game Game) currentMark() marks.Mark {
 	return game.CurrentPlayer().Mark()
 }
 
-func (game Game) winner() string {
+func (game Game) winner() marks.Mark {
 	return game.winningMark()
 }
 
@@ -58,18 +60,18 @@ func (game Game) playMove(move int) Board {
 	return game.board.PlaceMark(move, mark)
 }
 
-func (game Game) winningMark() string {
+func (game Game) winningMark() marks.Mark {
 	return game.rules.Winner(game.data())
 }
 
-func (game Game) data() (Board, string, string) {
+func (game Game) data() (Board, marks.Mark, marks.Mark) {
 	return game.board, game.markOne(), game.markTwo()
 }
 
-func (game Game) markOne() string {
+func (game Game) markOne() marks.Mark {
 	return game.playerOne.Mark()
 }
 
-func (game Game) markTwo() string {
+func (game Game) markTwo() marks.Mark {
 	return game.playerTwo.Mark()
 }

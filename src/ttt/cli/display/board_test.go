@@ -4,12 +4,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type DisplayBoardTest struct{}
 
 var displayBoardTest DisplayBoardTest = DisplayBoardTest{}
-var markedBoard core.Board = core.NewMarkedBoard([]string{"X", "", "", "", "", "", "", "", ""})
+var markedBoard core.Board = core.NewMarkedBoard([]marks.Mark{"X", "", "", "", "", "", "", "", ""})
 
 func TestDisplaysAnEmptyBoard(t *testing.T) {
 	displayBoard, board := Board{}, core.NewBoard(9)

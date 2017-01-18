@@ -1,6 +1,9 @@
 package cli
 
-import "ttt/core"
+import (
+	"ttt/core"
+	"ttt/core/marks"
+)
 
 type DisplayWriter interface {
 	Write(message string)
@@ -17,7 +20,7 @@ type DisplayWriter interface {
 
 	Goodbye()
 
-	Win(mark string)
+	Win(mark marks.Mark)
 
 	Clear()
 

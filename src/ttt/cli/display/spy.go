@@ -1,6 +1,9 @@
 package display
 
-import "ttt/core"
+import (
+	"ttt/core"
+	"ttt/core/marks"
+)
 
 type Spy struct {
 	WelcomeHasBeenCalled        bool
@@ -47,7 +50,7 @@ func (displaySpy *Spy) Goodbye() {
 	displaySpy.GoodbyeHasBeenCalled = true
 }
 
-func (displaySpy *Spy) Win(mark string) {
+func (displaySpy *Spy) Win(mark marks.Mark) {
 	displaySpy.WinHasBeenCalled = true
 }
 

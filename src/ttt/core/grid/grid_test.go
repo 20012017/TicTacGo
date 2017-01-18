@@ -3,12 +3,13 @@ package grid
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"ttt/core/marks"
 )
 
 type GridTest struct{}
 
 var gridTest GridTest = GridTest{}
-var numberedSlice []string = []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+var numberedSlice []marks.Mark = []marks.Mark{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 func TestEmptyGrid(t *testing.T) {
 	newGrid := NewGrid(9)
@@ -60,8 +61,12 @@ func TestMark(t *testing.T) {
 
 	markedGrid := grid.Mark(0, "X")
 
-	assert.Equal(t, []string{"", "", "", "", "", "", "", "", ""}, grid.Cells())
-	assert.Equal(t, []string{"X", "", "", "", "", "", "", "", ""}, markedGrid.Cells())
+	assert.Equal(t,
+		[]marks.Mark{"", "", "", "", "", "", "", "", ""},
+		grid.Cells())
+	assert.Equal(t,
+		[]marks.Mark{"X", "", "", "", "", "", "", "", ""},
+		markedGrid.Cells())
 }
 
 func (gridTest GridTest) grid() Grid {

@@ -3,6 +3,7 @@ package display
 import (
 	"io"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Writer struct {
@@ -43,8 +44,8 @@ func (writer Writer) Goodbye() {
 	writer.Write(writer.script.goodbye())
 }
 
-func (writer Writer) Win(mark string) {
-	writer.Write(writer.script.win(mark))
+func (writer Writer) Win(mark marks.Mark) {
+	writer.Write(writer.script.win(string(mark)))
 }
 
 func (writer Writer) Clear() {
