@@ -8,7 +8,7 @@ import (
 	"ttt/core/marks"
 )
 
-var playerFactory Factory = NewPlayerFactory(new(InputReaderDummy))
+var playerFactory Factory = NewPlayerFactory(new(inputReaderDummy))
 
 func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
 	player := playerFactory.Create(HUMAN, marks.X)
@@ -28,8 +28,8 @@ func TestPlayerFactoryReturnsDelayedPlayer(t *testing.T) {
 	assert.Equal(t, marks.O, player.Mark())
 }
 
-type InputReaderDummy struct{}
+type inputReaderDummy struct{}
 
-func (inputReader InputReaderDummy) Read() string {
+func (inputReader inputReaderDummy) Read() string {
 	return ""
 }
