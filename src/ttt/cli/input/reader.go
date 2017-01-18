@@ -1,8 +1,6 @@
 package input
 
-import (
-	"bufio"
-)
+import "bufio"
 
 type Reader struct {
 	ioReader *bufio.Reader

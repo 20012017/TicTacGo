@@ -1,8 +1,6 @@
 package player
 
-import (
-	"ttt/core"
-)
+import "ttt/core"
 
 type Computer struct {
 	mark    string

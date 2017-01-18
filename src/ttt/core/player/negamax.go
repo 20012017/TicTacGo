@@ -1,8 +1,6 @@
 package player
 
-import (
-	"ttt/core"
-)
+import "ttt/core"
 
 const winScore, lossScore, drawScore int = 10, -10, 0
 
