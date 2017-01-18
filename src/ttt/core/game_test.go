@@ -10,7 +10,7 @@ type gameTests struct{}
 
 var gameTest gameTests = gameTests{}
 
-var playerOne, playerTwo Player = PlayerDouble{X}, PlayerDouble{O}
+var playerOne, playerTwo Player = playerStub{X}, playerStub{O}
 var rule *Rules = new(Rules)
 
 func TestCanPlayAMark(t *testing.T) {
@@ -117,14 +117,14 @@ func (gameTest gameTests) fullBoard() Board {
 		O, X, O})
 }
 
-type PlayerDouble struct {
+type playerStub struct {
 	mark marks.Mark
 }
 
-func (player PlayerDouble) Mark() marks.Mark {
+func (player playerStub) Mark() marks.Mark {
 	return player.mark
 }
 
-func (player PlayerDouble) Move(board Board) (int, error) {
+func (player playerStub) Move(board Board) (int, error) {
 	return 0, nil
 }

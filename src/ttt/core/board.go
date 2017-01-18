@@ -42,6 +42,16 @@ func (board Board) AvailableMoves() []int {
 	return availableMoves
 }
 
+func (board Board) CountMarks() int {
+	count := 0
+	for _, mark := range board.cells() {
+		if mark != marks.EMPTY {
+			count++
+		}
+	}
+	return count
+}
+
 func (board Board) PlaceMark(cell int, mark marks.Mark) Board {
 	updatedGrid := board.updateCells(cell, mark)
 	return NewMarkedBoard(updatedGrid)
@@ -57,16 +67,6 @@ func (board Board) isFull() bool {
 
 func (board Board) winningPositions() []grid.Line {
 	return grid.NewWinningPositions(board.grid, board.rowLength()).All
-}
-
-func (board Board) CountMarks() int {
-	count := 0
-	for _, mark := range board.cells() {
-		if mark != marks.EMPTY {
-			count++
-		}
-	}
-	return count
 }
 
 func (board Board) updateCells(cell int, mark marks.Mark) []marks.Mark {
