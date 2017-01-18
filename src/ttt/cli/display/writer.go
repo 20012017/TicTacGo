@@ -26,6 +26,10 @@ func (writer Writer) Prompt() {
 	writer.Write(writer.script.prompt())
 }
 
+func (writer Writer) ComputerPrompt() {
+	writer.Write(writer.script.computerPrompt())
+}
+
 func (writer Writer) ShowBoard(board core.Board) {
 	displayBoard := new(Board).show(board)
 	writer.Write(displayBoard)

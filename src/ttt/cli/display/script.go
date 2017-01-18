@@ -42,3 +42,7 @@ func (script Script) invalidChoice() string {
 func (script Script) replay() string {
 	return "Would you like to play again?\nPlease type yes to replay\n"
 }
+
+func (script Script) computerPrompt() string {
+	return "Computer is making a move...\n"
+}

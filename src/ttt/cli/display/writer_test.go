@@ -106,6 +106,14 @@ func TestReplay(t *testing.T) {
 	assert.Equal(t, "Would you like to play again?\nPlease type yes to replay\n", buffer.String())
 }
 
+func TestComputerPrompt(t *testing.T) {
+	buffer, writer := writerTest.setUpWriter()
+
+	writer.ComputerPrompt()
+
+	assert.Equal(t, "Computer is making a move...\n", buffer.String())
+}
+
 func (writerTest WriterTest) setUpWriter() (*bytes.Buffer, Writer) {
 	buffer, script := new(bytes.Buffer), new(Script)
 	writer := NewDisplayWriter(buffer, script)
