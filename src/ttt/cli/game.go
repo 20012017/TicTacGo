@@ -46,6 +46,7 @@ func (cliGame *Game) play() {
 func (cliGame Game) getValidMove() int {
 	move, err := cliGame.currentPlayer().Move(cliGame.board())
 	for err != nil {
+		cliGame.showBoard()
 		cliGame.display.Write(fmt.Sprintf("%s\n", err.Error()))
 		cliGame.prompt()
 		move, err = cliGame.currentPlayer().Move(cliGame.board())
