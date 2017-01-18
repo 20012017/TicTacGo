@@ -19,7 +19,7 @@ func TestStartsAGame(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
-	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
 
 	cliGame.Start()
 
@@ -34,7 +34,7 @@ func TestPlaysADrawnGame(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
-	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
 
 	cliGame.Start()
 
@@ -48,7 +48,7 @@ func TestPlaysAWonGame(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
-	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
 
 	cliGame.Start()
 
@@ -62,12 +62,25 @@ func TestDisplayErrorsForInvalidMove(t *testing.T) {
 	playerTwo := players.NewFake("O", 0, 6, 7)
 	displaySpy := new(display.Spy)
 	game := cliGameTest.createGame(playerOne, playerTwo)
-	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 1)
 
 	cliGame.Start()
 
 	assert.True(t, displaySpy.WriteHasBeenCalled)
 	assert.Equal(t, "Out of bounds\n", displaySpy.WriteArgument)
+}
+
+func TestPromptsTheCorrectPlayers(t *testing.T) {
+	playerOne := players.NewFake("X", 0, -1, 0, 1, 2)
+	playerTwo := players.NewFake("O", 0, 6, 7)
+	displaySpy := new(display.Spy)
+	game := cliGameTest.createGame(playerOne, playerTwo)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter, 2)
+
+	cliGame.Start()
+
+	assert.True(t, displaySpy.HumanPromptHasBeenCalled)
+	assert.True(t, displaySpy.ComputerPromptHasBeenCalled)
 }
 
 func (gameTest GameTest) createGame(playerOne, playerTwo core.Player) core.Game {

@@ -6,13 +6,14 @@ import (
 )
 
 type Game struct {
-	game     *core.Game
-	display  DisplayWriter
-	prompter Prompter
+	game       *core.Game
+	display    DisplayWriter
+	prompter   Prompter
+	gameChoice int
 }
 
-func NewCliGame(game *core.Game, display DisplayWriter, prompter Prompter) Game {
-	return Game{game, display, prompter}
+func NewCliGame(game *core.Game, display DisplayWriter, prompter Prompter, gameChoice int) Game {
+	return Game{game, display, prompter, gameChoice}
 }
 
 func (cliGame Game) Start() {
@@ -45,7 +46,7 @@ func (cliGame Game) getValidMove() int {
 	move, err := cliGame.currentPlayer().Move(cliGame.board())
 	for err != nil {
 		cliGame.display.Write(fmt.Sprintf("%s\n", err.Error()))
-		cliGame.display.HumanPrompt()
+		cliGame.prompt()
 		move, err = cliGame.currentPlayer().Move(cliGame.board())
 	}
 	return move
@@ -53,7 +54,7 @@ func (cliGame Game) getValidMove() int {
 
 func (cliGame Game) initializeTurn() {
 	cliGame.showBoard()
-	cliGame.display.HumanPrompt()
+	cliGame.prompt()
 }
 
 func (cliGame Game) welcome() {
@@ -74,6 +75,14 @@ func (cliGame Game) currentPlayer() core.Player {
 	return cliGame.game.CurrentPlayer()
 }
 
+func (cliGame Game) currentMark() string {
+	return cliGame.game.CurrentPlayer().Mark()
+}
+
 func (cliGame Game) Game() *core.Game {
 	return cliGame.game
+}
+
+func (cliGame Game) prompt() {
+	cliGame.prompter.Prompt(cliGame.gameChoice, cliGame.currentMark(), cliGame.display)
 }

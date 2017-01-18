@@ -70,7 +70,7 @@ func (menu Menu) createGame(gameChoice int) Game {
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
 	playerOne, playerTwo := menu.createPlayers(playerOneType, playerTwoType)
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	return NewCliGame(&game, menu.display, NewPrompter(gameOptions))
+	return NewCliGame(&game, menu.display, NewPrompter(menu.gameOptions), gameChoice)
 }
 
 func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, core.Player) {
@@ -80,6 +80,6 @@ func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, c
 }
 
 func (menu Menu) getPlayerTypes(choice int) (int, int) {
-	playerTypes := gameOptions[choice]
+	playerTypes := menu.gameOptions[choice]
 	return playerTypes[0], playerTypes[1]
 }
