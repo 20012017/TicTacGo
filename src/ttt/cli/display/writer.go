@@ -22,7 +22,7 @@ func (writer Writer) Welcome() {
 	writer.Write(writer.script.welcome())
 }
 
-func (writer Writer) Prompt() {
+func (writer Writer) HumanPrompt() {
 	writer.Write(writer.script.prompt())
 }
 

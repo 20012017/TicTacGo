@@ -7,7 +7,9 @@ type DisplayWriter interface {
 
 	Welcome()
 
-	Prompt()
+	HumanPrompt()
+
+	ComputerPrompt()
 
 	ShowBoard(board core.Board)
 

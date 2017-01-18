@@ -3,18 +3,19 @@ package display
 import "ttt/core"
 
 type Spy struct {
-	WelcomeHasBeenCalled       bool
-	ShowBoardHasBeenCalled     bool
-	PromptHasBeenCalled        bool
-	DrawHasBeenCalled          bool
-	GoodbyeHasBeenCalled       bool
-	WinHasBeenCalled           bool
-	ClearHasBeenCalled         bool
-	WriteHasBeenCalled         bool
-	WriteArgument              string
-	MenuHasBeenCalled          bool
-	InvalidChoiceHasBeenCalled bool
-	ReplayHasBeenCalled        bool
+	WelcomeHasBeenCalled        bool
+	ShowBoardHasBeenCalled      bool
+	HumanPromptHasBeenCalled    bool
+	ComputerPromptHasBeenCalled bool
+	DrawHasBeenCalled           bool
+	GoodbyeHasBeenCalled        bool
+	WinHasBeenCalled            bool
+	ClearHasBeenCalled          bool
+	WriteHasBeenCalled          bool
+	WriteArgument               string
+	MenuHasBeenCalled           bool
+	InvalidChoiceHasBeenCalled  bool
+	ReplayHasBeenCalled         bool
 }
 
 func (displaySpy *Spy) Write(message string) {
@@ -26,8 +27,12 @@ func (displaySpy *Spy) Welcome() {
 	displaySpy.WelcomeHasBeenCalled = true
 }
 
-func (displaySpy *Spy) Prompt() {
-	displaySpy.PromptHasBeenCalled = true
+func (displaySpy *Spy) HumanPrompt() {
+	displaySpy.HumanPromptHasBeenCalled = true
+}
+
+func (displaySpy *Spy) ComputerPrompt() {
+	displaySpy.ComputerPromptHasBeenCalled = true
 }
 
 func (displaySpy *Spy) ShowBoard(board core.Board) {

@@ -24,7 +24,7 @@ func TestStartsAGame(t *testing.T) {
 	assert.True(t, displaySpy.ClearHasBeenCalled)
 	assert.True(t, displaySpy.WelcomeHasBeenCalled)
 	assert.True(t, displaySpy.ShowBoardHasBeenCalled)
-	assert.True(t, displaySpy.PromptHasBeenCalled)
+	assert.True(t, displaySpy.HumanPromptHasBeenCalled)
 }
 
 func TestPlaysADrawnGame(t *testing.T) {

@@ -41,7 +41,7 @@ func TestPrintsBoard(t *testing.T) {
 func TestPromptsForMove(t *testing.T) {
 	buffer, writer := writerTest.setUpWriter()
 
-	writer.Prompt()
+	writer.HumanPrompt()
 
 	assert.Equal(t,
 		"Where would you like to make a move?\nPlease choose a space between 1 and 9\n",

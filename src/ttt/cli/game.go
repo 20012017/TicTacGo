@@ -44,7 +44,7 @@ func (cliGame Game) getValidMove() int {
 	move, err := cliGame.currentPlayer().Move(cliGame.board())
 	for err != nil {
 		cliGame.display.Write(fmt.Sprintf("%s\n", err.Error()))
-		cliGame.display.Prompt()
+		cliGame.display.HumanPrompt()
 		move, err = cliGame.currentPlayer().Move(cliGame.board())
 	}
 	return move
@@ -52,7 +52,7 @@ func (cliGame Game) getValidMove() int {
 
 func (cliGame Game) initializeTurn() {
 	cliGame.showBoard()
-	cliGame.display.Prompt()
+	cliGame.display.HumanPrompt()
 }
 
 func (cliGame Game) welcome() {
