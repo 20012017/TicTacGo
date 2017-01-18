@@ -16,7 +16,7 @@ func NewPlayerFactory(inputReader input.InputReader) Factory {
 }
 
 func (factory Factory) Create(choice int, mark string) core.Player {
-	if choice == 1 {
+	if choice == HUMAN {
 		return factory.createHumanPlayer(mark)
 	}
 	return factory.createComputerPlayer(mark)

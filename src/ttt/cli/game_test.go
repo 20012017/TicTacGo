@@ -12,12 +12,14 @@ type GameTest struct{}
 
 var cliGameTest *GameTest = new(GameTest)
 
+var playerPrompter Prompter = NewPrompter(GameOptions)
+
 func TestStartsAGame(t *testing.T) {
 	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
-	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(&game, displaySpy)
+	game := cliGameTest.createGame(playerOne, playerTwo)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
 
 	cliGame.Start()
 
@@ -31,8 +33,8 @@ func TestPlaysADrawnGame(t *testing.T) {
 	playerOne := players.NewFake("X", 0, 0, 1, 6, 5, 8)
 	playerTwo := players.NewFake("O", 0, 4, 2, 3, 7)
 	displaySpy := new(display.Spy)
-	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(&game, displaySpy)
+	game := cliGameTest.createGame(playerOne, playerTwo)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
 
 	cliGame.Start()
 
@@ -44,9 +46,9 @@ func TestPlaysADrawnGame(t *testing.T) {
 func TestPlaysAWonGame(t *testing.T) {
 	playerOne := players.NewFake("X", 0, 0, 1, 2)
 	playerTwo := players.NewFake("O", 0, 6, 7)
-	displaySpy := &display.Spy{}
-	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(&game, displaySpy)
+	displaySpy := new(display.Spy)
+	game := cliGameTest.createGame(playerOne, playerTwo)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
 
 	cliGame.Start()
 
@@ -58,12 +60,16 @@ func TestPlaysAWonGame(t *testing.T) {
 func TestDisplayErrorsForInvalidMove(t *testing.T) {
 	playerOne := players.NewFake("X", 0, -1, 0, 1, 2)
 	playerTwo := players.NewFake("O", 0, 6, 7)
-	displaySpy := &display.Spy{}
-	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	cliGame := NewCliGame(&game, displaySpy)
+	displaySpy := new(display.Spy)
+	game := cliGameTest.createGame(playerOne, playerTwo)
+	cliGame := NewCliGame(&game, displaySpy, playerPrompter)
 
 	cliGame.Start()
 
 	assert.True(t, displaySpy.WriteHasBeenCalled)
 	assert.Equal(t, "Out of bounds\n", displaySpy.WriteArgument)
+}
+
+func (gameTest GameTest) createGame(playerOne, playerTwo core.Player) core.Game {
+	return core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
 }

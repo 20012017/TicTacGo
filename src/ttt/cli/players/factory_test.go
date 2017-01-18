@@ -10,7 +10,7 @@ import (
 var playerFactory Factory = NewPlayerFactory(new(InputReaderDummy))
 
 func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
-	player := playerFactory.Create(1, "X")
+	player := playerFactory.Create(HUMAN, "X")
 
 	typeOfPlayer := reflect.TypeOf(player)
 
@@ -19,7 +19,7 @@ func TestPlayerFactoryReturnsHumanPlayer(t *testing.T) {
 }
 
 func TestPlayerFactoryReturnsDelayedPlayer(t *testing.T) {
-	player := playerFactory.Create(2, "O")
+	player := playerFactory.Create(COMPUTER, "O")
 
 	typeOfPlayer := reflect.TypeOf(player)
 

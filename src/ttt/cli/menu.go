@@ -8,25 +8,20 @@ import (
 	"ttt/core"
 )
 
-var options map[int][]int = map[int][]int{
-	1: []int{1, 1},
-	2: []int{1, 2},
-	3: []int{2, 1},
-	4: []int{2, 2},
-}
-
 type Menu struct {
 	display       DisplayWriter
 	inputReader   input.InputReader
 	playerFactory players.Factory
 	menuValidator validators.Input
+	gameOptions   map[int][]int
 }
 
 func NewMenu(display DisplayWriter,
 	inputReader input.InputReader,
 	playerFactory players.Factory,
-	menuValidator validators.Input) Menu {
-	return Menu{display, inputReader, playerFactory, menuValidator}
+	menuValidator validators.Input,
+	gameOptions map[int][]int) Menu {
+	return Menu{display, inputReader, playerFactory, menuValidator, gameOptions}
 }
 
 func (menu Menu) show() CliGame {
@@ -75,7 +70,7 @@ func (menu Menu) createGame(gameChoice int) Game {
 	playerOneType, playerTwoType := menu.getPlayerTypes(gameChoice)
 	playerOne, playerTwo := menu.createPlayers(playerOneType, playerTwoType)
 	game := core.NewGame(playerOne, playerTwo, core.NewBoard(9), new(core.Rules))
-	return NewCliGame(&game, menu.display)
+	return NewCliGame(&game, menu.display, NewPrompter(gameOptions))
 }
 
 func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, core.Player) {
@@ -85,6 +80,6 @@ func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, c
 }
 
 func (menu Menu) getPlayerTypes(choice int) (int, int) {
-	playerTypes := options[choice]
+	playerTypes := gameOptions[choice]
 	return playerTypes[0], playerTypes[1]
 }

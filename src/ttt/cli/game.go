@@ -6,12 +6,13 @@ import (
 )
 
 type Game struct {
-	game    *core.Game
-	display DisplayWriter
+	game     *core.Game
+	display  DisplayWriter
+	prompter Prompter
 }
 
-func NewCliGame(game *core.Game, display DisplayWriter) Game {
-	return Game{game, display}
+func NewCliGame(game *core.Game, display DisplayWriter, prompter Prompter) Game {
+	return Game{game, display, prompter}
 }
 
 func (cliGame Game) Start() {

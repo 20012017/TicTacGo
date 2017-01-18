@@ -30,7 +30,7 @@ func TestPrintsAMenuOfGameChoices(t *testing.T) {
 
 func TestReadsInput(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 
 	menu.show()
 
@@ -142,7 +142,7 @@ func TestAsksForReplay(t *testing.T) {
 
 func TestReplayReadsUserInput(t *testing.T) {
 	inputReader := input.NewInputReaderSpy("1\n")
-	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	menu := NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 
 	menu.replay()
 
@@ -175,7 +175,7 @@ func TestSaysGoodbye(t *testing.T) {
 
 func (menuTest MenuTest) newMenuWithInput(userInput string) Menu {
 	inputReader := input.NewInputReaderSpy(userInput, "1\n")
-	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator)
+	return NewMenu(displaySpy, inputReader, playerFactory, menuValidator, GameOptions)
 }
 
 func (menuTest MenuTest) getPlayers(game CliGame) (playerOne, playerTwo core.Player) {
