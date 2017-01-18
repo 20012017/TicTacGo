@@ -15,7 +15,9 @@ func TestKnowsIfThereIsAWin(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.True(t, rules.isAWin(board, X, O))
+	isAWin := rules.isAWin(board, X, O)
+
+	assert.True(t, isAWin)
 }
 
 func TestKnowsIfThereIsANotAWin(t *testing.T) {
@@ -24,7 +26,9 @@ func TestKnowsIfThereIsANotAWin(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.False(t, rules.isAWin(board, X, O))
+	isAWin := rules.isAWin(board, X, O)
+
+	assert.False(t, isAWin)
 }
 
 func TestKnowsIfTheGameIsDrawn(t *testing.T) {
@@ -33,7 +37,9 @@ func TestKnowsIfTheGameIsDrawn(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.True(t, rules.isADraw(board, X, O))
+	isADraw := rules.isADraw(board, X, O)
+
+	assert.True(t, isADraw)
 }
 
 func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
@@ -42,7 +48,9 @@ func TestKnowsIfTheGameIsNotDrawn(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.False(t, rules.isADraw(board, X, O))
+	isADraw := rules.isADraw(board, X, O)
+
+	assert.False(t, isADraw)
 }
 
 func TestKnowsTheWinnerWhenX(t *testing.T) {
@@ -51,7 +59,9 @@ func TestKnowsTheWinnerWhenX(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.Equal(t, X, rules.Winner(board, X, O))
+	winner := rules.Winner(board, X, O)
+
+	assert.Equal(t, X, winner)
 }
 
 func TestKnowsTheWinnerWhenO(t *testing.T) {
@@ -60,7 +70,9 @@ func TestKnowsTheWinnerWhenO(t *testing.T) {
 		EMPTY, EMPTY, EMPTY,
 		EMPTY, EMPTY, EMPTY})
 
-	assert.Equal(t, O, rules.Winner(board, X, O))
+	winner := rules.Winner(board, X, O)
+
+	assert.Equal(t, O, winner)
 }
 
 func TestKnowsThereIsNoWinner(t *testing.T) {
@@ -69,7 +81,9 @@ func TestKnowsThereIsNoWinner(t *testing.T) {
 		EMPTY, EMPTY, EMPTY,
 		EMPTY, EMPTY, EMPTY})
 
-	assert.Equal(t, EMPTY, rules.Winner(board, X, O))
+	winner := rules.Winner(board, X, O)
+
+	assert.Equal(t, EMPTY, winner)
 }
 
 func TestKnowsItIsOverWhenADraw(t *testing.T) {
@@ -78,7 +92,9 @@ func TestKnowsItIsOverWhenADraw(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.True(t, rules.IsOver(board, X, O))
+	isOver := rules.IsOver(board, X, O)
+
+	assert.True(t, isOver)
 }
 
 func TestKnowsItIsOverWhenAWin(t *testing.T) {
@@ -87,5 +103,7 @@ func TestKnowsItIsOverWhenAWin(t *testing.T) {
 		O, X, O,
 		O, X, O})
 
-	assert.True(t, rules.IsOver(board, X, O))
+	isOver := rules.IsOver(board, X, O)
+
+	assert.True(t, isOver)
 }
