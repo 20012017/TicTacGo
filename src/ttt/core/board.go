@@ -3,9 +3,8 @@ package core
 import (
 	"math"
 	"ttt/core/grid"
+	"ttt/core/marks"
 )
-
-var emptyCell string = EmptyMark()
 
 type Board struct {
 	grid grid.Grid
@@ -53,7 +52,7 @@ func (board Board) rowLength() int {
 }
 
 func (board Board) isFull() bool {
-	return !board.grid.Any(empty)
+	return !board.grid.Any(marks.EMPTY)
 }
 
 func (board Board) winningPositions() []grid.Line {
@@ -63,7 +62,7 @@ func (board Board) winningPositions() []grid.Line {
 func (board Board) CountMarks() int {
 	count := 0
 	for _, mark := range board.cells() {
-		if mark != empty {
+		if mark != marks.EMPTY {
 			count++
 		}
 	}

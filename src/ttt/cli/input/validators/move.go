@@ -3,6 +3,7 @@ package validators
 import (
 	"errors"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 const takenError string = "Already taken"
@@ -33,5 +34,5 @@ func (validator Move) convertToIndex(move int) int {
 }
 
 func (validator Move) isInvalidCell(index int, board core.Board) bool {
-	return board.MarkAt(index) != core.EmptyMark()
+	return board.MarkAt(index) != marks.EMPTY
 }

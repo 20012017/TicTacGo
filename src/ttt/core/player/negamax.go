@@ -1,6 +1,9 @@
 package player
 
-import "ttt/core"
+import (
+	"ttt/core"
+	"ttt/core/marks"
+)
 
 const winScore, lossScore, drawScore int = 10, -10, 0
 
@@ -22,10 +25,10 @@ func (negamax *Negamax) move(board core.Board, mark string) int {
 }
 
 func (negamax *Negamax) opponentMark(mark string) string {
-	if mark == core.MarkX() {
-		return core.MarkO()
+	if mark == marks.X {
+		return marks.O
 	}
-	return core.MarkX()
+	return marks.X
 }
 
 func (negamax *Negamax) currentMark(color int, mark, opponentMark string) string {

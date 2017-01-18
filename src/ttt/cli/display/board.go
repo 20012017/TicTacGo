@@ -3,6 +3,7 @@ package display
 import (
 	"fmt"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 const emptyCell string = "-"
@@ -32,7 +33,7 @@ func (display Board) formatBoard(board core.Board) []string {
 }
 
 func (display Board) formatCell(cell string) string {
-	if cell == core.EmptyMark() {
+	if cell == marks.EMPTY {
 		return emptyCell
 	}
 	return cell

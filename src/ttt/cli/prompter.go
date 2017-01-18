@@ -2,7 +2,7 @@ package cli
 
 import (
 	"ttt/cli/players"
-	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Prompter struct {
@@ -29,7 +29,7 @@ func (prompter Prompter) currentPlayerType(gameType int, currentMark string) int
 }
 
 func (prompter Prompter) currentPlayer(mark string) int {
-	if mark == core.MarkX() {
+	if mark == marks.X {
 		return 0
 	}
 	return 1

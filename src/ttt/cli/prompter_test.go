@@ -5,7 +5,7 @@ import (
 	"testing"
 	"ttt/cli/display"
 	"ttt/cli/players"
-	"ttt/core"
+	"ttt/core/marks"
 )
 
 type PrompterTest struct{}
@@ -20,7 +20,7 @@ var gameOptions map[int][]int = map[int][]int{
 var prompterTest PrompterTest = PrompterTest{}
 
 var prompter Prompter = Prompter{gameOptions}
-var X, O string = core.MarkX(), core.MarkO()
+var X, O string = marks.X, marks.O
 
 func (prompterTest PrompterTest) newSpy() *display.Spy {
 	return &display.Spy{}

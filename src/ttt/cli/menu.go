@@ -6,6 +6,7 @@ import (
 	"ttt/cli/input/validators"
 	"ttt/cli/players"
 	"ttt/core"
+	"ttt/core/marks"
 )
 
 type Menu struct {
@@ -74,8 +75,8 @@ func (menu Menu) createGame(gameChoice int) Game {
 }
 
 func (menu Menu) createPlayers(playerOneType, playerTwoType int) (core.Player, core.Player) {
-	playerOne := menu.playerFactory.Create(playerOneType, core.MarkX())
-	playerTwo := menu.playerFactory.Create(playerTwoType, core.MarkO())
+	playerOne := menu.playerFactory.Create(playerOneType, marks.X)
+	playerTwo := menu.playerFactory.Create(playerTwoType, marks.O)
 	return playerOne, playerTwo
 }
 
